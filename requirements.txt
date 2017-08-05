@@ -1,0 +1,5 @@
+# project requirements
+
+bittrex
+python-telegram-bot
+python-dotenv

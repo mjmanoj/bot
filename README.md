@@ -14,7 +14,12 @@ checks social media outlets for the most optimal coins to trade
 
 ## requirements
 
-install the following with pip
+install requirements with the following:
+
+```bash
+make setup
+```
 
 - [telegram](https://github.com/python-telegram-bot/python-telegram-bot/)
 - [dotenv](https://github.com/theskumar/python-dotenv)
+- [bittrex](https://github.com/ericsomdahl/python-bittrex)
