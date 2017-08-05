@@ -4,12 +4,11 @@ checks social media outlets for the most optimal coins to trade
 
 ## todo
 
-- get bittrex all coins
-- get 24h % change
+- ~get bittrex all coins~
 - check twitter for the symbol
 - verify account has to do with crypto
 - analyze known text nodes for emotional content (NLP)
-- score coin based on its emotional context (EC) as well as 24H%
+- score coin based on its emotional context
 - report every 30 minutes.
 
 ## requirements
