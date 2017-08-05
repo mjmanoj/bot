@@ -5,4 +5,4 @@ from dotenv import load_dotenv
 dotenv_path = join(dirname(__file__), '../.env')
 load_dotenv(dotenv_path)
 
-telegram_token = environ.get("http_api_token")
+telegram_token = environ.get("bot_api_token")
