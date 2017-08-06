@@ -4,15 +4,21 @@ from settings import twitter_consumer_key, twitter_consumer_secret, twitter_acce
 auth = tweepy.OAuthHandler(twitter_consumer_key, twitter_consumer_secret)
 auth.set_access_token(twitter_access_token, twitter_access_secret)
 
-api = tweepy.API(auth)
+twitter = tweepy.API(auth)
 
 
 # get_recent_tweets_with_search_term returns 100 search results per term
 # TODO: expand for more results, have to do multiple pages to support that
 # could do an iterate over count while >= page, then page +
 def search(term):
-    return api.search(q=term, rpp=100)
+    return twitter.search(q=term, rpp=100)
 
 
+# gets a twitter user, aka tweep.
 def get_tweep(tweep):
-    return api.get_user(tweep)
+    return twitter.get_user(tweep)
+
+
+# gets top trending hash tags of the moment
+def get_trends_for_woeid(place):
+    return twitter.trends_place(place)
