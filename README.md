@@ -21,7 +21,7 @@ checks social media outlets for the most optimal coins to trade
 - [x] https://github.com/ericsomdahl/python-bittrex
 - https://pypi.python.org/pypi/Yahoo-ticker-downloader
 
-## requirements
+## getting started
 
 install requirements with the following:
 
@@ -29,6 +29,16 @@ install requirements with the following:
 make setup
 ```
 
-- [telegram](https://github.com/python-telegram-bot/python-telegram-bot/)
-- [dotenv](https://github.com/theskumar/python-dotenv)
-- [bittrex](https://github.com/ericsomdahl/python-bittrex)
+want to use your own .env? mimic the following:
+
+```bash
+bot_api_token=
+
+rex_api_key=
+rex_api_secret=
+
+twitter_consumer_key=
+twitter_consumer_secret=
+twitter_access_token=
+twitter_access_secret=
+```
