@@ -21,6 +21,10 @@ checks social media outlets for the most optimal coins to trade
 - [x] https://github.com/ericsomdahl/python-bittrex
 - https://pypi.python.org/pypi/Yahoo-ticker-downloader
 
+## other integrations
+- look into tracking top hashtags on twitter?
+- http://aa.usno.navy.mil/data/docs/api.php -> python sdk
+
 ## getting started
 
 install requirements with the following:
