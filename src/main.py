@@ -1,18 +1,21 @@
-
-from rex import get_market_symbols
 from helpers import set_interval
 import constants
+import rex
+import twitter
+import logician
 
 
 def moon_call():
-    symbols = get_market_symbols()
+    symbols = rex.get_market_symbols()
 
-    for symbol in symbols >
-    # search twitter for $symbol
-    # process tweets (favorites, retweets, account (greater than X followers), emotional value of tweet content, etc)
-    # take top 10 symbols
-    # if they are over a certain amount, send with telegram bot
-    #
+    for symbol in symbols:
+        modified = "$" + symbol
+
+        tweets = twitter.search(modified)
+        relevant_tweets = logician.strip_irrelevant(tweets)
+        # score = logician.judge(relevant_tweets)
+
+    # telegram results over a certain threshold.
 
 
-set_interval(moon_call, 60, 000 * constants.DEFAULT_MINS)
+set_interval(moon_call, constants.DEFAULT_MINS)
