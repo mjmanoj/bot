@@ -17,6 +17,9 @@ checks social media outlets for the most optimal coins to trade
 - https://www.reddit.com/dev/api
 - https://developers.google.com/youtube/v3/docs/search
 
+## next symbol integrations
+- https://pypi.python.org/pypi/Yahoo-ticker-downloader
+
 ## requirements
 
 install requirements with the following:

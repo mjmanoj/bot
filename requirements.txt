@@ -4,3 +4,4 @@ bittrex
 python-telegram-bot
 python-dotenv
 tweepy
+tinydb
