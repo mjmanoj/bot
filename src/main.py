@@ -13,7 +13,7 @@ def moon_call():
 
         tweets = twitter.search(modified)
         relevant_tweets = logician.strip_irrelevant(tweets)
-        # score_card = logician.judge(relevant_tweets)
+        score_card = logician.judge(relevant_tweets)
 
     # telegram results over a certain threshold.
 

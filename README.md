@@ -2,22 +2,23 @@
 
 checks social media outlets for the most optimal coins to trade
 
-## moon_call todo
+## main todo
 
-- ~get bittrex all coins~
-- ~check twitter for the symbol~
-- verify account has to do with crypto
-- text sentiment analysis
-- score coin based on its emotional context
+- [x] get bittrex all coins
+- [x] check social for the symbol
+- score the coin based on text sentiment analysis
 - telegram it
+- scale symbols and social integrations
 
-## next social integrations
+## social integrations
 
+- [x] dev.twitter.com/overview/api/
 - https://steemit.github.io/steemit-docs/#discussions
-- https://www.reddit.com/dev/api
+- https://reddit.com/dev/api
 - https://developers.google.com/youtube/v3/docs/search
 
-## next symbol integrations
+## symbol integrations
+- [x] https://github.com/ericsomdahl/python-bittrex
 - https://pypi.python.org/pypi/Yahoo-ticker-downloader
 
 ## requirements
