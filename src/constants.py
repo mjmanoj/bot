@@ -20,3 +20,22 @@ HOT_COUNTRIES = [
     23424819,  # France
     23424934,  # Phillipines
 ]
+
+CRYPTO_TERMS = [
+    "blockchain"
+    "crypto",
+    "cryptocurrenecy",
+    "bitcoin",
+    "fintech",
+    "ethereum",
+    "bear",
+    "bull",
+    "FOMO",
+    "fibonacci",
+    "block",
+    "network",
+    "mine",
+    "mining",
+    "ledger",
+    "SHA 256",
+]
