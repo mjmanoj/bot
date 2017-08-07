@@ -6,23 +6,46 @@ import constants
 import rex
 import twitter
 import logician
+import db
+import config
+from telegram import bot
 from helpers import set_interval
 
 
 # call hot shots on market symbols
 def moon_call():
     symbols = rex.get_market_symbols()
+    scores = {}
 
+    # get and score relevant tweets per symbol.
     for symbol in symbols:
         modified = "$" + symbol
-
         tweets = twitter.search(modified)
         relevant_tweets = logician.strip_irrelevant(tweets)
         score = logician.judge(relevant_tweets)
-        # TODO: store score to symbol_score database
-        get_peripherals()
+        db.add(modified, score)
+        scores[modified] = score
 
-    # telegram results over a certain threshold.
+    get_peripherals()
+
+    # sort and find hottest trends
+    sorted_scores = sorted(scores.items(), key=lambda x: x[1])
+    hot_five = {k: sorted_scores[k] for k in sorted_scores.keys()[:5]}
+
+    # prepare message for telegram
+    message = "<h1>Hot Coin Ratings</h1>"
+    message += "<ul>"
+
+    for symbol in hot_five:
+        message += "<li>" + symbol + " score: " + hot_five[symbol] + "</li>"
+
+    message += "</ul>"
+    message += "<p>Like this message? BTC tips @ <code>" + \
+        config.tip_jar + "</code> are welcome!</p>"
+
+    # send telegram message to moon room channel
+    bot.send_message(chat_id=config.telegram_chat,
+                     text=message, parse_mode="HTML")
 
 
 # gets peripheral data
