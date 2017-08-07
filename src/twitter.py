@@ -11,8 +11,6 @@ twitter = tweepy.API(auth)
 
 
 # get_recent_tweets_with_search_term returns 100 search results per term
-# TODO: expand for more results, have to do multiple pages to support that
-# could do an iterate over count while >= page, then page +
 def search(term):
     return twitter.search(q=term, rpp=100)
 

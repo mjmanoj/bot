@@ -19,14 +19,20 @@ def moon_call():
 
     # get and score relevant tweets per symbol.
     for symbol in symbols:
-        modified = "$" + symbol
-        tweets = twitter.search(modified)
-        relevant_tweets = logician.strip_irrelevant(tweets)
-        score = logician.judge(relevant_tweets)
-        db.add(modified, score)
-        scores[modified] = score
+        coin_symbol = "$" + symbol
 
-    get_peripherals()
+        # search twitter
+        tweets = twitter.search(coin_symbol)
+        relevant_tweets = logician.strip_irrelevant(tweets)
+        if len(relevant_tweets) is None:
+            print("No new updates for " + coin_symbol + " found.")
+            continue
+
+        score = logician.judge(relevant_tweets)
+        db.add(coin_symbol, score)
+        scores[coin_symbol] = score
+
+    track_periphreals()
 
     # sort and find hottest trends
     sorted_scores = sorted(scores.items(), key=lambda x: x[1])
@@ -48,9 +54,9 @@ def moon_call():
                      text=message, parse_mode="HTML")
 
 
-# gets peripheral data
+# tracks peripheral data
 # - twitter trending per main tech countries
-def get_peripherals():
+def track_periphreals():
     for country in constants.HOT_COUNTRIES:
         twitter.get_trends_for_woeid(country)
         # logician judge this.

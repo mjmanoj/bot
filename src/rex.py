@@ -9,16 +9,16 @@ Rex = bittrex.Bittrex(api_key="", api_secret="")
 # get_market_symbols returns active btc based symbols
 def get_market_symbols():
     res = Rex.get_markets()
-    coins = res.get('result')
+    coins = res["result"]
     coin_names = []
 
     for coin in coins:
-        base = coin.get('BaseCurrency')
-        isActive = coin.get('IsActive')
+        base = coin["BaseCurrency"]
+        isActive = coin["IsActive"]
 
         if isActive:
             if base == "BTC":
-                name = coin.get('MarketCurrency')
+                name = coin["MarketCurrency"]
                 coin_names.append(name)
 
     return coin_names

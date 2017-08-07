@@ -1,29 +1,32 @@
 """
-the logician makes all the calls, he's about as smart as he can be.
+the logician makes all the calls, he"s about as smart as he can be.
 """
 import twitter
 import db
-from datetime import datetime
+from datetime import datetime, timedelta
 from textblob import TextBlob
+from operator import itemgetter
 
 
 # strip_irrelevant takes tweets and sniffs everything for crypto mentions.
 def strip_irrelevant(tweets):
-    relevant_tweets = []
-    for tweet in tweets:
-        user = tweet.get("user")
+    latest_tweets = sorted(tweets, key=itemgetter("created_at"))
 
+    relevant_tweets = []
+    for tweet in latest_tweets:
+        if tweet["created_at"] < datetime.now() - timedelta(minutes=30):
+            print("Encountering tweets already parsed... breaking")
+            break
+
+        user = tweet["user"]
         # fuck potential bots.
-        if user.get("default_profile") == True:
-            return
+        if user["default_profile"] == True:
+            continue
 
         # check if user in db, if not, add him.
-        exists = db.find_by_id("twitter_users", user.get('id'))
+        exists = db.find_by_id("twitter_users", user["id"])
         if exists == False:
             db.add("twitter_users", user)
-
-        # TODO: check relevant terms (https://textblob.readthedocs.io/en/dev/) for each tweet
-        # TODO: return only tweets that are relevant
 
         # confirm tweet is relevant
         relevant_tweets.append(tweet)
@@ -41,31 +44,29 @@ def judge(tweets):
 
         # judge user credibility
         # gather data
-        user = tweet.get("user")
-        followers = user.get('followers_count')
-        user_date_created = tweet.get("created_at")
+        user = tweet["user"]
+        followers = user["followers_count"]
+        user_date_created = tweet["created_at"]
         account_age = datetime.now() - datetime(user_date_created)
 
         # score
         score += followers
         score += account_age
-        if user.get("verified") == True:
+        if user["verified"]:
             score *= 2
 
         # judge tweet quality
         # gather data
-        tweet_date_created = tweet.get("created_at")
-        tweet_age = datetime.now() - datetime(tweet_date_created)
-        favs = tweet.get("favorite_count")
-        retweets = tweet.get("retweet_count")
-        text = tweet.get("text")
+        tweet_age = datetime.now() - datetime(tweet["created_at"])
+        favs = tweet["favorite_count"]
+        text = tweet["text"]
         content = TextBlob(text)
 
         # score
         score -= tweet_age
         if favs is not None:
             score += favs
-        score += retweets
+        score += tweet["retweet_count"]
 
         score *= content.sentiment.polarity
         score *= content.sentiment.subjectivity
