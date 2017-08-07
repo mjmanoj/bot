@@ -1,5 +1,8 @@
+"""
+tweepy adapter
+"""
 import tweepy
-from settings import twitter_consumer_key, twitter_consumer_secret, twitter_access_token, twitter_access_secret
+from config import twitter_consumer_key, twitter_consumer_secret, twitter_access_token, twitter_access_secret
 
 auth = tweepy.OAuthHandler(twitter_consumer_key, twitter_consumer_secret)
 auth.set_access_token(twitter_access_token, twitter_access_secret)

@@ -1,3 +1,6 @@
+"""
+bittrex adaptor to the bittrex exchange.
+"""
 import bittrex
 
 Rex = bittrex.Bittrex(api_key="", api_secret="")

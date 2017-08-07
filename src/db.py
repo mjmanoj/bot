@@ -1,3 +1,6 @@
+"""
+db is a tinydb adapter with useful function calls
+"""
 from tinydb import TinyDB, Query
 
 

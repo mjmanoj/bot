@@ -1,3 +1,6 @@
+"""
+constants are the defaults used throughout the project
+"""
 DEFAULT_MINS = 30
 
 HOT_COUNTRIES = [

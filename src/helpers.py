@@ -1,3 +1,6 @@
+"""
+general helpers for the application
+"""
 import threading
 
 

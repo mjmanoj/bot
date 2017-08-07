@@ -1,9 +1,12 @@
+"""
+config  works with environment variables
+"""
 from os.path import join, dirname
 from os import environ
 from dotenv import load_dotenv
 
-dotenv_path = join(dirname(__file__), '../.env')
-load_dotenv(dotenv_path)
+dotenv = join(dirname(__file__), '../.env')
+load_dotenv(dotenv)
 
 # telegram bot
 telegram_token = environ.get("bot_api_token")

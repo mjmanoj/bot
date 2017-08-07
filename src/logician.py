@@ -1,3 +1,6 @@
+"""
+the logician makes all the calls, he's about as smart as he can be.
+"""
 import twitter
 import db
 from datetime import datetime
