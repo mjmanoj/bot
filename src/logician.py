@@ -28,8 +28,8 @@ def strip_irrelevant(tweets):
             continue
 
         # check if user in db, if not, add him.
-        exists = db.find_by_id("twitter_users", user["id"])
-        if exists == False:
+        existing_user = db.find_by_id("twitter_users", user["id"])
+        if not len(existing_user):
             db.add("twitter_users", user)
 
         # confirm tweet is relevant
