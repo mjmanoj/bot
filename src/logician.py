@@ -50,8 +50,9 @@ def judge(tweets):
         # gather data
         user = tweet["user"]
         followers = user["followers_count"]
-        user_date_created = tweet["created_at"]
-        account_age = time_now - datetime(user_date_created)
+        user_date_created = parse_date(user["created_at"])
+        account_age = int(time_now.strftime('%s')) - \
+            int(user_date_created.strftime('%s'))
 
         # score
         score += followers
@@ -61,7 +62,9 @@ def judge(tweets):
 
         # judge tweet quality
         # gather data
-        tweet_age = time_now - datetime(tweet["created_at"])
+        tweet_created_date = parse_date(user["created_at"])
+        tweet_age = int(time_now.strftime('%s')) - \
+            int(tweet_created_date.strftime('%s'))
         favs = tweet["favorite_count"]
         text = tweet["text"]
         content = TextBlob(text)
