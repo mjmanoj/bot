@@ -6,10 +6,11 @@ import constants
 import rex
 import twitter
 import logician
+from operator import itemgetter
 import db
 import config
+from datetime import datetime
 from bot import send_message
-from helpers import set_interval
 
 
 # call hot shots on market symbols
@@ -20,6 +21,8 @@ def moon_call():
 
     # get and score relevant tweets per symbol.
     for symbol in symbols:
+        entry = {}
+        entry["created"] = datetime.now()
         coin_symbol = "$" + symbol
 
         # search twitter
@@ -32,13 +35,14 @@ def moon_call():
 
         print("Scoring " + coin_symbol + "tweet quality")
         score = logician.judge(relevant_tweets)
-        db.add("symbols/" + coin_symbol, score)
+        entry["score"] = score
+        db.add(path="symbols", file_name=coin_symbol, entry=entry)
         scores[coin_symbol] = score
 
     track_periphreals()
 
     # sort and find hottest trends
-    sorted_scores = sorted(scores.items(), key=lambda x: x[1])
+    sorted_scores = sorted(scores, key=itemgetter("score"))
     hot_five = {k: sorted_scores[k] for k in sorted_scores.keys()[:5]}
 
     print("preparing results message for hot five")
