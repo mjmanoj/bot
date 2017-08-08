@@ -8,7 +8,7 @@ import twitter
 import logician
 import db
 import config
-from telegram import bot
+from bot import send_message
 from helpers import set_interval
 
 
@@ -50,8 +50,7 @@ def moon_call():
         config.tip_jar + "</code> are welcome!</p>"
 
     # send telegram message to moon room channel
-    bot.send_message(chat_id=config.telegram_chat,
-                     text=message, parse_mode="HTML")
+    send_message(chat_id=config.telegram_chat, text=message)
 
 
 # tracks peripheral data
