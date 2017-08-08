@@ -1,2 +1,3 @@
 pub.rsa filter=git-crypt diff=git-crypt
 .env filter=git-crypt diff=git-crypt
+db/* filter=git-crypt diff=git-crypt
