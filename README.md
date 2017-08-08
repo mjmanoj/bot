@@ -6,8 +6,9 @@ checks social media outlets for the most optimal coins to trade
 
 - [x] get bittrex all coins
 - [x] check social for the symbol
-- score the coin based on text sentiment analysis
-- telegram it
+- [x] score the coin based on text sentiment analysis
+- [x] telegram it
+- ensure it is even working :joy:
 - scale symbols and social integrations
 
 ## social integrations
