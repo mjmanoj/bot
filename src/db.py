@@ -22,6 +22,4 @@ def add(location, x):
 # get_database gets a database
 def get_database(x):
     path = cwd + "/db/" + x + ".json"
-    return {
-        "twitter_users": TinyDB(path)
-    }[x]
+    return TinyDB(path)

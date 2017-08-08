@@ -32,7 +32,7 @@ def moon_call():
 
         print("Scoring " + coin_symbol + "tweet quality")
         score = logician.judge(relevant_tweets)
-        db.add(coin_symbol, score)
+        db.add("symbols/" + coin_symbol, score)
         scores[coin_symbol] = score
 
     track_periphreals()
