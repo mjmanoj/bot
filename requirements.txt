@@ -4,5 +4,7 @@ bittrex
 python-telegram-bot
 python-dotenv
 tweepy
+pytz
 tinydb
 textblob
+python-dateutil

@@ -1,18 +1,19 @@
 """
 tweepy adapter
 """
+import json
 import tweepy
 from config import twitter_consumer_key, twitter_consumer_secret, twitter_access_token, twitter_access_secret
 
 auth = tweepy.OAuthHandler(twitter_consumer_key, twitter_consumer_secret)
 auth.set_access_token(twitter_access_token, twitter_access_secret)
 
-twitter = tweepy.API(auth)
+twitter = tweepy.API(auth, parser=tweepy.parsers.JSONParser())
 
 
 # get_recent_tweets_with_search_term returns 100 search results per term
 def search(term):
-    return twitter.search(q=term, rpp=100)
+    return twitter.search(q=term, rpp=100)["statuses"]
 
 
 # gets a twitter user, aka tweep.

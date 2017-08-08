@@ -3,9 +3,13 @@ the logician makes all the calls, he"s about as smart as he can be.
 """
 import twitter
 import db
+import pytz
+from dateutil.parser import parse as parse_date
 from datetime import datetime, timedelta
 from textblob import TextBlob
 from operator import itemgetter
+
+time_now = datetime.utcnow().replace(tzinfo=pytz.UTC)
 
 
 # strip_irrelevant takes tweets and sniffs everything for crypto mentions.
@@ -14,7 +18,7 @@ def strip_irrelevant(tweets):
 
     relevant_tweets = []
     for tweet in latest_tweets:
-        if tweet["created_at"] < datetime.now() - timedelta(minutes=30):
+        if parse_date(tweet["created_at"]) < time_now - timedelta(minutes=30):
             print("Encountering tweets already parsed... breaking")
             break
 
@@ -47,7 +51,7 @@ def judge(tweets):
         user = tweet["user"]
         followers = user["followers_count"]
         user_date_created = tweet["created_at"]
-        account_age = datetime.now() - datetime(user_date_created)
+        account_age = time_now - datetime(user_date_created)
 
         # score
         score += followers
@@ -57,7 +61,7 @@ def judge(tweets):
 
         # judge tweet quality
         # gather data
-        tweet_age = datetime.now() - datetime(tweet["created_at"])
+        tweet_age = time_now - datetime(tweet["created_at"])
         favs = tweet["favorite_count"]
         text = tweet["text"]
         content = TextBlob(text)

@@ -14,6 +14,7 @@ from helpers import set_interval
 
 # call hot shots on market symbols
 def moon_call():
+    print("Starting moon_call.")
     symbols = rex.get_market_symbols()
     scores = {}
 
@@ -22,12 +23,14 @@ def moon_call():
         coin_symbol = "$" + symbol
 
         # search twitter
+        print("Calling twitter for " + coin_symbol)
         tweets = twitter.search(coin_symbol)
         relevant_tweets = logician.strip_irrelevant(tweets)
         if len(relevant_tweets) is None:
             print("No new updates for " + coin_symbol + " found.")
             continue
 
+        print("Scoring " + coin_symbol + "tweet quality")
         score = logician.judge(relevant_tweets)
         db.add(coin_symbol, score)
         scores[coin_symbol] = score
@@ -37,6 +40,8 @@ def moon_call():
     # sort and find hottest trends
     sorted_scores = sorted(scores.items(), key=lambda x: x[1])
     hot_five = {k: sorted_scores[k] for k in sorted_scores.keys()[:5]}
+
+    print("preparing results message for hot five")
 
     # prepare message for telegram
     message = "<h1>Hot Coin Ratings</h1>"
@@ -51,6 +56,7 @@ def moon_call():
 
     # send telegram message to moon room channel
     send_message(chat_id=config.telegram_chat, text=message)
+    print("moon call complete, message sent.")
 
 
 # tracks peripheral data
@@ -62,4 +68,4 @@ def track_periphreals():
         # write this to database
 
 
-set_interval(moon_call, constants.DEFAULT_MINS)
+moon_call()
