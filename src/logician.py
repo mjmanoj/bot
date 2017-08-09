@@ -3,13 +3,11 @@ the logician makes all the calls, he"s about as smart as he can be.
 """
 import twitter
 import db
-import pytz
+from helpers import get_time_now
 from dateutil.parser import parse as parse_date
 from datetime import datetime, timedelta
 from textblob import TextBlob
 from operator import itemgetter
-
-time_now = datetime.utcnow().replace(tzinfo=pytz.UTC)
 
 
 # strip_irrelevant takes tweets and sniffs everything for crypto mentions.
@@ -18,7 +16,7 @@ def strip_irrelevant(tweets):
 
     relevant_tweets = []
     for tweet in latest_tweets:
-        if parse_date(tweet["created_at"]) < time_now - timedelta(minutes=30):
+        if parse_date(tweet["created_at"]) < get_time_now() - timedelta(minutes=30):
             print("Encountering tweets already parsed... breaking")
             break
 
@@ -52,7 +50,7 @@ def judge(tweets):
         user = tweet["user"]
         followers = user["followers_count"]
         user_date_created = parse_date(user["created_at"])
-        account_age = int(time_now.strftime('%s')) - \
+        account_age = int(get_time_now().strftime('%s')) - \
             int(user_date_created.strftime('%s'))
 
         # score
@@ -64,7 +62,7 @@ def judge(tweets):
         # judge tweet quality
         # gather data
         tweet_created_date = parse_date(user["created_at"])
-        tweet_age = int(time_now.strftime('%s')) - \
+        tweet_age = int(get_time_now().strftime('%s')) - \
             int(tweet_created_date.strftime('%s'))
         favs = tweet["favorite_count"]
         text = tweet["text"]
@@ -76,9 +74,12 @@ def judge(tweets):
             score += favs  # TODO: functional MULTIPLIER
         score += tweet["retweet_count"]  # TODO: functional MULTIPLIER
 
-        score *= content.sentiment.polarity
-        score *= content.sentiment.subjectivity
+        # TODO: fix -> score *= content.sentiment.polarity
+        # TODO: fix -> score *= content.sentiment.subjectivity
 
         scores.append(score)
+
+    if len(scores) == 0:
+        return 0
 
     return sum(scores) / float(len(scores))

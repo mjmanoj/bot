@@ -7,6 +7,7 @@ import rex
 import twitter
 import logician
 from operator import itemgetter
+from helpers import get_time_now
 import db
 import config
 from datetime import datetime
@@ -22,19 +23,22 @@ def moon_call():
     # get and score relevant tweets per symbol.
     for symbol in symbols:
         entry = {}
-        entry["created"] = datetime.now()
+        entry["created"] = get_time_now().strftime('%s')
         coin_symbol = "$" + symbol
 
         # search twitter
         print("Calling twitter for " + coin_symbol)
         tweets = twitter.search(coin_symbol)
         relevant_tweets = logician.strip_irrelevant(tweets)
-        if len(relevant_tweets) is None:
+        if len(relevant_tweets) == 0:
             print("No new updates for " + coin_symbol + " found.")
             continue
 
         print("Scoring " + coin_symbol + "tweet quality")
         score = logician.judge(relevant_tweets)
+        if score == 0:
+            continue
+
         entry["score"] = score
         db.add(path="symbols", file_name=coin_symbol, entry=entry)
         scores[coin_symbol] = score

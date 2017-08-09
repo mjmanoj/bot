@@ -14,7 +14,7 @@ checks social media outlets for the most optimal coins to trade
 ## social integrations
 
 - [x] dev.twitter.com/overview/api/
-- https://steemit.github.io/steemit-docs/#discussions
+- https://github.com/steemit/steem-python
 - https://reddit.com/dev/api
 - https://developers.google.com/youtube/v3/docs/search
 

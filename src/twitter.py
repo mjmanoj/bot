@@ -8,7 +8,8 @@ from config import twitter_consumer_key, twitter_consumer_secret, twitter_access
 auth = tweepy.OAuthHandler(twitter_consumer_key, twitter_consumer_secret)
 auth.set_access_token(twitter_access_token, twitter_access_secret)
 
-twitter = tweepy.API(auth, parser=tweepy.parsers.JSONParser())
+twitter = tweepy.API(
+    auth, parser=tweepy.parsers.JSONParser(), wait_on_rate_limit=True)
 
 
 # get_recent_tweets_with_search_term returns 100 search results per term

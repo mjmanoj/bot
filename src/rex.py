@@ -2,7 +2,6 @@
 bittrex adaptor to the bittrex exchange.
 """
 import bittrex
-
 Rex = bittrex.Bittrex(api_key="", api_secret="")
 
 
@@ -14,9 +13,9 @@ def get_market_symbols():
 
     for coin in coins:
         base = coin["BaseCurrency"]
-        isActive = coin["IsActive"]
+        is_active = coin["IsActive"]
 
-        if isActive:
+        if is_active:
             if base == "BTC":
                 name = coin["MarketCurrency"]
                 coin_names.append(name)

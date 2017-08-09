@@ -3,14 +3,23 @@ general helpers for the application
 """
 import threading
 import errno
+from datetime import datetime
+import pytz
 import os
 
 
+# returns a proper default UTC timezone now time.
+def get_time_now():
+    return datetime.utcnow().replace(tzinfo=pytz.UTC)
+
+
+# touches a file as you would do in bash.
 def touch(fname, times=None):
     with open(fname, 'a'):
         os.utime(fname, times)
 
 
+# makes diretory, recursively.
 def mkdir_p(path):
     try:
         os.makedirs(path)
@@ -21,6 +30,7 @@ def mkdir_p(path):
             raise
 
 
+# set interval to activate a function every certain amount of minutes
 def set_interval(func, mins):
     sec = mins * 60000
 
