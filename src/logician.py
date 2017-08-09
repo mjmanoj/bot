@@ -73,8 +73,8 @@ def judge(tweets):
         # score
         score -= tweet_age
         if favs is not None:
-            score += favs
-        score += tweet["retweet_count"]
+            score += favs  # TODO: functional MULTIPLIER
+        score += tweet["retweet_count"]  # TODO: functional MULTIPLIER
 
         score *= content.sentiment.polarity
         score *= content.sentiment.subjectivity
