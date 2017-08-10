@@ -6,6 +6,7 @@ import constants
 import rex
 import twitter
 import logician
+import emoji
 from operator import itemgetter
 from helpers import get_time_now
 import db
@@ -38,31 +39,36 @@ def moon_call():
         if score == 0:
             continue
 
-        entry["score"] = score
+        entry["score"] = int(score)
         db.add(path="symbols", file_name=coin_symbol, entry=entry)
         scores.append(entry)
 
     print("Symbols analyzed, tracking periphreals...")
     # track_periphreals()
 
-    print(scores)
-
     # sort and find hottest trends
     sorted_scores = sorted(scores, key=itemgetter("score"), reverse=True)
-    hot = sorted_scores[:5]
+    hot = sorted_scores[:10]
 
     print("Preparing hot five message...")
 
     # prepare message for telegram
-    message = "Hot Coin Ratings from Twitter\n"
+    message = "*Hot Coin Ratings from Twitter*\n"
 
     for market in hot:
         symbol = market["symbol"]
-        message += "- " + symbol + " score: " + \
-            str(market["score"]) + "\n"
 
-    message += "\nFind me useful? BTC tips @ __" + \
-        config.tip_jar + "__ are welcome!"
+        fires = len(str(market["score"]))
+        lit_meter = ""
+
+        for _ in range(fires):
+            lit_meter += emoji.emojize(":fire:")
+
+        message += "- [" + symbol + " is: " + \
+            lit_meter + \
+            "](https://twitter.com/search?q=%" + symbol + ")\n"
+
+    message += "\nTip me @ `" + config.tip_jar + "`"
 
     # send telegram message to moon room channel
     send_message(chat_id=config.telegram_chat, text=message)
