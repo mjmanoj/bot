@@ -18,7 +18,7 @@ from bot import send_message
 def moon_call():
     print("Starting moon_call...")
     symbols = rex.get_market_summaries()
-    scores = {}
+    scores = []
 
     print("Searching Twitter for BTRX symbol high volume list...")
     # get and score relevant tweets per symbol.
@@ -26,6 +26,7 @@ def moon_call():
         entry = {}
         entry["created"] = get_time_now().strftime('%s')
         coin_symbol = "$" + symbol
+        entry["symbol"] = coin_symbol
 
         # search twitter
         tweets = twitter.search(coin_symbol)
@@ -39,13 +40,16 @@ def moon_call():
 
         entry["score"] = score
         db.add(path="symbols", file_name=coin_symbol, entry=entry)
-        scores[coin_symbol] = score
+        scores.append(entry)
 
     print("Symbols analyzed, tracking periphreals...")
     # track_periphreals()
 
+    print(scores)
+
     # sort and find hottest trends
-    sorted_scores = sorted(scores, key=itemgetter("score"))[0:5]
+    sorted_scores = sorted(scores, key=itemgetter("score"), reverse=True)
+    hot = sorted_scores[:5]
 
     print("Preparing hot five message...")
 
@@ -53,9 +57,10 @@ def moon_call():
     message = "<h1>Hot Coin Ratings</h1>"
     message += "<ul>"
 
-    for symbol in sorted_scores:
+    for market in hot:
+        symbol = market["symbol"]
         message += "<li>" + symbol + " score: " + \
-            sorted_scores[symbol] + "</li>"
+            str(market["score"]) + "</li>"
 
     message += "</ul>"
     message += "<p>Like this message? BTC tips @ <code>" + \
