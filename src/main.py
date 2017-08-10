@@ -27,7 +27,7 @@ def moon_call():
         entry = {}
         entry["created"] = get_time_now().strftime('%s')
         coin_symbol = "$" + symbol
-        entry["symbol"] = coin_symbol
+        entry["symbol"] = symbol
 
         # search twitter
         tweets = twitter.search(coin_symbol)
@@ -65,8 +65,7 @@ def moon_call():
             lit_meter += emoji.emojize(":fire:")
 
         message += "- [" + symbol + " is " + \
-            lit_meter + \
-            "](https://twitter.com/search?q=%" + symbol + ")\n"
+            lit_meter + "](https://twitter.com/search?q=%24" + symbol + ")\n"
 
     message += "\nTip me @ `" + config.tip_jar + "`"
 
