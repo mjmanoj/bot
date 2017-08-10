@@ -6,7 +6,6 @@ import db
 from helpers import get_time_now
 from dateutil.parser import parse as parse_date
 from datetime import datetime, timedelta
-from textblob import TextBlob
 from operator import itemgetter
 
 
@@ -65,16 +64,13 @@ def judge(tweets):
         tweet_age = int(get_time_now().strftime('%s')) - \
             int(tweet_created_date.strftime('%s'))
         favs = tweet["favorite_count"]
-        text = tweet["text"]
-        content = TextBlob(text)
 
         score -= tweet_age
         if favs is not None:
-            score += favs  # TODO: functional MULTIPLIER
-        score += tweet["retweet_count"]  # TODO: functional MULTIPLIER
+            score += favs * 4
+        score += tweet["retweet_count"] * 4
 
-        # TODO: fix -> score *= content.sentiment.polarity
-        # TODO: fix -> score *= content.sentiment.subjectivity
+        # TODO: add sentiment analysis here!
 
         scores.append(score)
 

@@ -6,6 +6,5 @@ python-dotenv
 tweepy
 pytz
 tinydb
-textblob
 python-dateutil
 emoji
