@@ -54,17 +54,15 @@ def moon_call():
     print("Preparing hot five message...")
 
     # prepare message for telegram
-    message = "<h1>Hot Coin Ratings</h1>"
-    message += "<ul>"
+    message = "Hot Coin Ratings from Twitter\n"
 
     for market in hot:
         symbol = market["symbol"]
-        message += "<li>" + symbol + " score: " + \
-            str(market["score"]) + "</li>"
+        message += "- " + symbol + " score: " + \
+            str(market["score"]) + "\n"
 
-    message += "</ul>"
-    message += "<p>Like this message? BTC tips @ <code>" + \
-        config.tip_jar + "</code> are welcome!</p>"
+    message += "\nFind me useful? BTC tips @ __" + \
+        config.tip_jar + "__ are welcome!"
 
     # send telegram message to moon room channel
     send_message(chat_id=config.telegram_chat, text=message)
