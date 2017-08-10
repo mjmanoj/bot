@@ -48,12 +48,12 @@ def moon_call():
 
     # sort and find hottest trends
     sorted_scores = sorted(scores, key=itemgetter("score"), reverse=True)
-    hot = sorted_scores[:10]
+    hot = sorted_scores[:5]
 
     print("Preparing hot five message...")
 
     # prepare message for telegram
-    message = "*Hot Coin Ratings from Twitter*\n"
+    message = emoji.emojize("*:fire: Hot Coins of Twitter :fire: *\n")
 
     for market in hot:
         symbol = market["symbol"]
@@ -64,7 +64,7 @@ def moon_call():
         for _ in range(fires):
             lit_meter += emoji.emojize(":fire:")
 
-        message += "- [" + symbol + " is: " + \
+        message += "- [" + symbol + " is " + \
             lit_meter + \
             "](https://twitter.com/search?q=%" + symbol + ")\n"
 
