@@ -13,14 +13,16 @@ from operator import itemgetter
 # strip_irrelevant takes tweets and sniffs everything for crypto mentions.
 def strip_irrelevant(tweets):
     latest_tweets = sorted(tweets, key=itemgetter("created_at"))
-
     relevant_tweets = []
+
     for tweet in latest_tweets:
+
+        # ignore stale tweets.
         if parse_date(tweet["created_at"]) < get_time_now() - timedelta(minutes=30):
-            print("Encountering tweets already parsed... breaking")
             break
 
         user = tweet["user"]
+
         # fuck potential bots.
         if user["default_profile"] == True:
             continue
@@ -28,6 +30,7 @@ def strip_irrelevant(tweets):
         # check if user in db, if not, add him.
         existing_user = db.find_by_id(
             path="users", file_name="twitter", identifier=user["id"])
+
         if not len(existing_user):
             db.add(path="users", file_name="twitter", entry=user)
 
@@ -46,21 +49,18 @@ def judge(tweets):
         score = 0
 
         # judge user credibility
-        # gather data
         user = tweet["user"]
         followers = user["followers_count"]
         user_date_created = parse_date(user["created_at"])
         account_age = int(get_time_now().strftime('%s')) - \
             int(user_date_created.strftime('%s'))
 
-        # score
         score += followers
         score += account_age
         if user["verified"]:
             score *= 2
 
         # judge tweet quality
-        # gather data
         tweet_created_date = parse_date(user["created_at"])
         tweet_age = int(get_time_now().strftime('%s')) - \
             int(tweet_created_date.strftime('%s'))
@@ -68,7 +68,6 @@ def judge(tweets):
         text = tweet["text"]
         content = TextBlob(text)
 
-        # score
         score -= tweet_age
         if favs is not None:
             score += favs  # TODO: functional MULTIPLIER
