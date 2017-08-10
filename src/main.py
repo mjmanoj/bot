@@ -8,7 +8,7 @@ import twitter
 import logician
 import emoji
 from operator import itemgetter
-from helpers import get_time_now
+from helpers import get_time_now, set_interval
 import db
 import config
 from datetime import datetime
@@ -54,6 +54,7 @@ def moon_call():
 
     # prepare message for telegram
     message = emoji.emojize("*:fire: Hot Coins of Twitter :fire: *\n")
+    message += "_Analysis of credible #crypto tweets for BTRX coins._"
 
     for market in hot:
         symbol = market["symbol"]
@@ -64,10 +65,10 @@ def moon_call():
         for _ in range(fires):
             lit_meter += emoji.emojize(":fire:")
 
-        message += "- [" + symbol + " is " + \
+        message += "- [$" + symbol + " is " + \
             lit_meter + "](https://twitter.com/search?q=%24" + symbol + ")\n"
 
-    message += "\nTip me @ `" + config.tip_jar + "`"
+    message += "\nSupport development with BTC Tips @ `" + config.tip_jar + "`"
 
     # send telegram message to moon room channel
     send_message(chat_id=config.telegram_chat, text=message)
@@ -84,3 +85,4 @@ def track_periphreals():
 
 
 moon_call()
+set_interval(moon_call, 30)
