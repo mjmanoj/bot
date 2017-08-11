@@ -7,6 +7,9 @@ from operator import itemgetter
 Rex = bittrex.Bittrex(api_key="", api_secret="")
 
 
+blacklist = ["GLD", "1ST"]
+
+
 def get_market_summaries():
     res = Rex.get_market_summaries()
     summaries = []
@@ -16,7 +19,17 @@ def get_market_summaries():
         if coin == "BTC" or coin == "USDT" or coin == "ETH":
             summaries.append(summary["MarketName"].split("-")[1])
 
-    return summaries[:100]
+    # get rid of blacklist terms (I have found these overlap and pollute data, sorry!)
+    for blacklisted in blacklist:
+        summaries.remove(blacklisted)
+
+    # ensure no duplicates
+    final = []
+    for i in summaries:
+        if i not in final:
+            final.append(i)
+
+    return final[:100]
 
 
 # get_market_symbols returns active btc based symbols
