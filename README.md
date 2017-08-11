@@ -8,7 +8,7 @@ checks social media outlets for the most optimal coins to trade
 - [x] check social for the symbol
 - [x] score the coin based on text sentiment analysis
 - [x] telegram it
-- ensure it is even working :joy:
+- [x] ensure it is even working :joy:
 - scale symbols and social integrations
 
 ## social integrations

@@ -88,7 +88,7 @@ def track_periphreals():
 def execute():
     while True:
         moon_call()
-        time.sleep(18000)
+        time.sleep(1800)
 
 
 execute()
