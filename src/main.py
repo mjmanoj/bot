@@ -85,10 +85,4 @@ def track_periphreals():
         # write this to database
 
 
-def execute():
-    moon_call()
-    time.sleep(1800)
-
-
-while True:
-    execute()
+moon_call()

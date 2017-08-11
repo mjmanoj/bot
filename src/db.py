@@ -4,6 +4,7 @@ db is a tinydb adapter with useful function calls
 from tinydb import TinyDB, Query
 from helpers import mkdir_p, touch
 import os
+from config import env
 cwd = os.getcwd()
 
 
@@ -22,7 +23,7 @@ def add(path, file_name, entry):
 
 # get_database gets a database
 def get_database(path, file_name):
-    directory = cwd + "/db/" + path
+    directory = cwd + "/db/" + env + "/" + path
     db = directory + "/" + file_name + ".json"
 
     if not os.path.isdir(directory):

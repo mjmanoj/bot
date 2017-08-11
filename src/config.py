@@ -24,3 +24,6 @@ twitter_access_secret = environ["twitter_access_secret"]
 
 # btc
 tip_jar = environ["tip_jar"]
+
+# environment
+env = environ["ENV"]
