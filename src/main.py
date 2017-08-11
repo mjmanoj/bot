@@ -7,6 +7,7 @@ import rex
 import twitter
 import logician
 import emoji
+import time
 from operator import itemgetter
 from helpers import get_time_now
 import db
@@ -84,4 +85,10 @@ def track_periphreals():
         # write this to database
 
 
-moon_call()
+def execute():
+    moon_call()
+    time.sleep(1800)
+
+
+while True:
+    execute()
