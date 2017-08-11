@@ -55,7 +55,7 @@ def moon_call():
 
     # prepare message for telegram
     message = emoji.emojize("*:fire: Hot Coins of Twitter :fire: *\n")
-    message += "_Analysis of credible #crypto tweets for BTRX coins._\n\n"
+    message += "_Analysis of credible #crypto tweets for BTRX coins for last 30 minutes._\n\n"
 
     for market in hot:
         symbol = market["symbol"]
@@ -85,4 +85,10 @@ def track_periphreals():
         # write this to database
 
 
-moon_call()
+def execute():
+    while True:
+        moon_call()
+        time.sleep(18000)
+
+
+execute()

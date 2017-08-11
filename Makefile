@@ -1,9 +1,6 @@
 setup:
 	pip install -r requirements.txt
 
-run:
-	./run.sh
-
 execute:
 	ENV=prod python ./src/main.py
 
