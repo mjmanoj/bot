@@ -29,7 +29,7 @@ def get_market_summaries():
         if i not in final:
             final.append(i)
 
-    return final[:100]
+    return final
 
 
 # get_market_symbols returns active btc based symbols
