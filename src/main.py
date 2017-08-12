@@ -4,7 +4,7 @@ main runs the main functionalities of the program
 """
 import constants
 import rex
-import twitter
+import twit
 import logician
 import emoji
 import time
@@ -31,7 +31,7 @@ def moon_call():
         entry["symbol"] = symbol
 
         # search twitter
-        tweets = twitter.search(coin_symbol)
+        tweets = twit.search(coin_symbol)
         relevant_tweets = logician.strip_irrelevant(tweets)
         if len(relevant_tweets) == 0:
             continue
@@ -80,7 +80,7 @@ def moon_call():
 # - twitter trending per main tech countries
 def track_periphreals():
     for country in constants.HOT_COUNTRIES:
-        twitter.get_trends_for_woeid(country)
+        twit.get_trends_for_woeid(country)
         # logician judge this.
         # write this to database
 

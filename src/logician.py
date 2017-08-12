@@ -1,7 +1,6 @@
 """
 the logician makes all the calls, he"s about as smart as he can be.
 """
-import twitter
 import db
 from helpers import get_time_now
 from dateutil.parser import parse as parse_date
@@ -11,27 +10,25 @@ from operator import itemgetter
 
 # strip_irrelevant takes tweets and sniffs everything for crypto mentions.
 def strip_irrelevant(tweets):
-    latest_tweets = sorted(tweets, key=itemgetter("created_at"))
     relevant_tweets = []
-
-    for tweet in latest_tweets:
+    for tweet in tweets:
 
         # ignore stale tweets.
-        if parse_date(tweet["created_at"]) < get_time_now() - timedelta(minutes=30):
+        if parse_date(tweet.created_at) < get_time_now() - timedelta(minutes=30):
             break
 
-        user = tweet["user"]
+        user = tweet.user
 
         # fuck potential bots.
-        if user["default_profile"] == True:
+        if user.default_profile == True:
             continue
 
         # check if user in db, if not, add him.
         existing_user = db.find_by_id(
-            path="users", file_name="twitter", identifier=user["id"])
+            path="users", file_name="twitter", identifier=user.id)
 
         if not len(existing_user):
-            db.add(path="users", file_name="twitter", entry=user)
+            db.add(path="users", file_name="twitter", entry=user.AsDict())
 
         # confirm tweet is relevant
         relevant_tweets.append(tweet)
@@ -48,27 +45,27 @@ def judge(tweets):
         score = 0
 
         # judge user credibility
-        user = tweet["user"]
-        followers = user["followers_count"]
-        user_date_created = parse_date(user["created_at"])
+        user = tweet.user
+        followers = user.followers_count
+        user_date_created = parse_date(user.created_at)
         account_age = int(get_time_now().strftime('%s')) - \
             int(user_date_created.strftime('%s'))
 
         score += followers
         score += account_age
-        if user["verified"]:
+        if user.verified:
             score *= 2
 
         # judge tweet quality
-        tweet_created_date = parse_date(user["created_at"])
+        tweet_created_date = parse_date(user.created_at)
         tweet_age = int(get_time_now().strftime('%s')) - \
             int(tweet_created_date.strftime('%s'))
-        favs = tweet["favorite_count"]
+        favs = tweet.favorite_count
 
         score -= tweet_age
         if favs is not None:
             score += favs * 4
-        score += tweet["retweet_count"] * 4
+        score += tweet.retweet_count * 4
 
         # TODO: add sentiment analysis here!
 
