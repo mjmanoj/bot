@@ -55,6 +55,7 @@ def moon_call():
     # prepare message for telegram
     send_hot_tweets(hot)
     print("moon call complete, message sent.")
+    print("sleeping now for 30 minutes...\n\n")
 
 
 # tracks peripheral data
