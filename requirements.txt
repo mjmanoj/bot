@@ -3,7 +3,7 @@
 bittrex
 python-telegram-bot
 python-dotenv
-tweepy
+python-twitter
 pytz
 tinydb
 python-dateutil
