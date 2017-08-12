@@ -6,14 +6,13 @@ import constants
 import rex
 import twit
 import logician
-import emoji
 import time
 from operator import itemgetter
 from helpers import get_time_now
 import db
 import config
 from datetime import datetime
-from bot import send_message
+from bot import send_hot_tweets
 
 
 # call hot shots on market symbols
@@ -54,25 +53,7 @@ def moon_call():
     print("Preparing hot five message...")
 
     # prepare message for telegram
-    message = emoji.emojize("*:fire: Hot Coins of Twitter :fire: *\n")
-    message += "_Analysis of credible #crypto tweets for BTRX coins for last 30 minutes._\n\n"
-
-    for market in hot:
-        symbol = market["symbol"]
-
-        fires = len(str(market["score"]))
-        lit_meter = ""
-
-        for _ in range(fires):
-            lit_meter += emoji.emojize(":fire:")
-
-        message += "- [$" + symbol + " is " + \
-            lit_meter + "](https://twitter.com/search?q=%24" + symbol + ")\n"
-
-    message += "\nSupport development with BTC Tips @ `" + config.tip_jar + "`"
-
-    # send telegram message to moon room channel
-    send_message(chat_id=config.telegram_chat, text=message)
+    send_hot_tweets(hot)
     print("moon call complete, message sent.")
 
 
@@ -85,10 +66,4 @@ def track_periphreals():
         # write this to database
 
 
-def execute():
-    while True:
-        moon_call()
-        time.sleep(1800)
-
-
-execute()
+moon_call()
