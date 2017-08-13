@@ -10,7 +10,8 @@ load_dotenv(dotenv)
 
 # telegram bot
 telegram_token = environ["bot_api_token"]
-telegram_chat = environ["telegram_chat"]
+telegram_chat_prod = environ["telegram_chat_prod"]
+telegram_chat_dev = environ["telegram_chat_dev"]
 
 # bittrex api
 rex_api_key = environ["bittrex_api_key"]
