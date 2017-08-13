@@ -4,6 +4,7 @@ bittrex adaptor to the bittrex exchange.
 import bittrex
 import time
 from operator import itemgetter
+from config import env
 Rex = bittrex.Bittrex(api_key="", api_secret="")
 
 
@@ -49,6 +50,9 @@ def get_market_summaries():
     for i in summaries:
         if i not in final:
             final.append(i)
+
+    if env == "test":
+        return final[:5]
 
     return final
 

@@ -10,7 +10,7 @@ bot = telegram.Bot(token=telegram_token)
 
 def send_message(text):
     chat_id = telegram_chat_prod
-    if ev == "TEST":
+    if env == "test":
         chat_id = telegram_chat_dev
 
     bot.send_message(chat_id=chat_id, text=text, parse_mode="Markdown")
