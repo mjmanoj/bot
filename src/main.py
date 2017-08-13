@@ -44,7 +44,7 @@ def moon_call():
         scores.append(entry)
 
     print("Symbols analyzed, tracking periphreals...")
-    # track_periphreals()
+    track_periphreals()
 
     # sort and find hottest trends
     sorted_scores = sorted(scores, key=itemgetter("score"), reverse=True)
@@ -61,9 +61,11 @@ def moon_call():
 # - twitter trending per main tech countries
 def track_periphreals():
     for country in constants.HOT_COUNTRIES:
-        twit.get_trends_for_woeid(country)
-        # logician judge this.
-        # write this to database
+        res = twit.get_trends_for_woeid(country)
+        for trend in res:
+            entry = {}
+            entry["topic"] = trend.name
+            db.add(path="twitter/trends", file_name=str(country), entry=entry)
 
 
 moon_call()
