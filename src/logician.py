@@ -20,17 +20,19 @@ def strip_irrelevant(tweets):
         user = tweet.user
 
         # fuck potential bots.
-        if user.default_profile == True:
+        # - default profile means they have not modified at all.
+        if user.default_profile is True:
             continue
+
+        # TODO: ensure profile/tweet is in fact about crypto currency.
 
         # check if user in db, if not, add him.
         existing_user = db.find_by_id(
             path="users", file_name="twitter", identifier=user.id)
 
-        if not len(existing_user):
+        if not existing_user:
             db.add(path="users", file_name="twitter", entry=user.AsDict())
 
-        # confirm tweet is relevant
         relevant_tweets.append(tweet)
 
     return relevant_tweets
@@ -51,6 +53,9 @@ def judge(tweets):
         account_age = int(get_time_now().strftime('%s')) - \
             int(user_date_created.strftime('%s'))
 
+        # TODO: add multiplier if user is on "hot users" list, or
+        # if user is a top rated (rated on what?) user from our database.
+
         score += followers
         score += account_age
         if user.verified:
@@ -63,15 +68,16 @@ def judge(tweets):
         favs = tweet.favorite_count
 
         score -= tweet_age
-        if favs is not None:
+        if favs:
             score += favs * 4
         score += tweet.retweet_count * 4
 
         # TODO: add sentiment analysis here!
+        # - take the polarity of the text and simply multiply the score by that
 
         scores.append(score)
 
-    if len(scores) == 0:
+    if not score:
         return 0
 
     return sum(scores) / float(len(scores))

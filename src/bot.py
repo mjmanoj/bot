@@ -17,12 +17,16 @@ def send_message(text):
 
 
 def send_hot_tweets(hot_tweets):
-    message = emoji.emojize("*:fire: Hot Coins of Twitter :fire: *\n")
-    message += "_Analysis of credible #crypto tweets for BTRX coins for last 30 minutes._\n\n"
+    message = "_Analysis of credible #crypto social media for BTRX coins from the last 30 minutes._\n"
+    message += "_Disclaimer: These tweets are meant to help you RESERACH, not BUY IMMEDIATELY... make wise decisions on your own judgement._\n\n"
 
+    message += emoji.emojize("*:fire: Twitter Hype Coins :fire: *\n")
     for market in hot_tweets:
         symbol = market["symbol"]
 
+        # TODO: sentiment analysis
+        # - ensure length is minus one to account for negative symbol
+        # - if negative use skulls.
         fires = len(str(market["score"]))
         lit_meter = ""
 
@@ -30,7 +34,8 @@ def send_hot_tweets(hot_tweets):
             lit_meter += emoji.emojize(":fire:")
 
         message += "- [$" + symbol + " is " + \
-            lit_meter + "](https://twitter.com/search?q=%24" + symbol + ")\n"
+            lit_meter + \
+            "](https://twitter.com/search?f=tweets&vertical=default&q=%24" + symbol + ")\n"
 
     message += "\nSupport development with BTC Tips @ `" + tip_jar + "`"
 
