@@ -3,13 +3,17 @@ moonbot is a telegram adapter
 """
 import telegram
 import emoji
-from config import telegram_token, telegram_chat, tip_jar
+from config import telegram_token, telegram_chat_prod, telegram_chat_dev, tip_jar, env
 
 bot = telegram.Bot(token=telegram_token)
 
 
 def send_message(text):
-    bot.send_message(chat_id=telegram_chat, text=text, parse_mode="Markdown")
+    chat_id = telegram_chat_prod
+    if ev == "TEST":
+        chat_id = telegram_chat_dev
+
+    bot.send_message(chat_id=chat_id, text=text, parse_mode="Markdown")
 
 
 def send_hot_tweets(hot_tweets):
