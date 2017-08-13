@@ -2,19 +2,23 @@
 bittrex adaptor to the bittrex exchange.
 """
 import bittrex
-import time
 from operator import itemgetter
 from config import env
 Rex = bittrex.Bittrex(api_key="", api_secret="")
 
 
+# blacklist is where coins who have too much non crypto currency meaning go. sorry :(
 blacklist = ["GLD", "1ST"]
 
 
-def cream_only(list):
-    return int(len(list) * 0.4)
+# get_cream gets the top 40% of the pack, no dregs please.
+def get_cream(list_of_things):
+    return int(len(list_of_things) * 0.4)
 
 
+# get_market_summaries gets the top 40% highest volume market summaries for
+# btc, eth and usdt based markets
+# TODO: how can we automate the btc/eth/usdt lists into automated list generation based on the split[0] for the MarketName?
 def get_market_summaries():
     res = Rex.get_market_summaries()
 
@@ -37,10 +41,10 @@ def get_market_summaries():
         if market == "USDT":
             usdt_summaries.append(coin)
 
-    summaries = btc_summaries[:cream_only(btc_summaries)] + eth_summaries[:cream_only(
-        eth_summaries)] + usdt_summaries[:cream_only(usdt_summaries)]
+    summaries = btc_summaries[:get_cream(btc_summaries)] + eth_summaries[:get_cream(
+        eth_summaries)] + usdt_summaries[:get_cream(usdt_summaries)]
 
-    # get rid of blacklist terms (I have found these overlap and pollute data, sorry!)
+    # get rid of blacklist terms
     for blacklisted in blacklist:
         if blacklisted in summaries:
             summaries.remove(blacklisted)
@@ -55,24 +59,3 @@ def get_market_summaries():
         return final[:5]
 
     return final
-
-
-# get_market_symbols returns active btc based symbols
-def get_market_symbols():
-    res = Rex.get_markets()
-    coins = res["result"]
-    coin_names = []
-
-    print(coins)
-    time.sleep(20)
-
-    for coin in coins:
-        base = coin["BaseCurrency"]
-        is_active = coin["IsActive"]
-
-        if is_active:
-            if base == "BTC":
-                name = coin["MarketCurrency"]
-                coin_names.append(name)
-
-    return coin_names

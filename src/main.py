@@ -6,18 +6,15 @@ import constants
 import rex
 import twit
 import logician
-import time
 from operator import itemgetter
 from helpers import get_time_now
 import db
-import config
-from datetime import datetime
 from bot import send_hot_tweets
 
 
 # call hot shots on market symbols
 def moon_call():
-    print("Starting moon_call...")
+    print("Starting moon_call at " + get_time_now().strftime('%s'))
     symbols = rex.get_market_summaries()
     scores = []
 
@@ -26,17 +23,21 @@ def moon_call():
     for symbol in symbols:
         entry = {}
         entry["created"] = get_time_now().strftime('%s')
-        coin_symbol = "$" + symbol
         entry["symbol"] = symbol
+
+        coin_symbol = "$" + symbol
 
         # search twitter
         tweets = twit.search(coin_symbol)
         relevant_tweets = logician.strip_irrelevant(tweets)
-        if len(relevant_tweets) == 0:
+
+        # if empty, go to next symbol
+        if not relevant_tweets:
             continue
 
         score = logician.judge(relevant_tweets)
-        if score == 0:
+        # if score sucks, go to next symbol
+        if not score:
             continue
 
         entry["score"] = int(score)
@@ -54,12 +55,13 @@ def moon_call():
 
     # prepare message for telegram
     send_hot_tweets(hot)
-    print("moon call complete, message sent.")
+    print("moon call complete, message sent at " + get_time_now().strftime('%s'))
     print("sleeping now for 30 minutes...\n\n")
 
 
 # tracks peripheral data
 # - twitter trending per main tech countries
+# - TODO: planetary movements
 def track_periphreals():
     for country in constants.HOT_COUNTRIES:
         res = twit.get_trends_for_woeid(country)
