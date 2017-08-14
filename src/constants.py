@@ -39,3 +39,10 @@ CRYPTO_TERMS = [
     "ledger",
     "SHA 256",
 ]
+
+VIP_PLAYERS = [
+    "CryptoKirby",
+    "cryptonator1337",
+    "WolfOfPoloniex",
+    "StocksThatDoubl",
+]

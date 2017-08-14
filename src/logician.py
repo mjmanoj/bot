@@ -6,6 +6,7 @@ from helpers import get_time_now
 from dateutil.parser import parse as parse_date
 from datetime import datetime, timedelta
 from operator import itemgetter
+from constants import VIP_PLAYERS
 
 
 # strip_irrelevant takes tweets and sniffs everything for crypto mentions.
@@ -53,9 +54,6 @@ def judge(tweets):
         account_age = int(get_time_now().strftime('%s')) - \
             int(user_date_created.strftime('%s'))
 
-        # TODO: add multiplier if user is on "hot users" list, or
-        # if user is a top rated (rated on what?) user from our database.
-
         score += followers
         score += account_age
         if user.verified:
@@ -71,6 +69,10 @@ def judge(tweets):
         if favs:
             score += favs * 4
         score += tweet.retweet_count * 4
+
+        # vips get bumps.
+        if user.screen_name in VIP_PLAYERS:
+            score *= 2
 
         # TODO: add sentiment analysis here!
         # - take the polarity of the text and simply multiply the score by that
