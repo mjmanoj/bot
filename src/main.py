@@ -40,7 +40,7 @@ def moon_call():
         if not score:
             continue
 
-        entry["score"] = int(score)
+        entry["score"] = int(score / 2)
         db.add(path="symbols", file_name=coin_symbol, entry=entry)
         scores.append(entry)
 

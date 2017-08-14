@@ -33,7 +33,7 @@ def send_hot_tweets(hot_tweets):
         for _ in range(birds):
             lit_meter += emoji.emojize(":bird:")
 
-        message += "- [$" + symbol + " is " + \
+        message += "- [$" + symbol + \
             lit_meter + \
             "](https://twitter.com/search?f=tweets&vertical=default&q=%24" + symbol + ")\n"
 
