@@ -18,20 +18,20 @@ def send_message(text):
 
 def send_hot_tweets(hot_tweets):
     message = "_Analysis of credible #crypto social media for BTRX coins from the last 30 minutes._\n"
-    message += "_Disclaimer: These tweets are meant to help you RESERACH, not BUY IMMEDIATELY... make wise decisions on your own judgement._\n\n"
+    message += "_Disclaimer: These tweets are for RESERACH. Some are about dying coins, some about ones thriving with life! Make wise decisions on your own judgement._\n\n"
 
-    message += emoji.emojize("*:fire: Twitter Hype Coins :fire: *\n")
+    message += emoji.emojize("*:bird: Twitter Hype Coins :bird: *\n")
     for market in hot_tweets:
         symbol = market["symbol"]
 
         # TODO: sentiment analysis
         # - ensure length is minus one to account for negative symbol
         # - if negative use skulls.
-        fires = len(str(market["score"]))
+        birds = len(str(market["score"]))
         lit_meter = ""
 
-        for _ in range(fires):
-            lit_meter += emoji.emojize(":fire:")
+        for _ in range(birds):
+            lit_meter += emoji.emojize(":bird:")
 
         message += "- [$" + symbol + " is " + \
             lit_meter + \
