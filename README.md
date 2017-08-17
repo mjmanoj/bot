@@ -2,33 +2,43 @@
 
 checks social media outlets for the most optimal coins to trade
 
-## current implementation
+## project roadmap
 
-## project planning
+Please view the [ROADMAP.md](ROADMAP.md) to see what has been accomplished and what is upcoming!
 
-### beta release
+## development
 
-- [x] get bittrex all coins
-- [x] check social for the symbol
-- [x] score the coin based on text sentiment analysis
-- [x] telegram it
-- [x] ensure it is even working :joy:
+### testing
 
-### social integrations
+I prefer to do an e2e style test at the moment, so all scripts in the `Makefile` for testing are listed below to test the main functionalities of the code.
 
-- [x] dev.twitter.com/overview/api/
-- https://github.com/steemit/steem-python
-- https://reddit.com/dev/api
-- https://developers.google.com/youtube/v3/docs/search
+I plan on adding unit testing into the mix, but just haven't gotten around to it at the moment :shrug:
 
-### symbol integrations
-- [x] https://github.com/ericsomdahl/python-bittrex
-- https://pypi.python.org/pypi/Yahoo-ticker-downloader
+#### test_moon_call
 
-### other integrations
-- look into tracking top hashtags on twitter?
-- http://aa.usno.navy.mil/data/docs/api.php -> python sdk
+This will run the entire moon call with limited output, and post the results to the moonbot dev channel at https://t.me/joinchat/AAAAAEPIqtTv8hJkWBxeFA
 
-## getting started
+### contributing to moonbot
 
-install requirements with the following:
+If you'd like to be part of the project and even earn BTC from the tip service based on your commit activity, please write awitherow for information and we can discuss things.
+
+### run your own
+
+If you'd like to run your own standalone moon bot, you'll need
+
+1) twitter application
+2) your own telegram bot
+3) working `.env` variables listed below
+
+```bash
+bot_api_token=XXX
+telegram_chat_prod=XXX
+telegram_chat_dev=XXX
+bittrex_api_key=XXX
+bittrex_api_secret=XXX
+twitter_consumer_key=XXX
+twitter_consumer_secret=XXX
+twitter_access_token=XXX
+twitter_access_secret=XXX
+tip_jar=XXX
+```
