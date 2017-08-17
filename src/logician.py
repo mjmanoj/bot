@@ -6,7 +6,7 @@ from helpers import get_time_now
 from dateutil.parser import parse as parse_date
 from datetime import datetime, timedelta
 from operator import itemgetter
-from constants import VIP_PLAYERS
+from constants import VIP_PLAYERS, SHILLS
 
 
 # strip_irrelevant takes tweets and sniffs everything for crypto mentions.
@@ -49,30 +49,39 @@ def judge(tweets):
 
         # judge user credibility
         user = tweet.user
+        twitter_handle = user.screen_name
         followers = user.followers_count
-        user_date_created = parse_date(user.created_at)
-        account_age = int(get_time_now().strftime('%s')) - \
-            int(user_date_created.strftime('%s'))
+
+        # fuck shills and spammers.
+        if twitter_handle in SHILLS:
+            continue
 
         score += followers
-        score += account_age
         if user.verified:
             score *= 2
 
         # judge tweet quality
-        tweet_created_date = parse_date(user.created_at)
-        tweet_age = int(get_time_now().strftime('%s')) - \
-            int(tweet_created_date.strftime('%s'))
         favs = tweet.favorite_count
+        retweets = tweet.retweet_count
+        text = tweet.text
 
-        score -= tweet_age
+        # TODO: check tweet.entities
+        # https://dev.twitter.com/overview/api/entities
+        # if these entities are in CRYPTO_TERMS yeahhh
+
         if favs:
             score += favs * 4
-        score += tweet.retweet_count * 4
+
+        if retweets:
+            score += retweets * 4
 
         # vips get bumps.
-        if user.screen_name in VIP_PLAYERS:
+        if twitter_handle in VIP_PLAYERS:
             score *= 2
+
+        # deduct points for coin spamming
+        if text.count("$") > 5:
+            score *= 0.5
 
         # TODO: add sentiment analysis here!
         # - take the polarity of the text and simply multiply the score by that

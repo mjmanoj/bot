@@ -42,7 +42,10 @@ CRYPTO_TERMS = [
 
 VIP_PLAYERS = [
     "CryptoKirby",
-    "cryptonator1337",
     "WolfOfPoloniex",
+    "vincentbriatore"
+]
+
+SHILLS = [
     "StocksThatDoubl",
 ]
