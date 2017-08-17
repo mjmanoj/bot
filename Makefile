@@ -10,5 +10,5 @@ upload_db_to_github:
 execute:
 	ENV=prod python ./src/main.py
 
-test:
+test_moon_call:
 	ENV=test python ./src/main.py
