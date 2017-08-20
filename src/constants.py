@@ -43,7 +43,8 @@ CRYPTO_TERMS = [
 VIP_PLAYERS = [
     "CryptoKirby",
     "WolfOfPoloniex",
-    "vincentbriatore"
+    "vincentbriatore",
+    "CarpeNoctom"
 ]
 
 SHILLS = [

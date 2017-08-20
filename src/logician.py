@@ -10,12 +10,13 @@ from constants import VIP_PLAYERS, SHILLS
 
 
 # strip_irrelevant takes tweets and sniffs everything for crypto mentions.
-def strip_irrelevant(tweets):
+def strip_irrelevant(tweets, stale_break):
     relevant_tweets = []
+
     for tweet in tweets:
 
         # ignore stale tweets.
-        if parse_date(tweet.created_at) < get_time_now() - timedelta(minutes=30):
+        if parse_date(tweet.created_at) < get_time_now() - timedelta(seconds=stale_break):
             break
 
         user = tweet.user
