@@ -9,7 +9,7 @@ import logician
 from operator import itemgetter
 from helpers import get_time_now
 import db
-from bot import send_hot_tweets
+from bot import send_hot_template
 
 
 # call hot shots on market symbols
@@ -71,7 +71,7 @@ def moon_call():
 
     # prepare message for telegram
     operations_log["send_message_end"] = get_time_now(stringify=True)
-    send_hot_tweets(hot)
+    send_hot_template(hot)
     operations_log["send_message_end"] = get_time_now(stringify=True)
 
     print "moon call complete, message sent at " + get_time_now(stringify=True)

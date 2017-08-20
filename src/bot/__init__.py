@@ -16,12 +16,12 @@ def send_message(text):
     bot.send_message(chat_id=chat_id, text=text, parse_mode="Markdown")
 
 
-def send_hot_tweets(hot_tweets):
+def send_hot_template(hot):
     message = "_Analysis of credible #crypto social media for BTRX coins from the last 30 minutes._\n"
     message += "_Disclaimer: These tweets are for RESERACH. Some are about dying coins, some about ones thriving with life! Make wise decisions on your own judgement._\n\n"
 
     message += emoji.emojize("*:bird: Twitter Hype Coins :bird: *\n")
-    for market in hot_tweets:
+    for market in hot:
         symbol = market["symbol"]
 
         # TODO: sentiment analysis
