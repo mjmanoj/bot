@@ -1,5 +1,5 @@
 """
-moonbot is a telegram adapter
+the bot package servers as a telegram adapter
 """
 import telegram
 import emoji

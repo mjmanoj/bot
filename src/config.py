@@ -1,12 +1,12 @@
 """
-config  works with environment variables
+the config package works with environment variables
 """
 from os.path import join, dirname
 from os import environ
 from dotenv import load_dotenv
 
-dotenv = join(dirname(__file__), "../.env")
-load_dotenv(dotenv)
+env = join(dirname(__file__), "../.env")
+load_dotenv(env)
 
 # telegram bot
 telegram_token = environ["bot_api_token"]

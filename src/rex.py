@@ -1,5 +1,5 @@
 """
-bittrex adaptor to the bittrex exchange.
+the rex package is a bittrex exchange adapter.
 """
 import bittrex
 from operator import itemgetter

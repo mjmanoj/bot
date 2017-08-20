@@ -1,5 +1,5 @@
 """
-db is a tinydb adapter with useful function calls
+the db package is a tinydb adapter with useful function calls
 """
 from tinydb import TinyDB, Query
 from helpers import mkdir_p, touch

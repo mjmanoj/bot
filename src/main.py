@@ -1,5 +1,5 @@
 """
-main runs the main functionalities of the program
+the main package runs the main functionalities of the program
 - moon_call is a function to call moon shots on market symbols
 """
 import constants

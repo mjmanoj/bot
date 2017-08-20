@@ -1,5 +1,5 @@
 """
-bear python twitter adapter
+the twit package is a bear python-twitter adapter
 """
 import json
 import twitter

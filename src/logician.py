@@ -1,5 +1,5 @@
 """
-the logician makes all the calls, he"s about as smart as he can be.
+the logician package makes all the calls, based on human logic.
 """
 import db
 from helpers import get_time_now

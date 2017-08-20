@@ -1,5 +1,5 @@
 """
-general helpers for the application
+the helpers package contains help functions for the application
 """
 import threading
 import errno
