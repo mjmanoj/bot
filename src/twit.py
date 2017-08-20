@@ -39,12 +39,10 @@ def get_avg_api_res():
 
         durations += abs(start - end)
 
-    avg_res = durations / len(moon_call_ops)
+    avg_res = 1800
 
-    if avg_res is None:
-        print "[WARN] missing average response time from twitter, setting to 30 minutes."
-        avg_res = 1800
-    else:
+    if len(moon_call_ops):
+        avg_res = durations / len(moon_call_ops)
         print "[INFO] average twitter response time at " + str(avg_res) + " seconds."
 
     return avg_res
