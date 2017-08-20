@@ -40,7 +40,7 @@ def moon_call():
         # search twitter
         tweets = search(coin_symbol)
         relevant_tweets = logician.strip_irrelevant(
-            tweets, stale_break=avg_res
+            tweets, stale_break=avg_res + 1800
         )
 
         # if empty, go to next symbol
