@@ -32,3 +32,9 @@ def get_database(path, file_name):
         touch(db)
 
     return TinyDB(db)
+
+
+def get(path, file_name):
+    database = get_database(path, file_name)
+    all_entries = database.all()
+    return all_entries
