@@ -16,7 +16,7 @@ here is the ideal plan of things I want to get done with the project before real
 ### beta release -> September 2017
 
 - [x] [cleanup scoring methods for twitter](https://github.com/awitherow/moonbot/issues/16)
-- [ensure scoring is time aware](https://github.com/awitherow/moonbot/issues/13)
+- [x] [ensure scoring is time aware](https://github.com/awitherow/moonbot/issues/13)
 - [twitter longer trends](https://github.com/awitherow/moonbot/issues/15)
 - [dandelion.eu sentiment analysis](https://github.com/awitherow/moonbot/issues/5)
 - [record all market data for coin analysis](https://github.com/awitherow/moonbot/issues/6)
