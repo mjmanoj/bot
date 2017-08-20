@@ -9,7 +9,7 @@ import logician
 from operator import itemgetter
 from helpers import get_time_now
 import db
-from bot import send_hot_template
+from bot import build_rating_template
 
 
 # call hot shots on market symbols
@@ -17,12 +17,12 @@ def moon_call():
     operations_log = {}
     operations_log["_init"] = get_time_now(stringify=True)
 
-    print "Starting moon_call at " + operations_log["_init"]
+    print "[JOB] Starting moon_call at " + operations_log["_init"]
 
     symbols = rex.get_market_summaries()
     scores = []
 
-    print "Searching Twitter for BTRX symbol high volume list..."
+    print "[JOB] Searching Twitter for BTRX symbol high volume list..."
     # get and score relevant tweets per symbol.
     operations_log["twitter_search_start"] = get_time_now(stringify=True)
 
@@ -57,7 +57,7 @@ def moon_call():
         scores.append(entry)
 
     operations_log["twitter_search_end"] = get_time_now(stringify=True)
-    print "Symbols analyzed, tracking periphreals..."
+    print "[JOB] Symbols analyzed, tracking periphreals..."
 
     operations_log["track_periphreals_start"] = get_time_now(stringify=True)
     track_periphreals()
@@ -65,17 +65,22 @@ def moon_call():
 
     # sort and find hottest trends
     sorted_scores = sorted(scores, key=itemgetter("score"), reverse=True)
-    hot = sorted_scores[:5]
+    hot_hourly = sorted_scores[:5]
 
-    print("Preparing hot five message...")
+    print "[JOB] Preparing message templates..."
+
+    hot_daily = get_scores("daily")
+    hot_weekly = get_scores("weekly")
 
     # prepare message for telegram
     operations_log["send_message_end"] = get_time_now(stringify=True)
-    send_hot_template(hot)
+    hot_hourly_text = build_rating_template(hot_hourly, "Hourly Twitter Hype")
+    hot_daily_text = build_rating_template(hot_daily, "Daily Twitter Hype")
+    hot_weekly_text = build_rating_template(hot_weekly, "Weekly Twitter Hype")
     operations_log["send_message_end"] = get_time_now(stringify=True)
 
-    print "moon call complete, message sent at " + get_time_now(stringify=True)
-    print "sleeping now for 30 minutes...\n\n"
+    print "[JOB] Moon call complete, message sent at " + get_time_now(stringify=True)
+    print "[JOB] Sleeping now for 30 minutes...\n\n"
 
     operations_log["_end"] = get_time_now(stringify=True)
     db.add(path="operations", file_name="moon_call", entry=operations_log)
