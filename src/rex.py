@@ -8,7 +8,7 @@ Rex = bittrex.Bittrex(api_key="", api_secret="")
 
 
 # blacklist is where coins who have too much non crypto currency meaning go. sorry :(
-blacklist = ["GLD", "1ST", "2GIVE"]
+blacklist = ["GLD", "1ST", "2GIVE", "EMC2"]
 
 
 # get_cream gets the top 40% of the pack, no dregs please.
