@@ -5,7 +5,6 @@ import db
 from helpers import get_time_now
 from dateutil.parser import parse as parse_date
 from datetime import datetime, timedelta
-from operator import itemgetter
 from constants import VIP_PLAYERS, SHILLS
 
 

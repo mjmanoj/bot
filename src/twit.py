@@ -5,6 +5,7 @@ import json
 import twitter
 from config import twitter_consumer_key, twitter_consumer_secret, twitter_access_token, twitter_access_secret
 import db
+from operator import itemgetter
 
 
 api = twitter.Api(consumer_key=twitter_consumer_key,
@@ -31,18 +32,16 @@ def get_trends_for_woeid(place):
 # get_avg_api_res returns the logged average api response time for twitter
 def get_avg_api_res():
     moon_call_ops = db.get(path="operations", file_name="moon_call")
+    sorted_ops = sorted(moon_call_ops, key=itemgetter("_init"), reverse=True)
 
-    durations = 0
-    for operation in moon_call_ops:
-        start = int(operation["twitter_search_start"])
-        end = int(operation["twitter_search_end"])
-
-        durations += abs(start - end)
-
+    last_op = sorted_ops[0]
     avg_res = 1800
 
-    if len(moon_call_ops):
-        avg_res = durations / len(moon_call_ops)
-        print "[INFO] average twitter response time at " + str(avg_res) + " seconds."
+    if last_op:
+        start = int(last_op["twitter_search_start"])
+        end = int(last_op["twitter_search_end"])
+        last_twitter_call_seconds = abs(start - end)
+        avg_res += last_twitter_call_seconds
+        print "[INFO] last twitter response time was " + str(last_twitter_call_seconds) + " seconds."
 
     return avg_res
