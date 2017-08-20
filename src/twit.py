@@ -35,7 +35,7 @@ def get_avg_api_res():
     sorted_ops = sorted(moon_call_ops, key=itemgetter("_init"), reverse=True)
 
     last_op = sorted_ops[0]
-    avg_res = 1800
+    avg_res = 3600
 
     if last_op:
         start = int(last_op["twitter_search_start"])
