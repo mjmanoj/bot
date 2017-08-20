@@ -9,8 +9,12 @@ import os
 
 
 # returns a proper default UTC timezone now time.
-def get_time_now():
-    return datetime.utcnow().replace(tzinfo=pytz.UTC)
+def get_time_now(stringify=False):
+    now = datetime.utcnow().replace(tzinfo=pytz.UTC)
+    if stringify:
+        return now.strftime('%s')
+
+    return now
 
 
 # touches a file as you would do in bash.

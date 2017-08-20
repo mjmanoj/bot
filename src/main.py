@@ -14,15 +14,21 @@ from bot import send_hot_tweets
 
 # call hot shots on market symbols
 def moon_call():
-    print("Starting moon_call at " + get_time_now().strftime('%s'))
+    log = {}
+    log["_init"] = get_time_now(stringify=True)
+
+    print "Starting moon_call at " + log["_init"]
+
     symbols = rex.get_market_summaries()
     scores = []
 
-    print("Searching Twitter for BTRX symbol high volume list...")
+    print "Searching Twitter for BTRX symbol high volume list..."
     # get and score relevant tweets per symbol.
+    log["twitter_search_start"] = get_time_now(stringify=True)
+
     for symbol in symbols:
         entry = {}
-        entry["created"] = get_time_now().strftime('%s')
+        entry["created"] = get_time_now(stringify=True)
         entry["symbol"] = symbol
 
         coin_symbol = "$" + symbol
@@ -44,8 +50,12 @@ def moon_call():
         db.add(path="symbols", file_name=coin_symbol, entry=entry)
         scores.append(entry)
 
-    print("Symbols analyzed, tracking periphreals...")
+    log["twitter_search_end"] = get_time_now(stringify=True)
+    print "Symbols analyzed, tracking periphreals..."
+
+    log["track_periphreals_start"] = get_time_now(stringify=True)
     track_periphreals()
+    log["track_periphreals_end"] = get_time_now(stringify=True)
 
     # sort and find hottest trends
     sorted_scores = sorted(scores, key=itemgetter("score"), reverse=True)
@@ -54,9 +64,15 @@ def moon_call():
     print("Preparing hot five message...")
 
     # prepare message for telegram
+    log["send_message_end"] = get_time_now(stringify=True)
     send_hot_tweets(hot)
-    print("moon call complete, message sent at " + get_time_now().strftime('%s'))
-    print("sleeping now for 30 minutes...\n\n")
+    log["send_message_end"] = get_time_now(stringify=True)
+
+    print "moon call complete, message sent at " + get_time_now(stringify=True)
+    print "sleeping now for 30 minutes...\n\n"
+
+    log["_end"] = get_time_now(stringify=True)
+    db.add(path="operations", file_name="moon_call", entry=log)
 
 
 # tracks peripheral data
