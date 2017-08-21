@@ -2,16 +2,16 @@
 the main package runs the main functionalities of the program
 - moon_call is a function to call moon shots on market symbols
 """
-import constants
-import rex
-from twit import search, get_trends_for_woeid
-import logician
 from operator import itemgetter
-from archivist.operations import get_avg_api_res
-from archivist.coin_lookup import get_score_history
-from helpers import get_time_now
+
 import db
+from archivist import get_twitter_res_time, get_score_history
+from twit import search, get_trends_for_woeid
+from helpers import get_time_now
 from bot import build_rating_template, send_message
+from constants import HOT_COUNTRIES
+import rex
+import logician
 
 
 # call hot shots on market symbols
@@ -25,13 +25,10 @@ def moon_call():
     scores = []
 
     print "[JOB] Searching Twitter for BTRX symbol high volume list..."
-    # get and score relevant tweets per symbol.
     operations_log["twitter_search_start"] = get_time_now(stringify=True)
+    avg_res = get_twitter_res_time(time_range="last")
 
-    # get average response time for twitter to use as stale_break for logician
-    # note, this is the average for ALL calls during the moon_call duration
-    avg_res = get_avg_api_res()
-
+    # get and score relevant tweets per symbol.
     for symbol in symbols:
         entry = {}
         entry["created"] = get_time_now(stringify=True)
@@ -71,8 +68,8 @@ def moon_call():
 
     print "[JOB] Preparing message templates..."
 
-    hot_daily = get_score_history("day")
-    hot_weekly = get_score_history("week")
+    hot_daily = get_score_history(timeframe="day")
+    hot_weekly = get_score_history(timeframe="week")
 
     # prepare message for telegram
     operations_log["send_message_end"] = get_time_now(stringify=True)
@@ -94,11 +91,11 @@ def moon_call():
     db.add(path="operations", file_name="moon_call", entry=operations_log)
 
 
-# tracks peripheral data
+# track_periphreals tracks secondary data such as
 # - twitter trending per main tech countries
 # - TODO: planetary movements
 def track_periphreals():
-    for country in constants.HOT_COUNTRIES:
+    for country in HOT_COUNTRIES:
         res = get_trends_for_woeid(country)
         for trend in res:
             entry = {}

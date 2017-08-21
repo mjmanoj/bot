@@ -7,7 +7,7 @@ from operator import itemgetter
 cwd = os.getcwd()
 
 
-def get_score_history(interval):
+def get_score_history(timeframe):
     score_files = cwd + "/db/" + env + "/symbols/"
     symbol_score_dbs = os.listdir(score_files)
 
@@ -20,30 +20,30 @@ def get_score_history(interval):
         symbol = symbol_db_file.split(".")[0]
         entry["symbol"] = symbol
 
-        interval_entries = 0
-        interval_score = 0
+        timeframe_entries = 0
+        timeframe_score = 0
 
         symbol_db = db.get(path="symbols", file_name=symbol)
 
         for entry in symbol_db:
-            if interval == "day":
+            if timeframe == "day":
                 today = now
                 score_day = datetime.fromtimestamp(symbol["created"])
 
                 if today == score_day:
-                    interval_score += symbol["score"]
-                    interval_entries += interval_entries
+                    timeframe_score += symbol["score"]
+                    timeframe_entries += timeframe_entries
 
-            if interval == "week":
+            if timeframe == "week":
                 cal_week = date.fromtimestamp(now).isocalendar()
                 score_week = date.fromtimestamp(
                     symbol["created"]).isocalendar()
 
                 if cal_week == score_week:
-                    interval_score += symbol["score"]
-                    interval_entries += interval_entries
+                    timeframe_score += symbol["score"]
+                    timeframe_entries += timeframe_entries
 
-        entry["score"] = interval_score / interval_entries
+        entry["score"] = timeframe_score / timeframe_entries
         scores.append(entry)
 
     sorted_scores = sorted(scores, key=itemgetter("score"))
