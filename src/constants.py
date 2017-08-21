@@ -21,30 +21,38 @@ HOT_COUNTRIES = [
     23424934,  # Phillipines
 ]
 
-CRYPTO_TERMS = [
-    "blockchain"
-    "crypto",
-    "cryptocurrenecy",
-    "bitcoin",
-    "fintech",
-    "ethereum",
-    "bear",
-    "bull",
-    "FOMO",
-    "fibonacci",
-    "block",
-    "network",
-    "mine",
-    "mining",
-    "ledger",
-    "SHA 256",
-]
-
 VIP_PLAYERS = [
     "CryptoKirby",
     "WolfOfPoloniex",
     "vincentbriatore",
-    "CarpeNoctom"
+    "CarpeNoctom",
+    "FatihSK87",
+    "ThisIsNuse",
+    "anambroid",
+    "cryptodemedici",
+    "bonzocorleonee",
+    "MoonWalkDoge",
+    "petersinguili",
+    "JDDavenport2",
+    "onemanatatime",
+    "loomdart",
+    "CRYPTOBANGer",
+    "AngeloBTC",
+    "CryptoYoda1338",
+    "cryptomocho",
+    "coinjunky",
+    "WidespreadBTC",
+    "Crypto_Coinist",
+    "CryptOrca",
+    "DJThistle01",
+    "CoinImperator",
+    "biggzi",
+    "APACllc",
+    "CryptoCobain",
+    "RNR_0",
+    "CryptoGainz1",
+    "SecretsOfCrypto",
+    "cryptopicasso",
 ]
 
 SHILLS = [
