@@ -4,9 +4,10 @@ the main package runs the main functionalities of the program
 """
 import constants
 import rex
-from twit import search, get_avg_api_res, get_trends_for_woeid
+from twit import search, get_trends_for_woeid
 import logician
 from operator import itemgetter
+from archivist.operations import get_avg_api_res
 from helpers import get_time_now
 import db
 from bot import build_rating_template
@@ -40,7 +41,7 @@ def moon_call():
         # search twitter
         tweets = search(coin_symbol)
         relevant_tweets = logician.strip_irrelevant(
-            tweets, stale_break=avg_res + 1800
+            tweets, stale_break=avg_res + 3600
         )
 
         # if empty, go to next symbol
