@@ -1,15 +1,13 @@
-"""
-the helpers package contains help functions for the application
-"""
-import threading
-import errno
-from datetime import datetime
-import pytz
+""" the helpers package contains help functions for the application """
 import os
+from datetime import datetime
+import errno
+import pytz
 
 
-# returns a proper default UTC timezone now time.
 def get_time_now(stringify=False):
+    """ returns a proper default UTC timezone now time. """
+
     now = datetime.utcnow().replace(tzinfo=pytz.UTC)
     if stringify:
         return now.strftime('%s')
@@ -17,14 +15,16 @@ def get_time_now(stringify=False):
     return now
 
 
-# touches a file as you would do in bash.
 def touch(fname, times=None):
+    """ touches a file as you would do in bash. """
+
     with open(fname, 'a'):
         os.utime(fname, times)
 
 
-# makes diretory, recursively.
 def mkdir_p(path):
+    """ makes diretory, recursively. """
+
     try:
         os.makedirs(path)
     except OSError as exc:  # Python >2.5
@@ -32,16 +32,3 @@ def mkdir_p(path):
             pass
         else:
             raise
-
-
-# set interval to activate a function every certain amount of minutes
-def set_interval(func, mins):
-    sec = mins * 60000
-
-    def func_wrapper():
-        set_interval(func, sec)
-        func()
-
-    t = threading.Timer(sec, func_wrapper)
-    t.start()
-    return t

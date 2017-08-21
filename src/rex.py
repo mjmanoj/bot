@@ -11,15 +11,18 @@ Rex = bittrex.Bittrex(api_key="", api_secret="")
 blacklist = ["GLD", "1ST", "2GIVE", "EMC2"]
 
 
-# get_cream gets the top 40% of the pack, no dregs please.
 def get_cream(list_of_things):
+    """ get_cream gets the top 40% of the pack, no dregs please. """
+
     return int(len(list_of_things) * 0.4)
 
 
-# get_market_summaries gets the top 40% highest volume market summaries for
-# btc, eth and usdt based markets
-# TODO: how can we automate the btc/eth/usdt lists into automated list generation based on the split[0] for the MarketName?
 def get_market_summaries():
+    """
+    get_market_summaries gets the top 40% highest volume market summaries for
+    btc, eth and usdt based markets
+    TODO: how can we automate the btc/eth/usdt lists into automated list generation based on the split[0] for the MarketName?
+    """
     res = Rex.get_market_summaries()
 
     btc_summaries = []
@@ -29,9 +32,7 @@ def get_market_summaries():
     for summary in reversed(sorted(res["result"], key=itemgetter("Volume"))):
         market = summary["MarketName"].split("-")[0]
         coin = summary["MarketName"].split("-")[1]
-        volume = summary["Volume"]
 
-        # low volume trimming
         if market == "BTC":
             btc_summaries.append(coin)
 

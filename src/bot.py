@@ -1,22 +1,23 @@
-"""
-the bot package servers as a telegram adapter
-"""
+""" the bot package servers as a telegram adapter """
 import telegram
 import emoji
 from config import telegram_token, telegram_chat_prod, telegram_chat_dev, tip_jar, env
-
-bot = telegram.Bot(token=telegram_token)
+TELLIE = telegram.Bot(token=telegram_token)
 
 
 def send_message(text):
+    """ send_message sends a text message to the environment variable chat id, in markdown """
+
     chat_id = telegram_chat_prod
     if env == "test":
         chat_id = telegram_chat_dev
 
-    bot.send_message(chat_id=chat_id, text=text, parse_mode="Markdown")
+    TELLIE.send_message(chat_id=chat_id, text=text, parse_mode="Markdown")
 
 
 def build_rating_template(scores, title):
+    """ build_rating_template builds and returns a text message for twitter based coin score ratings """
+
     message = "_Analysis of credible #crypto social media for BTRX coins from the last 30 minutes._\n"
     message += "_Disclaimer: These tweets are for RESERACH. Some are about dying coins, some about ones thriving with life! Make wise decisions on your own judgement._\n\n"
 

@@ -1,6 +1,4 @@
-"""
-the config package works with environment variables
-"""
+""" the config package works with environment variables """
 from os.path import join, dirname
 from os import environ
 from dotenv import load_dotenv

@@ -14,8 +14,9 @@ import rex
 import logician
 
 
-# call hot shots on market symbols
 def moon_call():
+    """ call hot shots on market symbols """
+
     operations_log = {}
     operations_log["_init"] = get_time_now(stringify=True)
 
@@ -91,10 +92,13 @@ def moon_call():
     db.add(path="operations", file_name="moon_call", entry=operations_log)
 
 
-# track_periphreals tracks secondary data such as
-# - twitter trending per main tech countries
-# - TODO: planetary movements
 def track_periphreals():
+    """
+    track_periphreals tracks secondary data such as
+    - twitter trending per main tech countries
+    - TODO: planetary movements
+    """
+
     for country in HOT_COUNTRIES:
         res = get_trends_for_woeid(country)
         for trend in res:

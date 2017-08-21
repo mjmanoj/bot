@@ -1,6 +1,4 @@
-"""
-the constants package has globals used throughout the project
-"""
+""" the constants package has globals used throughout the project """
 DEFAULT_MINS = 30
 
 HOT_COUNTRIES = [

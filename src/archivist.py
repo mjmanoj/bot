@@ -1,14 +1,18 @@
+""" the archivist deals with archived data in the databases """
 import os
-import db
 from datetime import datetime, date
+from operator import itemgetter
+
+import db
 from helpers import get_time_now
 from config import env
-from operator import itemgetter
-cwd = os.getcwd()
+CWD = os.getcwd()
 
 
 def get_score_history(timeframe):
-    score_files = cwd + "/db/" + env + "/symbols/"
+    """ gets the score history for all coins, returning top 3 for the respective timeframe """
+
+    score_files = CWD + "/db/" + env + "/symbols/"
     symbol_score_dbs = os.listdir(score_files)
 
     now = datetime.fromtimestamp(get_time_now())
@@ -51,8 +55,9 @@ def get_score_history(timeframe):
     return sorted_scores[:3]
 
 
-# get_twitter_res_time returns the logged average api response time for twitter
 def get_twitter_res_time(time_range):
+    """ get_twitter_res_time returns the logged average api response time for twitter """
+
     moon_call_ops = db.get(path="operations", file_name="moon_call")
     sorted_ops = sorted(moon_call_ops, key=itemgetter("_init"), reverse=True)
 
