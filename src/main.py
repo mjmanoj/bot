@@ -8,9 +8,10 @@ from twit import search, get_trends_for_woeid
 import logician
 from operator import itemgetter
 from archivist.operations import get_avg_api_res
+from archivist.coin_lookup import get_score_history
 from helpers import get_time_now
 import db
-from bot import build_rating_template
+from bot import build_rating_template, send_message
 
 
 # call hot shots on market symbols
@@ -66,18 +67,24 @@ def moon_call():
 
     # sort and find hottest trends
     sorted_scores = sorted(scores, key=itemgetter("score"), reverse=True)
-    hot_hourly = sorted_scores[:5]
+    hot_hourly = sorted_scores[:3]
 
     print "[JOB] Preparing message templates..."
 
-    hot_daily = get_scores("daily")
-    hot_weekly = get_scores("weekly")
+    hot_daily = get_score_history("day")
+    hot_weekly = get_score_history("week")
 
     # prepare message for telegram
     operations_log["send_message_end"] = get_time_now(stringify=True)
-    hot_hourly_text = build_rating_template(hot_hourly, "Hourly Twitter Hype")
-    hot_daily_text = build_rating_template(hot_daily, "Daily Twitter Hype")
-    hot_weekly_text = build_rating_template(hot_weekly, "Weekly Twitter Hype")
+
+    hourly_text = build_rating_template(hot_hourly, "Hourly Twitter Hype")
+    daily_text = build_rating_template(hot_daily, "Daily Twitter Hype")
+    weekly_text = build_rating_template(hot_weekly, "Weekly Twitter Hype")
+
+    message_text = hourly_text + "\n" + daily_text + "\n" + weekly_text
+
+    send_message(text=message_text)
+
     operations_log["send_message_end"] = get_time_now(stringify=True)
 
     print "[JOB] Moon call complete, message sent at " + get_time_now(stringify=True)

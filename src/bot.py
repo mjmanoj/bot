@@ -37,6 +37,6 @@ def build_rating_template(scores, title):
             lit_meter + \
             "](https://twitter.com/search?f=tweets&vertical=default&q=%24" + symbol + ")\n"
 
-    message += "\nSupport development with BTC Tips @ `" + tip_jar + "`"
+    message += "\nSupport development with BTC Tips @ `" + tip_jar + "`\n"
 
     return message
