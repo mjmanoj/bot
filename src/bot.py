@@ -1,7 +1,7 @@
 """ the bot package servers as a telegram adapter """
 import telegram
 import emoji
-from config import telegram_token, telegram_chat_prod, telegram_chat_dev, tip_jar, env
+from config import telegram_token, telegram_chat_prod, telegram_chat_dev, env
 TELLIE = telegram.Bot(token=telegram_token)
 
 
@@ -18,10 +18,7 @@ def send_message(text):
 def build_rating_template(scores, title):
     """ build_rating_template builds and returns a text message for twitter based coin score ratings """
 
-    message = "_Analysis of credible #crypto social media for BTRX coins from the last 30 minutes._\n"
-    message += "_Disclaimer: These tweets are for RESERACH. Some are about dying coins, some about ones thriving with life! Make wise decisions on your own judgement._\n\n"
-
-    message += emoji.emojize("*:bird: " + title + ":bird: *\n")
+    message = emoji.emojize("*:bird:" + title + ":bird: *\n")
     for market in scores:
         symbol = market["symbol"]
 
@@ -37,7 +34,5 @@ def build_rating_template(scores, title):
         message += "- [$" + symbol + \
             lit_meter + \
             "](https://twitter.com/search?f=tweets&vertical=default&q=%24" + symbol + ")\n"
-
-    message += "\nSupport development with BTC Tips @ `" + tip_jar + "`\n"
 
     return message

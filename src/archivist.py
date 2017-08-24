@@ -9,13 +9,14 @@ from config import env
 CWD = os.getcwd()
 
 
-def get_score_history(timeframe):
-    """ gets the score history for all coins, returning top 3 for the respective timeframe """
+def get_score_history(tf):
+    """ gets the score history for all coins, returning top 3 for the respective tf """
 
     score_files = CWD + "/db/" + env + "/symbols/"
     symbol_score_dbs = os.listdir(score_files)
 
-    now = datetime.fromtimestamp(get_time_now())
+    now_timestamp = float(get_time_now(stringify=True))
+    now = datetime.fromtimestamp(now_timestamp)
 
     scores = []
 
@@ -24,30 +25,35 @@ def get_score_history(timeframe):
         symbol = symbol_db_file.split(".")[0]
         entry["symbol"] = symbol
 
-        timeframe_entries = 0
-        timeframe_score = 0
+        tf_entries = 0
+        tf_score = 0
 
         symbol_db = db.get(path="symbols", file_name=symbol)
 
         for entry in symbol_db:
-            if timeframe == "day":
+            if tf == "day":
                 today = now
-                score_day = datetime.fromtimestamp(symbol["created"])
+                entry_timestamp = float(entry["created"])
+                score_day = datetime.fromtimestamp(entry_timestamp)
 
                 if today == score_day:
-                    timeframe_score += symbol["score"]
-                    timeframe_entries += timeframe_entries
+                    tf_score += entry["score"]
+                    tf_entries += tf_entries
 
-            if timeframe == "week":
-                cal_week = date.fromtimestamp(now).isocalendar()
+            if tf == "week":
+                cal_week = date.fromtimestamp(now_timestamp).isocalendar()
                 score_week = date.fromtimestamp(
-                    symbol["created"]).isocalendar()
+                    float(entry["created"])).isocalendar()
 
                 if cal_week == score_week:
-                    timeframe_score += symbol["score"]
-                    timeframe_entries += timeframe_entries
+                    tf_score += entry["score"]
+                    tf_entries += tf_entries
 
-        entry["score"] = timeframe_score / timeframe_entries
+        score = 0
+        if tf_entries is not 0 and tf_score is not 0:
+            score = tf_score / tf_entries
+
+        entry["score"] = score
         scores.append(entry)
 
     sorted_scores = sorted(scores, key=itemgetter("score"))

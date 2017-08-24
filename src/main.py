@@ -5,6 +5,7 @@ the main package runs the main functionalities of the program
 from operator import itemgetter
 
 import db
+from config import env, tip_jar
 from archivist import get_twitter_res_time, get_score_history
 from twit import search, get_trends_for_woeid
 from helpers import get_time_now
@@ -29,6 +30,7 @@ def moon_call():
     operations_log["twitter_search_start"] = get_time_now(stringify=True)
     avg_res = get_twitter_res_time(time_range="last")
 
+    print "[JOB] Scoring " + str(len(symbols)) + " coins..."
     # get and score relevant tweets per symbol.
     for symbol in symbols:
         entry = {}
@@ -57,7 +59,7 @@ def moon_call():
         scores.append(entry)
 
     operations_log["twitter_search_end"] = get_time_now(stringify=True)
-    print "[JOB] Symbols analyzed, tracking periphreals..."
+    print "[JOB] Symbols scored, tracking periphreals..."
 
     operations_log["track_periphreals_start"] = get_time_now(stringify=True)
     track_periphreals()
@@ -69,8 +71,8 @@ def moon_call():
 
     print "[JOB] Preparing message templates..."
 
-    hot_daily = get_score_history(timeframe="day")
-    hot_weekly = get_score_history(timeframe="week")
+    hot_daily = get_score_history(tf="day")
+    hot_weekly = get_score_history(tf="week")
 
     # prepare message for telegram
     operations_log["send_message_end"] = get_time_now(stringify=True)
@@ -79,7 +81,10 @@ def moon_call():
     daily_text = build_rating_template(hot_daily, "Daily Twitter Hype")
     weekly_text = build_rating_template(hot_weekly, "Weekly Twitter Hype")
 
-    message_text = hourly_text + "\n" + daily_text + "\n" + weekly_text
+    message_text = "_Analysis of credible #crypto social media for BTRX coins._\n"
+    message_text += "_Disclaimer: These tweets are for RESERACH. Some are about dying coins, some about ones thriving with life! Make wise decisions on your own judgement._\n\n"
+    message_text += hourly_text + "\n" + daily_text + "\n" + weekly_text
+    message_text += "\nSupport development with BTC Tips @ `" + tip_jar + "`\n"
 
     send_message(text=message_text)
 
@@ -99,8 +104,13 @@ def track_periphreals():
     - TODO: planetary movements
     """
 
+    countries = HOT_COUNTRIES
+    if env == "test":
+        countries = countries[:2]
+
     for country in HOT_COUNTRIES:
         res = get_trends_for_woeid(country)
+
         for trend in res:
             entry = {}
             entry["topic"] = trend.name
