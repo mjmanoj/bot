@@ -1,15 +1,14 @@
-"""
-the logician package makes all the calls, based on human logic.
-"""
+""" the logician package makes all the calls, based on human logic. """
+from datetime import timedelta
 import db
 from helpers import get_time_now
 from dateutil.parser import parse as parse_date
-from datetime import datetime, timedelta
 from constants import VIP_PLAYERS, SHILLS
 
 
-# strip_irrelevant takes tweets and sniffs everything for crypto mentions.
 def strip_irrelevant(tweets, stale_break):
+    """ strip_irrelevant takes tweets and sniffs everything for crypto mentions. """
+
     relevant_tweets = []
 
     for tweet in tweets:
@@ -39,10 +38,13 @@ def strip_irrelevant(tweets, stale_break):
     return relevant_tweets
 
 
-# judge provides a score judging an array of tweets based on
-# - user credibility
-# - tweet quality, hype
 def judge(tweets):
+    """
+    judge provides a score judging an array of tweets based on
+    - user credibility
+    - tweet quality, hype     
+    """
+
     scores = []
     for tweet in tweets:
         score = 0
