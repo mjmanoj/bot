@@ -41,9 +41,9 @@ def get_score_history(tf):
                     tf_entries += tf_entries
 
             if tf == "week":
-                cal_week = date.fromtimestamp(now_timestamp).isocalendar()
+                cal_week = date.fromtimestamp(now_timestamp).isocalendar()[1]
                 score_week = date.fromtimestamp(
-                    float(entry["created"])).isocalendar()
+                    float(entry["created"])).isocalendar()[1]
 
                 if cal_week == score_week:
                     tf_score += entry["score"]
