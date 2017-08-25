@@ -23,41 +23,37 @@ def get_score_history(tf):
     for symbol_db_file in symbol_score_dbs:
         entry = {}
         symbol = symbol_db_file.split(".")[0]
-        entry["symbol"] = symbol
-
-        tf_entries = 0
-        tf_score = 0
-
+        entry["symbol"] = symbol[1:]
         symbol_db = db.get(path="symbols", file_name=symbol)
 
-        for entry in symbol_db:
+        tf_entries = len(symbol_db)
+        tf_score = 0
+
+        for data in symbol_db:
             if tf == "day":
-                today = now
-                entry_timestamp = float(entry["created"])
-                score_day = datetime.fromtimestamp(entry_timestamp)
+                today = now.day
+                entry_timestamp = float(data["created"])
+                score_day = datetime.fromtimestamp(entry_timestamp).day
 
                 if today == score_day:
-                    tf_score += entry["score"]
-                    tf_entries += tf_entries
+                    tf_score += data["score"]
 
             if tf == "week":
                 cal_week = date.fromtimestamp(now_timestamp).isocalendar()[1]
                 score_week = date.fromtimestamp(
-                    float(entry["created"])).isocalendar()[1]
+                    float(data["created"])).isocalendar()[1]
 
                 if cal_week == score_week:
-                    tf_score += entry["score"]
-                    tf_entries += tf_entries
-
+                    tf_score += data["score"]
         score = 0
         if tf_entries is not 0 and tf_score is not 0:
             score = tf_score / tf_entries
 
         entry["score"] = score
-        scores.append(entry)
+        if score:
+            scores.append(entry)
 
-    sorted_scores = sorted(scores, key=itemgetter("score"))
-
+    sorted_scores = sorted(scores, key=itemgetter("score"), reverse=True)
     return sorted_scores[:3]
 
 
