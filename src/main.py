@@ -41,7 +41,7 @@ def moon_call():
 
         # search twitter
         tweets = search(coin_symbol)
-        score = logician.judge(tweets, stale_break=avg_res + 1800)
+        score = logician.judge(tweets, stale_break=avg_res + 3600)
 
         # if score sucks, go to next symbol
         if not score:

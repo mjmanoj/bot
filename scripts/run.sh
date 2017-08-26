@@ -2,6 +2,7 @@
 while true; do
 
     make execute
+    make upload_db_to_github
     
-    sleep 1800    
+    sleep 3600    
 done
