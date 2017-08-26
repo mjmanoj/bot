@@ -67,7 +67,7 @@ def judge(tweets, stale_break):
 
         scores.append(score)
 
-    if not score:
+    if not scores:
         return 0
 
     return sum(scores) / float(len(scores))
