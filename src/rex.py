@@ -17,30 +17,45 @@ def get_cream(list_of_things):
     return int(len(list_of_things) * 0.4)
 
 
+def find(lst, key, value):
+    for i, dic in enumerate(lst):
+        if dic[key] == value:
+            return dic
+
+
 def get_market_summaries():
     """
     get_market_summaries gets the top 40% highest volume market summaries for
     btc, eth and usdt based markets
     TODO: how can we automate the btc/eth/usdt lists into automated list generation based on the split[0] for the MarketName?
     """
-    res = Rex.get_market_summaries()
+    summaries = Rex.get_market_summaries()["result"]
+    currencies = Rex.get_currencies()["result"]
 
     btc_summaries = []
     eth_summaries = []
     usdt_summaries = []
 
-    for summary in reversed(sorted(res["result"], key=itemgetter("Volume"))):
+    for summary in reversed(sorted(summaries, key=itemgetter("Volume"))):
         market = summary["MarketName"].split("-")[0]
         coin = summary["MarketName"].split("-")[1]
 
+        entry = {}
+        entry["symbol"] = coin
+
+        coin_info = find(currencies, "Currency", coin)
+
+        if coin_info:
+            entry["name"] = coin_info["CurrencyLong"].lower()
+
         if market == "BTC":
-            btc_summaries.append(coin)
+            btc_summaries.append(entry)
 
         if market == "ETH":
-            eth_summaries.append(coin)
+            eth_summaries.append(entry)
 
         if market == "USDT":
-            usdt_summaries.append(coin)
+            usdt_summaries.append(entry)
 
     summaries = btc_summaries[:get_cream(btc_summaries)] + eth_summaries[:get_cream(
         eth_summaries)] + usdt_summaries[:get_cream(usdt_summaries)]
