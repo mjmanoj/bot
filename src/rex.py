@@ -3,6 +3,7 @@ the rex package is a bittrex exchange adapter.
 """
 import bittrex
 from operator import itemgetter
+from helpers import find
 from config import env
 Rex = bittrex.Bittrex(api_key="", api_secret="")
 
@@ -15,12 +16,6 @@ def get_cream(list_of_things):
     """ get_cream gets the top 40% of the pack, no dregs please. """
 
     return int(len(list_of_things) * 0.4)
-
-
-def find(lst, key, value):
-    for i, dic in enumerate(lst):
-        if dic[key] == value:
-            return dic
 
 
 def get_market_summaries():

@@ -5,6 +5,13 @@ import errno
 import pytz
 
 
+def find(lst, key, value):
+    """ finds a key by matching value in a list of dictionaries """
+    for i, dic in enumerate(lst):
+        if dic[key] == value:
+            return dic
+
+
 def get_time_now(stringify=False):
     """ returns a proper default UTC timezone now time. """
 

@@ -4,7 +4,8 @@ from datetime import datetime, date
 from operator import itemgetter
 
 import db
-from helpers import get_time_now
+from rex import Rex
+from helpers import get_time_now, find
 from config import env
 CWD = os.getcwd()
 
@@ -30,6 +31,9 @@ def get_score_history(tf):
         tf_score = 0
 
         for data in symbol_db:
+            if "name" in data and "name" not in entry:
+                entry["name"] = data["name"]
+
             if tf == "day":
                 today = now.day
                 entry_timestamp = float(data["created"])
@@ -48,6 +52,13 @@ def get_score_history(tf):
         score = 0
         if tf_entries is not 0 and tf_score is not 0:
             score = tf_score / tf_entries
+
+        if "name" not in entry:
+            currencies = Rex.get_currencies()["result"]
+            coin_info = find(currencies, "Currency", symbol[1:])
+
+            if coin_info:
+                entry["name"] = coin_info["CurrencyLong"].lower()
 
         entry["score"] = score
         if score:
