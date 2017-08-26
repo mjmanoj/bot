@@ -28,7 +28,7 @@ def moon_call():
 
     print "[JOB] Searching Twitter for BTRX symbol high volume list..."
     operations_log["twitter_search_start"] = get_time_now(stringify=True)
-    # TODO: stale_break => use moon_call duration.
+
     avg_res = get_moon_call_res_duration()
 
     print "[JOB] Scoring " + str(len(symbols)) + " coins..."
@@ -42,15 +42,8 @@ def moon_call():
 
         # search twitter
         tweets = search(coin_symbol)
-        relevant_tweets = logician.strip_irrelevant(
-            tweets, stale_break=avg_res + 3600
-        )
+        score = logician.judge(tweets, stale_break=avg_res + 1800)
 
-        # if empty, go to next symbol
-        if not relevant_tweets:
-            continue
-
-        score = logician.judge(relevant_tweets)
         # if score sucks, go to next symbol
         if not score:
             continue

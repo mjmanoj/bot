@@ -3,5 +3,5 @@ while true; do
 
     make execute
     
-    sleep 3600    
+    sleep 1800    
 done
