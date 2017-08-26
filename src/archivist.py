@@ -65,7 +65,7 @@ def get_twitter_res_time(time_range):
 
     res_time = 0
 
-    if sorted_ops is None:
+    if sorted_ops is not None:
         if time_range == "last":
             last_op = sorted_ops[0]
 
@@ -88,3 +88,24 @@ def get_twitter_res_time(time_range):
             print "[INFO] average twitter response time " + res_time + " seconds."
 
     return res_time
+
+
+def get_moon_call_res_duration():
+    """ get_moon_call_res_duration returns the moon call duration"""
+
+    moon_call_ops = db.get(path="operations", file_name="moon_call")
+    sorted_ops = sorted(moon_call_ops, key=itemgetter("_init"), reverse=True)
+
+    moon_call_duration = 0
+
+    if sorted_ops is not None:
+        last_op = sorted_ops[0]
+
+        if last_op:
+            start = int(last_op["_init"])
+            end = int(last_op["_end"])
+            duration = abs(start - end)
+            moon_call_duration += duration
+            print "[INFO] last moon_call duration was " + str(duration) + " seconds."
+
+    return moon_call_duration

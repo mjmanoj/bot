@@ -6,7 +6,7 @@ from operator import itemgetter
 
 import db
 from config import env, tip_jar
-from archivist import get_twitter_res_time, get_score_history
+from archivist import get_moon_call_res_duration, get_score_history
 from twit import search, get_trends_for_woeid
 from helpers import get_time_now
 from bot import build_rating_template, send_message
@@ -28,7 +28,8 @@ def moon_call():
 
     print "[JOB] Searching Twitter for BTRX symbol high volume list..."
     operations_log["twitter_search_start"] = get_time_now(stringify=True)
-    avg_res = get_twitter_res_time(time_range="last")
+    # TODO: stale_break => use moon_call duration.
+    avg_res = get_moon_call_res_duration()
 
     print "[JOB] Scoring " + str(len(symbols)) + " coins..."
     # get and score relevant tweets per symbol.

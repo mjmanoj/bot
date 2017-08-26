@@ -1,18 +1,23 @@
 """ the bot package servers as a telegram adapter """
 import telegram
 import emoji
-from config import telegram_token, telegram_chat_prod, telegram_chat_dev, env
+from config import telegram_token, telegram_chat_prod, telegram_chat_dev, env, kirby_vip_channel
 TELLIE = telegram.Bot(token=telegram_token)
+
+PROD_CHANNELS = [telegram_chat_prod, kirby_vip_channel]
+TEST_CHANNELS = [telegram_chat_dev]
 
 
 def send_message(text):
     """ send_message sends a text message to the environment variable chat id, in markdown """
 
-    chat_id = telegram_chat_prod
-    if env == "test":
-        chat_id = telegram_chat_dev
+    channels = PROD_CHANNELS
 
-    TELLIE.send_message(chat_id=chat_id, text=text, parse_mode="Markdown")
+    if env == "test":
+        channels = TEST_CHANNELS
+
+    for channel in channels:
+        TELLIE.send_message(chat_id=channel, text=text, parse_mode="Markdown")
 
 
 def build_rating_template(scores, title):
