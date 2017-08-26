@@ -38,6 +38,12 @@ def build_rating_template(scores, title):
 
         message += "- [$" + symbol + \
             lit_meter + \
-            "](https://twitter.com/search?f=tweets&vertical=default&q=%24" + symbol + ")\n"
+            "](https://twitter.com/search?f=tweets&vertical=default&q=%24" + symbol + ")"
+
+        if "name" in market:
+            message += " | [CoinMarketCap](https://coinmarketcap.com/currencies/" + \
+                market["name"] + ")"
+
+        message += "\n"
 
     return message
