@@ -23,24 +23,33 @@ def get_market_summaries():
     btc, eth and usdt based markets
     TODO: how can we automate the btc/eth/usdt lists into automated list generation based on the split[0] for the MarketName?
     """
-    res = Rex.get_market_summaries()
+    summaries = Rex.get_market_summaries()
+    currencies = Rex.get_currencies()
 
     btc_summaries = []
     eth_summaries = []
     usdt_summaries = []
 
-    for summary in reversed(sorted(res["result"], key=itemgetter("Volume"))):
+    for summary in reversed(sorted(summaries["result"], key=itemgetter("Volume"))):
         market = summary["MarketName"].split("-")[0]
         coin = summary["MarketName"].split("-")[1]
 
+        entry = {}
+        entry["symbol"] = coin
+        currency_info = next(index for (index, d) in enumerate(
+            currencies) if d["MarketCurrency"] == coin)
+
+        if currency_info:
+            entry["name"] = str.lower(currency_info["MarketCurrencyLong"])
+
         if market == "BTC":
-            btc_summaries.append(coin)
+            btc_summaries.append(entry)
 
         if market == "ETH":
-            eth_summaries.append(coin)
+            eth_summaries.append(entry)
 
         if market == "USDT":
-            usdt_summaries.append(coin)
+            usdt_summaries.append(entry)
 
     summaries = btc_summaries[:get_cream(btc_summaries)] + eth_summaries[:get_cream(
         eth_summaries)] + usdt_summaries[:get_cream(usdt_summaries)]

@@ -23,7 +23,7 @@ def moon_call():
 
     print "[JOB] Starting moon_call at " + operations_log["_init"]
 
-    symbols = rex.get_market_summaries()
+    summaries = rex.get_market_summaries()
     scores = []
 
     print "[JOB] Searching Twitter for BTRX symbol high volume list..."
@@ -31,14 +31,13 @@ def moon_call():
 
     avg_res = get_moon_call_res_duration()
 
-    print "[JOB] Scoring " + str(len(symbols)) + " coins..."
+    print "[JOB] Scoring " + str(len(summaries)) + " coins..."
     # get and score relevant tweets per symbol.
-    for symbol in symbols:
-        entry = {}
+    for summary in summaries:
+        entry = summary
         entry["created"] = get_time_now(stringify=True)
-        entry["symbol"] = symbol
 
-        coin_symbol = "$" + symbol
+        coin_symbol = "$" + summary["symbol"]
 
         # search twitter
         tweets = search(coin_symbol)
