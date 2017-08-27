@@ -42,7 +42,7 @@ def build_rating_template(scores, title):
             symbol + ") Score => " + lit_meter
 
         if "name" in market:
-            message += " ::: [Learn](https://coinmarketcap.com/currencies/" + \
+            message += " ::: [Research](https://coinmarketcap.com/currencies/" + \
                 market["name"] + ")"
 
         message += " | [Analyize](https://www.tradingview.com/chart/?symbol=BITTREX:" + \
