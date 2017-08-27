@@ -1,10 +1,10 @@
 """ the bot package servers as a telegram adapter """
 import telegram
 import emoji
-from config import telegram_token, telegram_chat_prod, telegram_chat_dev, env, kirby_vip_channel
+from config import telegram_token, telegram_chat_prod, telegram_chat_dev, env, kirby_bot_channel
 TELLIE = telegram.Bot(token=telegram_token)
 
-PROD_CHANNELS = [telegram_chat_prod, kirby_vip_channel]
+PROD_CHANNELS = [telegram_chat_prod, kirby_bot_channel]
 TEST_CHANNELS = [telegram_chat_dev]
 
 
@@ -17,7 +17,8 @@ def send_message(text):
         channels = TEST_CHANNELS
 
     for channel in channels:
-        TELLIE.send_message(chat_id=channel, text=text, parse_mode="Markdown")
+        TELLIE.send_message(chat_id=channel, text=text,
+                            parse_mode="Markdown", disable_web_page_preview=True)
 
 
 def build_rating_template(scores, title):
@@ -37,11 +38,11 @@ def build_rating_template(scores, title):
             lit_meter += emoji.emojize(":bird:")
 
         message += "- [$" + symbol + \
-            lit_meter + \
-            "](https://twitter.com/search?f=tweets&vertical=default&q=%24" + symbol + ")"
+            "](https://twitter.com/search?f=tweets&vertical=default&q=%24" + \
+            symbol + ") Score => " + lit_meter
 
         if "name" in market:
-            message += " -> [Learn](https://coinmarketcap.com/currencies/" + \
+            message += " ::: [Learn](https://coinmarketcap.com/currencies/" + \
                 market["name"] + ")"
 
         message += " | [Analyize](https://www.tradingview.com/chart/?symbol=BITTREX:" + \

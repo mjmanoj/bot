@@ -10,7 +10,7 @@ load_dotenv(env)
 telegram_token = environ["bot_api_token"]
 telegram_chat_prod = environ["telegram_chat_prod"]
 telegram_chat_dev = environ["telegram_chat_dev"]
-kirby_vip_channel = environ["kirby_vip_channel"]
+kirby_bot_channel = environ["kirby_bot_channel"]
 
 # bittrex api
 rex_api_key = environ["bittrex_api_key"]
@@ -22,8 +22,10 @@ twitter_consumer_secret = environ["twitter_consumer_secret"]
 twitter_access_token = environ["twitter_access_token"]
 twitter_access_secret = environ["twitter_access_secret"]
 
-# btc
-tip_jar = environ["tip_jar"]
+# tips
+btc_tip_jar = environ["btc_tip_jar"]
+ltc_tip_jar = environ["ltc_tip_jar"]
+rain_tip_jar = environ["rain_tip_jar"]
 
 # environment
 env = environ["ENV"]

@@ -5,7 +5,8 @@ the main package runs the main functionalities of the program
 from operator import itemgetter
 
 import db
-from config import env, tip_jar
+import emoji
+from config import env, btc_tip_jar, ltc_tip_jar, rain_tip_jar
 from archivist import get_moon_call_res_duration, get_score_history
 from twit import search, get_trends_for_woeid
 from helpers import get_time_now
@@ -41,7 +42,7 @@ def moon_call():
 
         # search twitter
         tweets = search(coin_symbol)
-        score = logician.judge(tweets, stale_break=avg_res + 7200)
+        score = logician.judge(tweets, stale_break=avg_res + 3200)
 
         # if score sucks, go to next symbol
         if not score:
@@ -70,15 +71,20 @@ def moon_call():
     # prepare message for telegram
     operations_log["send_message_end"] = get_time_now(stringify=True)
 
-    hourly_text = build_rating_template(
-        hot_hourly, "Last 2 Hours Twitter Hype")
+    hourly_text = build_rating_template(hot_hourly, "Hourly Twitter Hype")
     daily_text = build_rating_template(hot_daily, "Daily Twitter Hype")
     weekly_text = build_rating_template(hot_weekly, "Weekly Twitter Hype")
+
+    pray_symbol = emoji.emojize(":folded_hands:")
 
     message_text = "_Analysis of credible #crypto social media for BTRX coins._\n"
     message_text += "_Disclaimer: These tweets are for RESERACH. Some are about dying coins, some about ones thriving with life! Make wise decisions on your own judgement._\n\n"
     message_text += hourly_text + "\n" + daily_text + "\n" + weekly_text
-    message_text += "\nSupport development with BTC Tips @ `" + tip_jar + "`\n"
+    message_text += emoji.emojize(
+        "\n" + pray_symbol + " Tips for further dev super appreciated! " + pray_symbol + "\n")
+    message_text += "BTC: `" + btc_tip_jar + "`\n"
+    message_text += "LTC: `" + ltc_tip_jar + "`\n"
+    message_text += "RAIN: `" + rain_tip_jar + "`\n"
     message_text += "Questions, tips, feedback, whatever? write @azurikai\n"
 
     send_message(text=message_text)
@@ -86,7 +92,7 @@ def moon_call():
     operations_log["send_message_end"] = get_time_now(stringify=True)
 
     print "[JOB] Moon call complete, message sent at " + get_time_now(stringify=True)
-    print "[JOB] Sleeping now for 2 hours...\n\n"
+    print "[JOB] Sleeping now for one hour...\n\n"
 
     operations_log["_end"] = get_time_now(stringify=True)
     db.add(path="operations", file_name="moon_call", entry=operations_log)
