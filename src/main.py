@@ -78,6 +78,7 @@ def moon_call():
     message_text += "_Disclaimer: These tweets are for RESERACH. Some are about dying coins, some about ones thriving with life! Make wise decisions on your own judgement._\n\n"
     message_text += hourly_text + "\n" + daily_text + "\n" + weekly_text
     message_text += "\nSupport development with BTC Tips @ `" + tip_jar + "`\n"
+    message_text += "Questions, tips, feedback, whatever? write @azurikai\n"
 
     send_message(text=message_text)
 
