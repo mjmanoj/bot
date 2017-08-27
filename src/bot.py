@@ -41,8 +41,14 @@ def build_rating_template(scores, title):
             "](https://twitter.com/search?f=tweets&vertical=default&q=%24" + symbol + ")"
 
         if "name" in market:
-            message += " | [CoinMarketCap](https://coinmarketcap.com/currencies/" + \
+            message += " -> [Learn](https://coinmarketcap.com/currencies/" + \
                 market["name"] + ")"
+
+        message += " | [Analyize](https://www.tradingview.com/chart/?symbol=BITTREX:" + \
+            market["symbol"] + "BTC)"
+
+        message += " | [Trade](https://bittrex.com/Market/Index?MarketName=BTC-" + \
+            market["symbol"] + ")"
 
         message += "\n"
 

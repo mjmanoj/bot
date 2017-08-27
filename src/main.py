@@ -41,7 +41,7 @@ def moon_call():
 
         # search twitter
         tweets = search(coin_symbol)
-        score = logician.judge(tweets, stale_break=avg_res + 3600)
+        score = logician.judge(tweets, stale_break=avg_res + 7200)
 
         # if score sucks, go to next symbol
         if not score:
@@ -70,7 +70,8 @@ def moon_call():
     # prepare message for telegram
     operations_log["send_message_end"] = get_time_now(stringify=True)
 
-    hourly_text = build_rating_template(hot_hourly, "Hourly Twitter Hype")
+    hourly_text = build_rating_template(
+        hot_hourly, "Last 2 Hours Twitter Hype")
     daily_text = build_rating_template(hot_daily, "Daily Twitter Hype")
     weekly_text = build_rating_template(hot_weekly, "Weekly Twitter Hype")
 
@@ -85,7 +86,7 @@ def moon_call():
     operations_log["send_message_end"] = get_time_now(stringify=True)
 
     print "[JOB] Moon call complete, message sent at " + get_time_now(stringify=True)
-    print "[JOB] Sleeping now for 30 minutes...\n\n"
+    print "[JOB] Sleeping now for 2 hours...\n\n"
 
     operations_log["_end"] = get_time_now(stringify=True)
     db.add(path="operations", file_name="moon_call", entry=operations_log)
