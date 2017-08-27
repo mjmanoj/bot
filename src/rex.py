@@ -57,8 +57,9 @@ def get_market_summaries():
 
     # get rid of blacklist terms
     for blacklisted in blacklist:
-        if blacklisted in summaries:
-            summaries.remove(blacklisted)
+        for summary in summaries:
+            if entry["symbol"] == blacklisted:
+                summaries.remove(summary)
 
     # ensure no duplicates
     final = []
