@@ -1,11 +1,38 @@
 """ the bot package servers as a telegram adapter """
 import telegram
 import emoji
-from config import telegram_token, telegram_chat_prod, telegram_chat_dev, env, kirby_bot_channel
+from config import telegram_token, telegram_chat_prod, telegram_chat_dev, env, kirby_bot_channel, btc_tip_jar, ltc_tip_jar, rain_tip_jar
 TELLIE = telegram.Bot(token=telegram_token)
 
 PROD_CHANNELS = [telegram_chat_prod, kirby_bot_channel]
 TEST_CHANNELS = [telegram_chat_dev]
+
+
+def generate_and_post_message(hourly, daily, weekly):
+    """
+    generates and posts a message using the build template and send message functions
+    accepts hourly, daily, weekly scores
+    - scores currently are expected to be of shape [{ symbol: string, score: int }]
+    - scores will evolve to coins array => [{ symbol: string, scores: { medium: int }}]
+    -- medium being "twitter", "reddit", "google", etc.
+    """
+    hourly_text = build_rating_template(hourly, "Hourly Twitter Hype")
+    daily_text = build_rating_template(daily, "Daily Twitter Hype")
+    weekly_text = build_rating_template(weekly, "Weekly Twitter Hype")
+
+    pray_symbol = emoji.emojize(":folded_hands:")
+
+    message_text = "_Analysis of credible #crypto social media for BTRX coins._\n"
+    message_text += "_Disclaimer: These tweets are for RESERACH. Some are about dying coins, some about ones thriving with life! Make wise decisions on your own judgement._\n\n"
+    message_text += hourly_text + "\n" + daily_text + "\n" + weekly_text
+    message_text += emoji.emojize(
+        "\n" + pray_symbol + " Tips for further dev super appreciated! " + pray_symbol + "\n")
+    message_text += "BTC: `" + btc_tip_jar + "`\n"
+    message_text += "LTC: `" + ltc_tip_jar + "`\n"
+    message_text += "RAIN: `" + rain_tip_jar + "`\n"
+    message_text += "Questions, tips, feedback, whatever? write @azurikai\n"
+
+    send_message(text=message_text)
 
 
 def send_message(text):

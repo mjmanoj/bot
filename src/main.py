@@ -6,11 +6,11 @@ from operator import itemgetter
 
 import db
 import emoji
-from config import env, btc_tip_jar, ltc_tip_jar, rain_tip_jar
+from config import env
 from archivist import get_moon_call_res_duration, get_score_history
 from twit import search, get_trends_for_woeid
 from helpers import get_time_now
-from bot import build_rating_template, send_message
+from bot import generate_and_post_message
 from constants import HOT_COUNTRIES
 import rex
 import logician
@@ -61,33 +61,18 @@ def moon_call():
 
     # sort and find hottest trends
     sorted_scores = sorted(scores, key=itemgetter("score"), reverse=True)
-    hot_hourly = sorted_scores[:3]
+    hourly_top_scores = sorted_scores[:3]
 
     print "[JOB] Preparing message templates..."
 
-    hot_daily = get_score_history(tf="day")
-    hot_weekly = get_score_history(tf="week")
+    daily_top_scores = get_score_history(tf="day")
+    weekly_top_scores = get_score_history(tf="week")
 
     # prepare message for telegram
     operations_log["send_message_end"] = get_time_now(stringify=True)
 
-    hourly_text = build_rating_template(hot_hourly, "Hourly Twitter Hype")
-    daily_text = build_rating_template(hot_daily, "Daily Twitter Hype")
-    weekly_text = build_rating_template(hot_weekly, "Weekly Twitter Hype")
-
-    pray_symbol = emoji.emojize(":folded_hands:")
-
-    message_text = "_Analysis of credible #crypto social media for BTRX coins._\n"
-    message_text += "_Disclaimer: These tweets are for RESERACH. Some are about dying coins, some about ones thriving with life! Make wise decisions on your own judgement._\n\n"
-    message_text += hourly_text + "\n" + daily_text + "\n" + weekly_text
-    message_text += emoji.emojize(
-        "\n" + pray_symbol + " Tips for further dev super appreciated! " + pray_symbol + "\n")
-    message_text += "BTC: `" + btc_tip_jar + "`\n"
-    message_text += "LTC: `" + ltc_tip_jar + "`\n"
-    message_text += "RAIN: `" + rain_tip_jar + "`\n"
-    message_text += "Questions, tips, feedback, whatever? write @azurikai\n"
-
-    send_message(text=message_text)
+    generate_and_post_message(
+        hourly_top_scores, daily_top_scores, weekly_top_scores)
 
     operations_log["send_message_end"] = get_time_now(stringify=True)
 
