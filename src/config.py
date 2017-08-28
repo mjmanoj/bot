@@ -28,4 +28,4 @@ ltc_tip_jar = environ["ltc_tip_jar"]
 rain_tip_jar = environ["rain_tip_jar"]
 
 # environment
-env = environ["ENV"]
+env = environ["MOONBOT_ENV"]

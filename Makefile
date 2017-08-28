@@ -8,7 +8,7 @@ upload_db_to_github:
 	./scripts/upload_db.sh
 
 execute:
-	ENV=prod python ./src/main.py
+	MOONBOT_ENV=prod python ./src/main.py
 
 test_moon_call:
-	ENV=test python ./src/main.py
+	MOONBOT_ENV=test python ./src/main.py
