@@ -21,16 +21,20 @@ def generate_and_post_message(hourly, daily, weekly):
     weekly_text = build_rating_template(weekly, "Weekly Twitter Hype")
 
     pray_symbol = emoji.emojize(":folded_hands:")
+    moon_symbol = emoji.emojize(":full_moon:")
+    crystal_ball_symbol = emoji.emojize(":crystal_ball:")
 
-    message_text = "_Analysis of credible #crypto social media for BTRX coins._\n"
+    message_text = moon_symbol + " MOON ROOM HOURLY REPORT " + moon_symbol + "\n"
+    message_text += "_Analysis of credible #crypto social media for BTRX coins._\n"
     message_text += "_Disclaimer: These tweets are for RESERACH. Some are about dying coins, some about ones thriving with life! Make wise decisions on your own judgement._\n\n"
     message_text += hourly_text + "\n" + daily_text + "\n" + weekly_text
     message_text += emoji.emojize(
-        "\n" + pray_symbol + " Tips for further dev super appreciated! " + pray_symbol + "\n")
+        "\n" + pray_symbol + " This bot takes effort to tune and develop. Badass features incoming! If you're making good profit, a 2.5% cut is recommended for development continuation. " + pray_symbol + "\n")
     message_text += "BTC: `" + btc_tip_jar + "`\n"
-    message_text += "LTC: `" + ltc_tip_jar + "`\n"
     message_text += "RAIN: `" + rain_tip_jar + "`\n"
-    message_text += "Questions, tips, feedback, whatever? write @azurikai\n"
+    message_text += crystal_ball_symbol + \
+        " Questions, tips, feedback, need a programmer? write @azurikai, will make your dreams come true " + \
+        crystal_ball_symbol + "\n"
 
     send_message(text=message_text)
 
