@@ -26,7 +26,7 @@ def generate_and_post_message(hourly, daily, weekly):
 
     message_text = moon_symbol + " MOON ROOM HOURLY REPORT " + moon_symbol + "\n"
     message_text += "_Analysis of credible #crypto social media for BTRX coins._\n"
-    message_text += "Please read the USER GUIDE at hackmd.io/s/HynmAWfKZ to bot trading pro tips. Always DYOR!\n\n"
+    message_text += "Please read the USER GUIDE at hackmd.io/s/HynmAWfKZ for bot trading pro tips. Always DYOR!\n\n"
     message_text += hourly_text + "\n" + daily_text + "\n" + weekly_text
     message_text += emoji.emojize(
         "\n" + pray_symbol + " This bot takes effort to tune and develop. Badass features incoming! If you're making good profit, a 2.5% cut is recommended for development continuation. " + pray_symbol + "\n")
