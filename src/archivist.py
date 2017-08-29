@@ -7,7 +7,7 @@ import db
 from rex import Rex
 from helpers import get_time_now, find
 from dateutil.parser import parse as parse_date
-from datetime import timedelta
+from datetime import timedelta, datetime
 from config import env
 CWD = os.getcwd()
 
@@ -18,7 +18,8 @@ def get_score_history(tf):
     score_files = CWD + "/db/" + env + "/symbols/"
     symbol_score_dbs = os.listdir(score_files)
 
-    now = get_time_now()
+    # HACK: fix this naive shit.
+    now = get_time_now(naive=False)
     day_delta = timedelta(hours=24)
     week_delta = timedelta(hours=168)
 
@@ -41,12 +42,13 @@ def get_score_history(tf):
             if "name" in data and "name" not in entry:
                 entry["name"] = data["name"]
 
-            entry_ts = parse_date(data["created"])
+            entry_ts = parse_date(str(
+                datetime.fromtimestamp(float(data["created"]))))
 
-            if tf == "day" and (now - day_delta) >= entry_ts:
+            if tf == "day" and (now - day_delta) <= entry_ts:
                 tf_score += data["score"]
 
-            if tf == "week" and (now - week_delta) >= entry_ts:
+            if tf == "week" and (now - week_delta) <= entry_ts:
                 tf_score += data["score"]
 
         score = 0
