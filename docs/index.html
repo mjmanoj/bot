@@ -25,7 +25,10 @@
             color: white;
         }
 
-        html,
+        html {
+            background: black;
+        }
+
         body {
             margin: 0;
             padding: 0;
@@ -38,7 +41,6 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            height: 100vh;
             padding: 0 16px;
             text-align: center;
             max-width: 600px;
@@ -100,6 +102,12 @@
 
         a:hover {
             color: white;
+        }
+
+        @media(min-height: 750px) {
+            #intro {
+                height: 100vh;
+            }
         }
     </style>
 
