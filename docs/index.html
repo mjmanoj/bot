@@ -6,23 +6,22 @@
     <meta charset="utf-8">
 
     <title>MOONBOT</title>
-    <meta name="description" content="SEO DESCRIPTION HERE">
+    <meta name="description" content="Find credible crypto currencies for trading based on technical and fundamental analysis with the Moon Bot Assistant.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <style>
-        @import url('https://fonts.googleapis.com/css?family=Roboto:300,400');
+        @import url('https://fonts.googleapis.com/css?family=Roboto:100,400');
 
         html,
         body,
         h1,
-        h3,
+        h2,
         h3,
         h4,
         h5,
         h6 {
             font-family: 'Roboto', sans-serif;
-            font-weight: 300;
-            text-transform: uppercase;
+            font-weight: 100;
             color: white;
         }
 
@@ -30,7 +29,7 @@
         body {
             margin: 0;
             padding: 0;
-            background: url('_site/stars.jpg');
+            background: url('stars.jpg');
             background-repeat: repeat;
         }
 
@@ -51,14 +50,27 @@
             margin: 16px;
         }
 
+        p {
+            line-height: 24px;
+        }
+
         .logo {
             width: 300px;
             height: 300px;
             padding: 0;
+            background: url("moon.png");
+            background-size: 100% 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .slogan {
             margin: 0;
+            color: white;
+            letter-spacing: 4px;
+            font-size: 42px;
+            font-weight: 100;
         }
 
         ul {
@@ -67,18 +79,27 @@
             margin: 8px 0;
         }
 
-        .social-icons li {
+        ul li {
             display: inline-block;
             padding: 0 16px;
         }
 
-        a.icon {
-            font-size: 64px;
-            color: aqua;
+        .link-list li a {
+            color: #ffe1ff;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-bottom: 1px solid #ffe1ff;
+            padding-bottom: 2px;
+            font-weight: 400;
         }
 
-        a.icon:hover {
-            color: deeppink;
+        a.icon {
+            font-size: 64px;
+            color: #ffe1ff;
+        }
+
+        a:hover {
+            color: white;
         }
     </style>
 
@@ -89,14 +110,28 @@
 
 <body>
     <div id="intro">
-        <img class="logo" src="./_site/moon.png" alt="INSERT SEO DESCRIPTION HERE FOR MAD GAINS" />
+        <div class="logo">
+            <h1 class="slogan">MOON BOT</h1>
+        </div>
 
-        <h1 class="slogal">MOON BOT</h1>
         <h2 class="more-info">Get Onboard, Ride The Rocket</h2>
         <p>
             Struggling to find which coins are the most relevant right now? Not sure how to properly perform <strong>solid fundamental and technical analysis</strong>?
             MOONBOT is here to call the moon shots. Hop onboard and enjoy the ride.
         </p>
+
+        <ul class="link-list">
+            <li>
+                <a href="https://steemit.com/cryptocurrency/@awitherow/using-twitter-bot-analysis-to-day-swing-and-hodl-cryptocurrencies-effectively">
+                    Whitepaper
+                </a>
+            </li>
+            <li>
+                <a href="https://steemit.com/cryptocurrency/@awitherow/moonbot-roadmap">
+                    Roadmap
+                </a>
+            </li>
+        </ul>
 
         <ul class="social-icons">
             <li>
