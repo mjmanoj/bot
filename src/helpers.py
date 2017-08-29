@@ -12,10 +12,12 @@ def find(lst, key, value):
             return dic
 
 
-def get_time_now(stringify=False):
+def get_time_now(stringify=False, naive=True):
     """ returns a proper default UTC timezone now time. """
 
-    now = datetime.utcnow().replace(tzinfo=pytz.UTC)
+    now = datetime.utcnow()
+    if naive:
+        now = now.replace(tzinfo=pytz.UTC)
     if stringify:
         return now.strftime('%s')
 

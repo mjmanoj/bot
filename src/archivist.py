@@ -6,6 +6,8 @@ from operator import itemgetter
 import db
 from rex import Rex
 from helpers import get_time_now, find
+from dateutil.parser import parse as parse_date
+from datetime import timedelta, datetime
 from config import env
 CWD = os.getcwd()
 
@@ -16,8 +18,13 @@ def get_score_history(tf):
     score_files = CWD + "/db/" + env + "/symbols/"
     symbol_score_dbs = os.listdir(score_files)
 
-    now_timestamp = float(get_time_now(stringify=True))
-    now = datetime.fromtimestamp(now_timestamp)
+    # HACK: fix this naive shit.
+    now = get_time_now(naive=False)
+    day_delta = timedelta(hours=24)
+    week_delta = timedelta(hours=168)
+
+    # used for fallback of putting name into entry.
+    currencies = Rex.get_currencies()["result"]
 
     scores = []
 
@@ -31,30 +38,26 @@ def get_score_history(tf):
         tf_score = 0
 
         for data in symbol_db:
+            # fallback for missing name check.
             if "name" in data and "name" not in entry:
                 entry["name"] = data["name"]
 
-            if tf == "day":
-                today = now.day
-                entry_timestamp = float(data["created"])
-                score_day = datetime.fromtimestamp(entry_timestamp).day
+            entry_ts = parse_date(str(
+                datetime.fromtimestamp(float(data["created"]))))
 
-                if today == score_day:
-                    tf_score += data["score"]
+            if tf == "day" and (now - day_delta) <= entry_ts:
+                tf_score += data["score"]
 
-            if tf == "week":
-                cal_week = date.fromtimestamp(now_timestamp).isocalendar()[1]
-                score_week = date.fromtimestamp(
-                    float(data["created"])).isocalendar()[1]
+            if tf == "week" and (now - week_delta) <= entry_ts:
+                tf_score += data["score"]
 
-                if cal_week == score_week:
-                    tf_score += data["score"]
         score = 0
+        # make sure there are entries with scores
         if tf_entries is not 0 and tf_score is not 0:
             score = tf_score / tf_entries
 
+        # fallback if name does not exist
         if "name" not in entry:
-            currencies = Rex.get_currencies()["result"]
             coin_info = find(currencies, "Currency", symbol[1:])
 
             if coin_info:
