@@ -33,8 +33,9 @@ def generate_and_post_message(hourly, daily, weekly):
         "\n" + pray_symbol + " This bot takes effort to tune and develop. Badass features incoming! If you're making good profit, a 2.5% cut is recommended for development continuation. " + pray_symbol + "\n")
     message_text += "BTC: `" + btc_tip_jar + "`\n"
     message_text += "RAIN: `" + rain_tip_jar + "`\n"
+    message_text += "Found a bug? [Report the bug here](https://goo.gl/forms/CPOCGE86TwDrf1sr1)! Got a feature request? [Request it here](https://goo.gl/forms/bdHcPk5TsRH5roZL2)!\n"
     message_text += crystal_ball_symbol + \
-        " Questions, tips, feedback, need a programmer? write @azurikai, will make your dreams come true " + \
+        " Feedback, need a programmer or anything else? Write @azurikai at any time. " + \
         crystal_ball_symbol + "\n"
 
     send_message(text=message_text)
