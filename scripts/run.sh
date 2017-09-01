@@ -2,9 +2,8 @@
 while true; do
 
     ./scripts/post_changelog.sh
-
     make execute
-    make upload_db_to_github
+	./scripts/upload_db.sh
     
     sleep 3200    
 done
