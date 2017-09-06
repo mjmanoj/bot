@@ -1,0 +1,65 @@
+{
+    "_meta": {
+        "hash": {
+            "sha256": "3a44073ab37889fe9a63a270c7643ce9b9596bbb3504f613fe3340001cb5d3e1"
+        },
+        "pipfile-spec": 1,
+        "requires": {
+            "python_version": "3.6"
+        },
+        "sources": [
+            {
+                "url": "https://pypi.python.org/simple",
+                "verify_ssl": true
+            }
+        ]
+    },
+    "default": {
+        "bittrex": {
+            "version": "==0.1.4"
+        },
+        "certifi": {
+            "version": "==2017.7.27.1"
+        },
+        "click": {
+            "version": "==6.7"
+        },
+        "emoji": {
+            "version": "==0.4.5"
+        },
+        "future": {
+            "version": "==0.16.0"
+        },
+        "oauthlib": {
+            "version": "==2.0.2"
+        },
+        "python-dateutil": {
+            "version": "==2.6.1"
+        },
+        "python-dotenv": {
+            "version": "==0.6.5"
+        },
+        "python-telegram-bot": {
+            "version": "==8.0"
+        },
+        "python-twitter": {
+            "version": "==3.3"
+        },
+        "pytz": {
+            "version": "==2017.2"
+        },
+        "requests": {
+            "version": "==2.7.0"
+        },
+        "requests-oauthlib": {
+            "version": "==0.8.0"
+        },
+        "six": {
+            "version": "==1.10.0"
+        },
+        "tinydb": {
+            "version": "==3.5.0"
+        }
+    },
+    "develop": {}
+}
