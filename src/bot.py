@@ -77,7 +77,7 @@ def build_rating_template(scores, title):
             message += " ::: [Research](https://coinmarketcap.com/currencies/" + \
                 market["name"] + ")"
 
-        message += " | [Analyize](https://www.tradingview.com/chart/?symbol=BITTREX:" + \
+        message += " | [Analyze](https://www.tradingview.com/chart/?symbol=BITTREX:" + \
             market["symbol"] + "BTC)"
 
         message += " | [Trade](https://bittrex.com/Market/Index?MarketName=BTC-" + \
