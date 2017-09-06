@@ -1,9 +1,13 @@
 setup:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pip2 install -r requirements.txt
 =======
 	pipenv install
 >>>>>>> add pipenv stuff
+=======
+	pipenv --three install
+>>>>>>> successfully update to 3.6
 
 run:
 	./scripts/run.sh
@@ -21,5 +25,9 @@ test_moon_call:
 	ENV=prod python3 ./src/main.py
 
 test_moon_call:
+<<<<<<< HEAD
 	ENV=test python3 ./src/main.py
 >>>>>>> add pipenv stuff
+=======
+	ENV=test python3 ./src/main.py
+>>>>>>> successfully update to 3.6

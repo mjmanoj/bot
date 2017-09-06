@@ -88,7 +88,8 @@ def get_twitter_res_time(time_range):
                 end = int(last_op["twitter_search_end"])
                 last_twitter_call_seconds = abs(start - end)
                 res_time += last_twitter_call_seconds
-                print "[INFO] last twitter response time was " + str(last_twitter_call_seconds) + " seconds."
+                print("[INFO] last twitter response time was " +
+                      str(last_twitter_call_seconds) + " seconds.")
 
         if time_range == "average" and sorted_ops is not None:
             durations = 0
@@ -99,7 +100,8 @@ def get_twitter_res_time(time_range):
                 durations += abs(start - end)
 
             res_time += durations / len(sorted_ops)
-            print "[INFO] average twitter response time " + res_time + " seconds."
+            print("[INFO] average twitter response time " +
+                  res_time + " seconds.")
 
     return res_time
 
@@ -120,6 +122,7 @@ def get_moon_call_res_duration():
             end = int(last_op["_end"])
             duration = abs(start - end)
             moon_call_duration += duration
-            print "[INFO] last moon_call duration was " + str(duration) + " seconds."
+            print("[INFO] last moon_call duration was " +
+                  str(duration) + " seconds.")
 
     return moon_call_duration
