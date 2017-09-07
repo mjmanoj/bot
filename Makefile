@@ -1,6 +1,7 @@
 setup:
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	pip2 install -r requirements.txt
 =======
 	pipenv install
@@ -31,3 +32,12 @@ test_moon_call:
 =======
 	ENV=test python3 ./src/main.py
 >>>>>>> successfully update to 3.6
+=======
+	pip3 install -r requirements.txt
+
+moon_call:
+	ENV=prod python3 ./src/jobs/moon_call.py
+
+test_moon_call:
+	ENV=test python3 ./src/jobs/moon_call.py
+>>>>>>> move to pip installation vs pipenv

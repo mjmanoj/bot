@@ -1,0 +1,8 @@
+bittrex
+python-telegram-bot
+python-dotenv
+python-twitter
+pytz
+psycopg2
+python-dateutil
+emoji
