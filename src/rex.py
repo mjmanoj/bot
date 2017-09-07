@@ -1,3 +1,4 @@
+#!/usr/bin/python
 """
 the rex package is a bittrex exchange adapter.
 """

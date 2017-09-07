@@ -1,3 +1,4 @@
+#!/usr/bin/python
 """ the config package works with environment variables """
 from os.path import join, dirname
 from os import environ

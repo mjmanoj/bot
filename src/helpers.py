@@ -1,3 +1,4 @@
+#!/usr/bin/python
 """ the helpers package contains help functions for the application """
 import os
 from datetime import datetime

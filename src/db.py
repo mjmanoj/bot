@@ -1,3 +1,4 @@
+#!/usr/bin/python
 """ the db package is a tinydb adapter with useful function calls """
 import os
 from tinydb import TinyDB, Query

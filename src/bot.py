@@ -1,3 +1,4 @@
+#!/usr/bin/python
 """ the bot package servers as a telegram adapter """
 import telegram
 import emoji

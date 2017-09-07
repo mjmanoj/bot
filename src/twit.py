@@ -1,3 +1,4 @@
+#!/usr/bin/python
 """
 the twit package is a bear python-twitter adapter
 """

@@ -1,3 +1,4 @@
+#!/usr/bin/python
 """
 the main package runs the main functionalities of the program
 - moon_call is a function to call moon shots on market symbols

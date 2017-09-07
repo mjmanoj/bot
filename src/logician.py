@@ -1,3 +1,4 @@
+#!/usr/bin/python
 """ the logician package makes all the calls, based on human logic. """
 from datetime import timedelta
 import db

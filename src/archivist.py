@@ -1,3 +1,4 @@
+#!/usr/bin/python
 """ the archivist deals with archived data in the databases """
 import os
 from datetime import datetime, date
