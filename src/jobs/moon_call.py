@@ -5,7 +5,7 @@ the main package runs the main functionalities of the program
 """
 from operator import itemgetter
 
-import db
+import postgres
 from config import env
 from archivist import get_moon_call_res_duration, get_score_history
 from helpers import get_time_now
@@ -20,9 +20,9 @@ def moon_call():
     """ call hot shots on market symbols """
 
     operations_log = {}
-    operations_log["_init"] = get_time_now(stringify=True)
+    operations_log["init"] = get_time_now(stringify=True)
 
-    print("[JOB] Starting moon_call at " + operations_log["_init"])
+    print("[JOB] Starting moon_call at " + operations_log["init"])
 
     summaries = rex.get_market_summaries()
     scores = []
@@ -48,16 +48,11 @@ def moon_call():
         if not score:
             continue
 
-        entry["score"] = int(score / 2)
-        db.add(path="symbols", file_name=coin_symbol, entry=entry)
+        entry["score"] = int(score)
+        postgres.add_coin_symbol(entry)
         scores.append(entry)
 
     operations_log["twitter_search_end"] = get_time_now(stringify=True)
-    print("[JOB] Symbols scored, tracking periphreals...")
-
-    operations_log["track_periphreals_start"] = get_time_now(stringify=True)
-    track_periphreals()
-    operations_log["track_periphreals_end"] = get_time_now(stringify=True)
 
     # sort and find hottest trends
     sorted_scores = sorted(scores, key=itemgetter("score"), reverse=True)
@@ -80,28 +75,8 @@ def moon_call():
           get_time_now(stringify=True))
     print("[JOB] Sleeping now for one hour...\n\n")
 
-    operations_log["_end"] = get_time_now(stringify=True)
-    db.add(path="operations", file_name="moon_call", entry=operations_log)
-
-
-def track_periphreals():
-    """
-    track_periphreals tracks secondary data such as
-    - twitter trending per main tech countries
-    - TODO: planetary movements
-    """
-
-    countries = HOT_COUNTRIES
-    if env == "test":
-        countries = countries[:2]
-
-    for country in HOT_COUNTRIES:
-        res = get_trends_for_woeid(country)
-
-        for trend in res:
-            entry = {}
-            entry["topic"] = trend.name
-            db.add(path="twitter/trends", file_name=str(country), entry=entry)
+    operations_log["end"] = get_time_now(stringify=True)
+    postgres.add_operations_log(operations_log)
 
 
 moon_call()
