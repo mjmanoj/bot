@@ -20,8 +20,3 @@ def search(term):
 def get_tweep(tweep):
     """ gets a twitter user, aka tweep. """
     return API.GetUser(tweep)
-
-
-def get_trends_for_woeid(place):
-    """ gets top trending hash tags of the moment """
-    return API.GetTrendsWoeid(place)
