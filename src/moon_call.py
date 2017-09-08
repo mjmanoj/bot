@@ -17,9 +17,9 @@ def moon_call():
     """ call hot shots on market symbols """
 
     operations_log = {}
-    operations_log["start"] = helpers.get_time_now(stringify=True)
+    operations_log["main_start"] = helpers.get_time_now(stringify=True)
 
-    print("[JOB] Starting moon_call at " + operations_log["start"])
+    print("[JOB] Starting moon_call at " + operations_log["main_start"])
 
     summaries = rex.get_market_summaries()
     scores = []
@@ -74,7 +74,7 @@ def moon_call():
           helpers.get_time_now(stringify=True))
     print("[JOB] Sleeping now for one hour...\n\n")
 
-    operations_log["end"] = helpers.get_time_now(stringify=True)
+    operations_log["main_end"] = helpers.get_time_now(stringify=True)
     postgres.add_operations_log(operations_log)
 
 

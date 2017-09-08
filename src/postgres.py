@@ -48,8 +48,8 @@ def add_operations_log(log):
         table = str(env + "_moon_call")
         try:
             db.execute("insert into " + table +
-                       "(start, end, twitter_search_start, twitter_search_end, send_message_start, send_message_end) values (%s, %s, %s, %s, %s, %s)",
-                       (log["start"], log["end"], log["twitter_search_start"], log["twitter_search_end"], log["send_message_start"], log["send_message_end"]))
+                       "(main_start, main_end, twitter_search_start, twitter_search_end, send_message_start, send_message_end) values (%s, %s, %s, %s, %s, %s)",
+                       (log["main_start"], log["main_end"], log["twitter_search_start"], log["twitter_search_end"], log["send_message_start"], log["send_message_end"]))
         except psycopg2.Error as e:
             print e
             pass
@@ -73,7 +73,7 @@ def get_moon_call_operations():
         table = str(env + "_moon_call")
         try:
             db.execute("SELECT * from " + table +
-                       " order by start desc limit 1")
+                       " order by main_start desc limit 1")
         except psycopg2.Error as e:
             print e
             pass
