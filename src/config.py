@@ -1,10 +1,12 @@
+#!/usr/bin/python
 """ the config package works with environment variables """
 from os.path import join, dirname
 from os import environ
 from dotenv import load_dotenv
 
-env = join(dirname(__file__), "../.env")
-load_dotenv(env)
+if "heroku" not in environ:
+    env = join(dirname(__file__), "../.env")
+    load_dotenv(env)
 
 # telegram bot
 telegram_token = environ["bot_api_token"]
@@ -24,7 +26,6 @@ twitter_access_secret = environ["twitter_access_secret"]
 
 # tips
 btc_tip_jar = environ["btc_tip_jar"]
-ltc_tip_jar = environ["ltc_tip_jar"]
 rain_tip_jar = environ["rain_tip_jar"]
 
 # environment

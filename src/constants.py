@@ -1,3 +1,4 @@
+#!/usr/bin/python
 """ the constants package has globals used throughout the project """
 DEFAULT_MINS = 30
 

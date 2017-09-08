@@ -1,6 +1,6 @@
+#!/usr/bin/python
 """ the logician package makes all the calls, based on human logic. """
 from datetime import timedelta
-import db
 from helpers import get_time_now
 from dateutil.parser import parse as parse_date
 from constants import VIP_PLAYERS, SHILLS
