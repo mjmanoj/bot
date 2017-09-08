@@ -34,6 +34,7 @@
             padding: 0;
             background: url('stars.jpg');
             background-repeat: repeat;
+            width: 100vw;
         }
 
         #intro {
@@ -83,7 +84,7 @@
 
         ul li {
             display: inline-block;
-            padding: 0 16px;
+            padding: 8px 16px;
         }
 
         .link-list li a {
@@ -104,7 +105,13 @@
             color: white;
         }
 
-        @media(min-height: 750px) {
+        .donations li {
+            font-size: 14px;
+        }
+
+
+
+        @media(min-height: 768px) {
             #intro {
                 height: 100vh;
             }
@@ -119,7 +126,7 @@
 <body>
     <div id="intro">
         <div class="logo">
-            <h1 class="slogan">MOON BOT</h1>
+            <h1 class="slogan">MOONBOT</h1>
         </div>
 
         <h2 class="more-info">Get Onboard, Ride The Rocket</h2>
@@ -131,12 +138,17 @@
         <ul class="link-list">
             <li>
                 <a href="https://steemit.com/cryptocurrency/@awitherow/using-twitter-bot-analysis-to-day-swing-and-hodl-cryptocurrencies-effectively">
-                    Effective Trading Using Moon Bot
+                    Trading Guide
                 </a>
             </li>
             <li>
                 <a href="https://steemit.com/cryptocurrency/@awitherow/moonbot-roadmap">
                     Product Roadmap
+                </a>
+            </li>
+            <li>
+                <a href="https://steemit.com/cryptocurrency/@awitherow/moonbot-testimonials">
+                    Testimonials
                 </a>
             </li>
         </ul>
@@ -154,9 +166,8 @@
             exist.
         </p>
 
-        <ul>
+        <ul class="donations">
             <li>BTC: <strong>1DzZX4pjJNZudgRnCbqp6VPHDBzWZZNwbq</strong></li>
-            <li>LTC: <strong>LNYC18127goscscLLprUFfZJ7EyEyHcLrs</strong></li>
             <li>RAIN: <strong>RNKA7vwpG2CScpcYaGMVMVyUSHH8hBKxwA</strong></li>
         </ul>
 
