@@ -32,16 +32,22 @@ def get_score_history(tf):
         return []
 
     for record in history:
+        broke = False
         # check scores and add score to existing score if it exists
         for score in scores:
-            if "symbol" in score and score["symbol"] == record["symbol"]:
+            if score["symbol"] == record["symbol"]:
                 score["score"] += record["score"]
-                continue
+                broke = True
+                break
 
-        scores.append(record)
+        if not broke:
+            scores.append(record)
 
-    sorted_scores = sorted(scores, key=itemgetter("score"), reverse=True)
-    return sorted_scores[:3]
+    if scores is not None:
+        scores = sorted(scores, key=itemgetter("score"), reverse=True)
+        scores = scores[:3]
+
+    return scores
 
 
 def get_moon_call_res_duration():
@@ -52,8 +58,8 @@ def get_moon_call_res_duration():
     moon_call_duration = 0
 
     if last_op is not None:
-        start = int(last_op["init"])
-        end = int(last_op["end"])
+        start = int(last_op["main_start"])
+        end = int(last_op["main_end"])
         duration = abs(start - end)
         moon_call_duration += duration
         print("[INFO] last moon_call duration was " +
