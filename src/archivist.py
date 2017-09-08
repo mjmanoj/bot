@@ -25,7 +25,7 @@ def get_score_history(tf):
     if tf is "daily":
         cutoff = now - day_delta
 
-    history = postgres.get_historical_scores(cutoff)
+    history = postgres.get_historical_twitter_scores(cutoff)
     scores = []
 
     if history is None:

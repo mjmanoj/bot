@@ -17,9 +17,9 @@ def moon_call():
     """ call hot shots on market symbols """
 
     operations_log = {}
-    operations_log["init"] = helpers.get_time_now(stringify=True)
+    operations_log["start"] = helpers.get_time_now(stringify=True)
 
-    print("[JOB] Starting moon_call at " + operations_log["init"])
+    print("[JOB] Starting moon_call at " + operations_log["start"])
 
     summaries = rex.get_market_summaries()
     scores = []
@@ -47,7 +47,7 @@ def moon_call():
             continue
 
         entry["score"] = int(score)
-        postgres.add_coin_symbol(entry)
+        postgres.add_twitter_score(entry)
         scores.append(entry)
 
     operations_log["twitter_search_end"] = helpers.get_time_now(stringify=True)
@@ -63,7 +63,7 @@ def moon_call():
     weekly_top_scores = archivist.get_score_history(tf="week")
 
     # prepare message for telegram
-    operations_log["send_message_end"] = helpers.get_time_now(stringify=True)
+    operations_log["send_message_start"] = helpers.get_time_now(stringify=True)
 
     bot.generate_and_post_message(
         hourly_top_scores, daily_top_scores, weekly_top_scores)

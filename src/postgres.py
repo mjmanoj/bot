@@ -6,8 +6,8 @@ from config import env
 
 class Db():
     """ contextual database for setting up and tearing down before running functional methods."""
-    # intilize
 
+    # intilize
     def __init__(self, url=urlparse.urlparse(os.environ["DATABASE_URL"])):
         urlparse.uses_netloc.append("postgres")
         self.url = url
@@ -18,7 +18,7 @@ class Db():
             host=self.url.hostname,
             port=self.url.port
         )
-        self.cur = self.conn.cur()
+        self.cur = self.conn.cursor()
 
     # setup
     def __enter__(self):
@@ -30,35 +30,51 @@ class Db():
         self.conn.close()
 
 
-def add_coin_symbol(entry):
+def add_twitter_score(entry):
     """ adds a coin symbol to the symbols table according to environment, and the symbol it is."""
     with Db() as db:
-        table = env + "/scores"
-        created, score = entry
-        db.execute("insert into " + table +
-                   "(created, score) values (%s, %s, %s)", (created, score))
+        table = str(env + "_twitter_scores")
+        try:
+            db.execute("insert into " + table +
+                       "(symbol, score, exchange) values (%s, %s, %s)", (entry["symbol"], entry["score"], "bittrex"))
+        except psycopg2.Error as e:
+            print e
+            pass
 
 
 def add_operations_log(log):
     """ adds a coin symbol to the symbols table according to environment, and the symbol it is."""
     with Db() as db:
-        table = env + "/moon_call"
-        init, end, twitter_search_start, twitter_search_end, track_periphreals_start, track_periphreals_end, send_message_start, send_message_end = log
-        db.execute("insert into " + table +
-                   "(init, end, twitter_search_start, twitter_search_end, send_message_start, send_message_end) values (%s, %s, %s, %s, %s, %s)",
-                   (init, end, twitter_search_start, twitter_search_end, send_message_start, send_message_end))
+        table = str(env + "_moon_call")
+        try:
+            db.execute("insert into " + table +
+                       "(start, end, twitter_search_start, twitter_search_end, send_message_start, send_message_end) values (%s, %s, %s, %s, %s, %s)",
+                       (log["start"], log["end"], log["twitter_search_start"], log["twitter_search_end"], log["send_message_start"], log["send_message_end"]))
+        except psycopg2.Error as e:
+            print e
+            pass
 
 
-def get_historical_scores(cutoff):
+def get_historical_twitter_scores(cutoff):
     with Db() as db:
-        table = env + "/scores"
-        db.execute("select * from " + table +
-                   " where created >= " + cutoff + "")
+        table = str(env + "_twitter_scores")
+        try:
+            db.execute("select * from " + table +
+                       " where created >= '" + str(cutoff) + "'")
+        except psycopg2.Error as e:
+            print e
+            return []
+
         return db.fetchall()
 
 
 def get_moon_call_operations():
     with Db() as db:
-        table = env + "/moon_call"
-        db.execute("SELECT * from " + table + " order by init desc limit 1")
-        return db.fetchall()
+        table = str(env + "_moon_call")
+        try:
+            db.execute("SELECT * from " + table +
+                       " order by start desc limit 1")
+        except psycopg2.Error as e:
+            print e
+            pass
+        return db.fetchone()

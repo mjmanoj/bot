@@ -4,7 +4,7 @@ from os.path import join, dirname
 from os import environ
 from dotenv import load_dotenv
 
-if environ["app_env"] is not "HEROKU":
+if "heroku" not in environ:
     env = join(dirname(__file__), "../.env")
     load_dotenv(env)
 
