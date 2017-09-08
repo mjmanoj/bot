@@ -1,5 +1,6 @@
 import os
 import psycopg2
+import psycopg2.extras
 import urlparse
 from config import env
 
@@ -18,14 +19,16 @@ class Db():
             host=self.url.hostname,
             port=self.url.port
         )
-        self.cur = self.conn.cursor()
+        self.cur = self.conn.cursor(
+            cursor_factory=psycopg2.extras.RealDictCursor)
 
     # setup
     def __enter__(self):
-        return self.cur
+        return self
 
     # teardown
     def __exit__(self, *args):
+        self.conn.commit()
         self.cur.close()
         self.conn.close()
 
@@ -35,8 +38,8 @@ def add_twitter_score(entry):
     with Db() as db:
         table = str(env + "_twitter_scores")
         try:
-            db.execute("insert into " + table +
-                       "(symbol, score, exchange) values (%s, %s, %s)", (entry["symbol"], entry["score"], "bittrex"))
+            db.cur.execute("insert into " + table +
+                           "(symbol, score, exchange) values (%s, %s, %s)", (entry["symbol"], entry["score"], "bittrex"))
         except psycopg2.Error as e:
             print e
             pass
@@ -47,9 +50,9 @@ def add_operations_log(log):
     with Db() as db:
         table = str(env + "_moon_call")
         try:
-            db.execute("insert into " + table +
-                       "(main_start, main_end, twitter_search_start, twitter_search_end, send_message_start, send_message_end) values (%s, %s, %s, %s, %s, %s)",
-                       (log["main_start"], log["main_end"], log["twitter_search_start"], log["twitter_search_end"], log["send_message_start"], log["send_message_end"]))
+            db.cur.execute("insert into " + table +
+                           "(main_start, main_end, twitter_search_start, twitter_search_end, send_message_start, send_message_end) values (%s, %s, %s, %s, %s, %s)",
+                           (log["main_start"], log["main_end"], log["twitter_search_start"], log["twitter_search_end"], log["send_message_start"], log["send_message_end"]))
         except psycopg2.Error as e:
             print e
             pass
@@ -59,22 +62,22 @@ def get_historical_twitter_scores(cutoff):
     with Db() as db:
         table = str(env + "_twitter_scores")
         try:
-            db.execute("select * from " + table +
-                       " where created >= '" + str(cutoff) + "'")
+            db.cur.execute("select * from " + table +
+                           " where created >= '" + str(cutoff) + "'")
         except psycopg2.Error as e:
             print e
             return []
 
-        return db.fetchall()
+        return db.cur.fetchall()
 
 
 def get_moon_call_operations():
     with Db() as db:
         table = str(env + "_moon_call")
         try:
-            db.execute("SELECT * from " + table +
-                       " order by main_start desc limit 1")
+            db.cur.execute("SELECT * from " + table +
+                           " order by main_start desc limit 1")
         except psycopg2.Error as e:
             print e
             pass
-        return db.fetchone()
+        return db.cur.fetchone()
