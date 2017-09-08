@@ -1,7 +1,7 @@
 setup:
 	pip2 install -r requirements.txt
 
-execute:
+moon_call:
 	ENV=prod python2 ./src/moon_call.py
 
 test_moon_call:
