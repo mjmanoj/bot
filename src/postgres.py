@@ -57,7 +57,7 @@ def get_historical_scores(cutoff):
         return db.fetchall()
 
 
-def get_moon_call_operations(cutoff):
+def get_moon_call_operations():
     with Db() as db:
         table = env + "/moon_call"
         db.execute("SELECT * from " + table + " order by init desc limit 1")

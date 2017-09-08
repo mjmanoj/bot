@@ -3,14 +3,14 @@
 the main package runs the main functionalities of the program
 - moon_call is a function to call moon shots on market symbols
 """
-from operator import itemgetter
-from src import archivist
-from src import helpers
-from src import bot
-from src import twit
-from src import rex
-from src import logician
-from src import postgres
+import operator
+import archivist
+import helpers
+import bot
+import twit
+import rex
+import logician
+import postgres
 
 
 def moon_call():
@@ -53,7 +53,8 @@ def moon_call():
     operations_log["twitter_search_end"] = helpers.get_time_now(stringify=True)
 
     # sort and find hottest trends
-    sorted_scores = sorted(scores, key=itemgetter("score"), reverse=True)
+    sorted_scores = sorted(
+        scores, key=operator.itemgetter("score"), reverse=True)
     hourly_top_scores = sorted_scores[:3]
 
     print("[JOB] Preparing message templates...")
