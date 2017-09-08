@@ -4,8 +4,9 @@ from os.path import join, dirname
 from os import environ
 from dotenv import load_dotenv
 
-env = join(dirname(__file__), "../.env")
-load_dotenv(env)
+if environ["app_env"] is not "HEROKU":
+    env = join(dirname(__file__), "../.env")
+    load_dotenv(env)
 
 # telegram bot
 telegram_token = environ["bot_api_token"]
