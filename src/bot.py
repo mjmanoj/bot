@@ -18,8 +18,8 @@ def build_info_template():
     message_text += "- *Free Trading Guide* -> bit.ly/2vFCM5W \n"
     message_text += "- Roadmap -> bit.ly/2wOPi7Z \n"
     message_text += "- Website -> bit.ly/2wmfMLz\n"
-    message_text += "- [Report bugs](https://goo.gl/forms/CPOCGE86TwDrf1sr1)!\n"
-    message_text += "- [Request features](https://goo.gl/forms/bdHcPk5TsRH5roZL2)!\n\n"
+    message_text += "- Report bugs! -> goo.gl/forms/CPOCGE86TwDrf1sr1\n"
+    message_text += "- Request features! -> goo.gl/forms/bdHcPk5TsRH5roZL2\n\n"
     message_text += crystal_ball_symbol + \
         " Feedback, need a programmer or anything else? Write @azurikai at any time. " + \
         crystal_ball_symbol + "\n"
@@ -27,13 +27,14 @@ def build_info_template():
 
 
 def build_ad_template():
-    pray_symbol = emoji.emojize(":folded_hands:")
+    rocket_symbol = emoji.emojize(":rocket:")
     crystal_ball_symbol = emoji.emojize(":crystal_ball:")
 
-    message_text = emoji.emojize(
-        " Support Development " + pray_symbol + pray_symbol + pray_symbol + " \n")
+    message_text = emoji.emojize(rocket_symbol + rocket_symbol + rocket_symbol +
+                                 " Accelerate Development With Donations " + rocket_symbol + rocket_symbol + rocket_symbol + " \n")
     message_text += "BTC: `" + btc_tip_jar + "`\n"
     message_text += "RAIN: `" + rain_tip_jar + "`\n"
+    message_text += "Bitconnect: bitconnect.co/?ref=5h3llgh05t\n"
 
     return message_text
 

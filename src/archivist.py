@@ -69,7 +69,7 @@ def get_moon_call_res_duration():
 
 
 def get_last_scores(tf):
-    """ get_last_scores returns the moon call duration"""
+    """ get_last_scores returns the last scores from the moon call based on the timeframe"""
 
     last_op = postgres.get_moon_call_operations()
 
