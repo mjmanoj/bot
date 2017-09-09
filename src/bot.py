@@ -95,8 +95,9 @@ def build_rating_template(scores, title):
             symbol + ") Score => " + lit_meter
 
         if "name" in market:
-            message += " ::: [Research](https://coinmarketcap.com/currencies/" + \
-                market["name"] + ")"
+            if market["name"] is not None:
+                message += " ::: [Research](https://coinmarketcap.com/currencies/" + \
+                    market["name"] + ")"
 
         message += " | [Analyze](https://www.tradingview.com/chart/?symbol=BITTREX:" + \
             market["symbol"] + "BTC)"

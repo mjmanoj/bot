@@ -16,6 +16,8 @@ CWD = os.getcwd()
 def get_score_history(tf):
     """ gets the score history for all coins, returning top 3 for the respective tf """
 
+    currencies = Rex.get_currencies()["result"]
+
     now = get_time_now(naive=False)
     day_delta = timedelta(hours=24)
     week_delta = timedelta(hours=168)
@@ -25,23 +27,28 @@ def get_score_history(tf):
     if tf is "daily":
         cutoff = now - day_delta
 
-    history = postgres.get_historical_twitter_scores(cutoff)
+    rows = postgres.get_historical_twitter_scores(cutoff)
     scores = []
 
-    if history is None:
+    if rows is None:
         return []
 
-    for record in history:
-        broke = False
+    for row in rows:
+        found = False
         # check scores and add score to existing score if it exists
-        for score in scores:
-            if score["symbol"] == record["symbol"]:
-                score["score"] += record["score"]
-                broke = True
+        for entry in scores:
+            if entry["symbol"] == row["symbol"]:
+                entry["score"] += row["score"]
+                found = True
                 break
 
-        if not broke:
-            scores.append(record)
+        if not found:
+            if "name" not in row:
+                coin_info = find(currencies, "Currency", row["symbol"])
+                if coin_info:
+                    row["name"] = coin_info["CurrencyLong"].lower()
+
+            scores.append(row)
 
     if scores is not None:
         scores = sorted(scores, key=itemgetter("score"), reverse=True)

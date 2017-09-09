@@ -39,7 +39,7 @@ def add_twitter_score(entry):
         table = str(env + "_twitter_scores")
         try:
             db.cur.execute("insert into " + table +
-                           "(symbol, score, exchange) values (%s, %s, %s)", (entry["symbol"], entry["score"], "bittrex"))
+                           "(symbol, score, exchange, name) values (%s, %s, %s, %s)", (entry["symbol"], entry["score"], "bittrex", entry["name"]))
         except psycopg2.Error as e:
             print e
             pass
