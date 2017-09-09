@@ -21,7 +21,7 @@ def build_info_template():
     return message_text
 
 
-def generate_ad_template():
+def build_ad_template():
     pray_symbol = emoji.emojize(":folded_hands:")
     crystal_ball_symbol = emoji.emojize(":crystal_ball:")
 
