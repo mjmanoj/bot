@@ -13,11 +13,11 @@ post_ad:
 test_post_ad:
 	ENV=test python2 ./src/post_ad.py
 
-post_uni:
-	ENV=prod python2 ./src/post_university.py
+post_res:
+	ENV=prod python2 ./src/post_res.py
 
-test_post_uni:
-	ENV=test python2 ./src/post_university.py
+test_post_res:
+	ENV=test python2 ./src/post_res.py
 
 tail:
 	heroku logs --app crypto-moon-bot --tail

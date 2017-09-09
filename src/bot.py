@@ -14,10 +14,15 @@ def build_info_template():
     moon_symbol = emoji.emojize(":full_moon:")
     crystal_ball_symbol = emoji.emojize(":crystal_ball:")
 
-    message_text = moon_symbol + " MOON ROOM HOURLY REPORT " + moon_symbol + "\n"
-    message_text += "_Analysis of credible #crypto social media for BTRX coins._\n"
-    message_text += "Please read the USER GUIDE at bit.ly/2vFCM5W for bot trading pro tips. Always DYOR!\n"
-    message_text += "Check the roadmap and other goodies on the main site at bit.ly/2wmfMLz \n\n"
+    message_text = moon_symbol + " Moon Room Resources " + moon_symbol + "\n"
+    message_text += "- *Free Trading Guide* -> bit.ly/2vFCM5W \n"
+    message_text += "- Roadmap -> bit.ly/2wOPi7Z \n"
+    message_text += "- Website -> bit.ly/2wmfMLz\n"
+    message_text += "- [Report bugs](https://goo.gl/forms/CPOCGE86TwDrf1sr1)!\n"
+    message_text += "- [Request features](https://goo.gl/forms/bdHcPk5TsRH5roZL2)!\n\n"
+    message_text += crystal_ball_symbol + \
+        " Feedback, need a programmer or anything else? Write @azurikai at any time. " + \
+        crystal_ball_symbol + "\n"
     return message_text
 
 
@@ -26,13 +31,9 @@ def build_ad_template():
     crystal_ball_symbol = emoji.emojize(":crystal_ball:")
 
     message_text = emoji.emojize(
-        "\n" + pray_symbol + " This bot takes effort to tune and develop. Badass features incoming! If you're making good profit, a 2.5% cut is recommended for development continuation. " + pray_symbol + "\n")
+        " Support Development " + pray_symbol + pray_symbol + pray_symbol + " \n")
     message_text += "BTC: `" + btc_tip_jar + "`\n"
     message_text += "RAIN: `" + rain_tip_jar + "`\n"
-    message_text += "Found a bug? [Report the bug here](https://goo.gl/forms/CPOCGE86TwDrf1sr1)! Got a feature request? [Request it here](https://goo.gl/forms/bdHcPk5TsRH5roZL2)!\n"
-    message_text += crystal_ball_symbol + \
-        " Feedback, need a programmer or anything else? Write @azurikai at any time. " + \
-        crystal_ball_symbol + "\n"
 
     return message_text
 
