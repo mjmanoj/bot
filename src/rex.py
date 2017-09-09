@@ -69,6 +69,6 @@ def get_market_summaries():
             final.append(i)
 
     if env == "test":
-        return final[:3]
+        return final[:5]
 
     return final

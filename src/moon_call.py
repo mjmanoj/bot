@@ -55,7 +55,7 @@ def moon_call():
     # sort and find hottest trends
     sorted_scores = sorted(
         scores, key=operator.itemgetter("score"), reverse=True)
-    hourly_top_scores = sorted_scores[:3]
+    hourly_top_scores = sorted_scores[:5]
 
     print("[JOB] Preparing message templates...")
 

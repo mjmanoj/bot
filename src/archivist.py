@@ -45,7 +45,7 @@ def get_score_history(tf):
 
     if scores is not None:
         scores = sorted(scores, key=itemgetter("score"), reverse=True)
-        scores = scores[:3]
+        scores = scores[:5]
 
     return scores
 
