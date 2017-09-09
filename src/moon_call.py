@@ -76,22 +76,24 @@ def moon_call():
     last_daily = archivist.get_last_scores("daily")
     last_weekly = archivist.get_last_scores("weekly")
 
-    day_match = False
+    day_match = 0
     if last_daily is not None:
+        print "DAILY"
         for i in range(0, len(daily_top_scores)):
             if daily_top_scores[i]["symbol"] == last_daily[i]:
-                day_match = True
+                day_match += 1
 
-    week_match = False
-    if last_weekly is not None:
+    week_match = 0
+    if last_weekly != None:
+        print "WEEKLY"
         for i in range(0, len(weekly_top_scores)):
             if weekly_top_scores[i]["symbol"] == last_weekly[i]:
-                week_match = True
+                week_match += 1
 
-    if day_match:
+    if day_match > 0:
         daily_top_scores = []
 
-    if week_match:
+    if week_match > 0:
         weekly_top_scores = []
 
     # prepare message for telegram
