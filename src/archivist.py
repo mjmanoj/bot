@@ -66,3 +66,18 @@ def get_moon_call_res_duration():
               str(duration) + " seconds.")
 
     return moon_call_duration
+
+
+def get_last_scores(tf):
+    """ get_last_scores returns the moon call duration"""
+
+    last_op = postgres.get_moon_call_operations()
+
+    if last_op is not None:
+        if tf == "daily":
+            return last_op["daily_coins"]
+
+        if tf == "weekly":
+            return last_op["weekly_coins"]
+
+    return []

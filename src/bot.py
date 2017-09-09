@@ -9,18 +9,7 @@ PROD_CHANNELS = [telegram_chat_prod, kirby_bot_channel]
 TEST_CHANNELS = [telegram_chat_dev]
 
 
-def generate_and_post_message(hourly, daily, weekly):
-    """
-    generates and posts a message using the build template and send message functions
-    accepts hourly, daily, weekly scores
-    - scores currently are expected to be of shape [{ symbol: string, score: int }]
-    - scores will evolve to coins array => [{ symbol: string, scores: { medium: int }}]
-    -- medium being "twitter", "reddit", "google", etc.
-    """
-    hourly_text = build_rating_template(hourly, "Hourly Twitter Hype")
-    daily_text = build_rating_template(daily, "Daily Twitter Hype")
-    weekly_text = build_rating_template(weekly, "Weekly Twitter Hype")
-
+def build_info_template():
     pray_symbol = emoji.emojize(":folded_hands:")
     moon_symbol = emoji.emojize(":full_moon:")
     crystal_ball_symbol = emoji.emojize(":crystal_ball:")
@@ -29,8 +18,14 @@ def generate_and_post_message(hourly, daily, weekly):
     message_text += "_Analysis of credible #crypto social media for BTRX coins._\n"
     message_text += "Please read the USER GUIDE at bit.ly/2vFCM5W for bot trading pro tips. Always DYOR!\n"
     message_text += "Check the roadmap and other goodies on the main site at bit.ly/2wmfMLz \n\n"
-    message_text += hourly_text + "\n" + daily_text + "\n" + weekly_text
-    message_text += emoji.emojize(
+    return message_text
+
+
+def generate_ad_template():
+    pray_symbol = emoji.emojize(":folded_hands:")
+    crystal_ball_symbol = emoji.emojize(":crystal_ball:")
+
+    message_text = emoji.emojize(
         "\n" + pray_symbol + " This bot takes effort to tune and develop. Badass features incoming! If you're making good profit, a 2.5% cut is recommended for development continuation. " + pray_symbol + "\n")
     message_text += "BTC: `" + btc_tip_jar + "`\n"
     message_text += "RAIN: `" + rain_tip_jar + "`\n"
@@ -38,6 +33,28 @@ def generate_and_post_message(hourly, daily, weekly):
     message_text += crystal_ball_symbol + \
         " Feedback, need a programmer or anything else? Write @azurikai at any time. " + \
         crystal_ball_symbol + "\n"
+
+    return message_text
+
+
+def generate_and_post_message(hourly, daily, weekly):
+    """
+    generates and posts a message using the build template and send message functions
+    accepts hourly, daily, weekly scores
+    - scores currently are expected to be of shape [{ symbol: string, score: int }]
+    - scores will evolve to coins array => [{ symbol: string, scores: { medium: int }}]
+    -- medium being "twitter", "reddit", "google", etc.
+    """
+
+    message_text = build_rating_template(hourly, "Hourly Twitter Hype") + "\n"
+
+    if daily:
+        daily_text = build_rating_template(daily, "Daily Twitter Hype")
+        message_text += daily_text + "\n"
+
+    if weekly:
+        weekly_text = build_rating_template(weekly, "Weekly Twitter Hype")
+        message_text += weekly_text + "\n"
 
     send_message(text=message_text)
 

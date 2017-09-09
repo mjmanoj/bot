@@ -62,6 +62,38 @@ def moon_call():
     daily_top_scores = archivist.get_score_history(tf="day")
     weekly_top_scores = archivist.get_score_history(tf="week")
 
+    # ensure that we are not unneecessarily sending daily/weekly block
+    # if the daily/weekly has not changed.
+    operations_log["daily_coins"] = []
+    operations_log["weekly_coins"] = []
+
+    for coin in daily_top_scores:
+        operations_log["daily_coins"].append(coin["symbol"])
+
+    for coin in weekly_top_scores:
+        operations_log["weekly_coins"].append(coin["symbol"])
+
+    last_daily = archivist.get_last_scores("daily")
+    last_weekly = archivist.get_last_scores("weekly")
+
+    day_match = False
+    if last_daily is not None:
+        for i in range(0, len(daily_top_scores)):
+            if daily_top_scores[i]["symbol"] == last_daily[i]:
+                day_match = True
+
+    week_match = False
+    if last_weekly is not None:
+        for i in range(0, len(weekly_top_scores)):
+            if weekly_top_scores[i]["symbol"] == last_weekly[i]:
+                week_match = True
+
+    if day_match:
+        daily_top_scores = []
+
+    if week_match:
+        weekly_top_scores = []
+
     # prepare message for telegram
     operations_log["send_message_start"] = helpers.get_time_now(stringify=True)
 
