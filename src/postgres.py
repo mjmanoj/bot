@@ -63,7 +63,7 @@ def get_historical_twitter_scores(cutoff):
         table = str(env + "_twitter_scores")
         try:
             db.cur.execute("select * from " + table +
-                           " where created >= '" + str(cutoff) + "'")
+                           " where created >= '" + str(cutoff) + "' order by score desc")
         except psycopg2.Error as e:
             print e
             return []
