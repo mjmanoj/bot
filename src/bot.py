@@ -36,14 +36,15 @@ def generate_and_post_message(hourly, daily, weekly):
 
     if hourly:
         text += build_rating_template(hourly,
-                                      "Hourly Twitter Hype") + "\n"
+                                      "Twitter Hourly Scoreboard") + "\n"
 
     if daily:
-        daily_text = build_rating_template(daily, "Daily Twitter Hype")
+        daily_text = build_rating_template(daily, "Twitter Daily Scoreboard")
         text += daily_text + "\n"
 
     if weekly:
-        weekly_text = build_rating_template(weekly, "Weekly Twitter Hype")
+        weekly_text = build_rating_template(
+            weekly, "Twitter Weekly Scoreboard")
         text += weekly_text + "\n"
 
     print "DEBUG"
@@ -69,7 +70,7 @@ def send_message(text):
 def build_rating_template(scores, title):
     """ build_rating_template builds and returns a text message for twitter based coin score ratings """
 
-    message = emoji.emojize("*:bird:" + title + ":bird: *\n")
+    message = emoji.emojize("*:bird:" + title + " :bird: *\n")
     for market in scores:
         symbol = market["symbol"]
 
