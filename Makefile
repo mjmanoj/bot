@@ -7,17 +7,11 @@ moon_call:
 test_moon_call:
 	ENV=test python2 ./src/moon_call.py
 
-post_ad:
-	ENV=prod python2 ./src/post_ad.py
+post_info:
+	ENV=prod python2 ./src/post_info.py
 
-test_post_ad:
-	ENV=test python2 ./src/post_ad.py
-
-post_res:
-	ENV=prod python2 ./src/post_res.py
-
-test_post_res:
-	ENV=test python2 ./src/post_res.py
+test_post_info:
+	ENV=test python2 ./src/post_info.py
 
 tail:
 	heroku logs --app crypto-moon-bot --tail
