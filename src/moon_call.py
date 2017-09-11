@@ -73,8 +73,8 @@ def moon_call():
     for coin in weekly_top_scores:
         operations_log["weekly_coins"].append(coin["symbol"])
 
-    last_daily = archivist.get_last_scores("daily")
-    last_weekly = archivist.get_last_scores("weekly")
+    last_daily = archivist.get_last_scores("day")
+    last_weekly = archivist.get_last_scores("week")
 
     # day_match = 0
     # if last_daily is not None:
