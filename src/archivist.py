@@ -13,34 +13,38 @@ from config import env
 CWD = os.getcwd()
 
 
-def get_score_history(tf):
-    """ gets the score history for all coins, returning top 3 for the respective tf """
-
+def get_cutoff(x):
     now = get_time_now(naive=False)
     day_delta = timedelta(hours=24)
     week_delta = timedelta(hours=168)
 
-    cutoff = now - week_delta
+    return {
+        "day": now - day_delta,
+        "week": now - week_delta
+    }[x]
 
-    if tf is "daily":
-        cutoff = now - day_delta
 
+def get_score_history(tf):
+    """ gets the score history for all coins, returning top 3 for the respective tf """
+
+    cutoff = get_cutoff(tf)
     history = postgres.get_historical_twitter_scores(cutoff)
-    scores = []
-
     if history is None:
         return []
 
+    scores = []
+
     for record in history:
-        broke = False
+        exists = False
         # check scores and add score to existing score if it exists
+        # break when exists so that we do not add unnecessary duplicaiton.
         for score in scores:
             if score["symbol"] == record["symbol"]:
                 score["score"] += record["score"]
-                broke = True
+                exists = True
                 break
 
-        if not broke:
+        if not exists:
             scores.append(record)
 
     if scores is not None:
@@ -74,10 +78,10 @@ def get_last_scores(tf):
     last_op = postgres.get_moon_call_operations()
 
     if last_op is not None:
-        if tf == "daily":
+        if tf == "day":
             return last_op["daily_coins"]
 
-        if tf == "weekly":
+        if tf == "week":
             return last_op["weekly_coins"]
 
     return []
