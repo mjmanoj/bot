@@ -87,16 +87,18 @@ def build_rating_template(scores, title):
             "](https://twitter.com/search?f=tweets&vertical=default&q=%24" + \
             symbol + ") Score => " + lit_meter
 
+        message += "\nResearch on "
+
         if "name" in market:
-            message += " ::: [Research](https://coinmarketcap.com/currencies/" + \
+            message += "[Coin Market Cap](https://coinmarketcap.com/currencies/" + \
                 market["name"] + ")"
 
-        message += " | [Analyze](https://www.tradingview.com/chart/?symbol=BITTREX:" + \
+        message += ", Analyze on[Trading View](https://www.tradingview.com/chart/?symbol=BITTREX:" + \
             market["symbol"] + "BTC)"
 
-        message += " | [Trade](https://bittrex.com/Market/Index?MarketName=BTC-" + \
+        message += ", Trade on[Bittrex](https://bittrex.com/Market/Index?MarketName=BTC-" + \
             market["symbol"] + ")"
 
-        message += "\n"
+        message += ".\n"
 
     return message
