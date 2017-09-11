@@ -52,7 +52,7 @@ def moon_call():
 
     operations_log["twitter_search_end"] = helpers.get_time_now(stringify=True)
 
-    # sort and find hottest trends
+    # sort and select only top 5.
     sorted_scores = sorted(
         scores, key=operator.itemgetter("score"), reverse=True)
     hourly_top_scores = sorted_scores[:5]
@@ -77,30 +77,38 @@ def moon_call():
         operations_log["weekly_coins"].append(coin["symbol"])
 
     # ensure that we are not unnecessarily sending daily/weekly block
+    # A. check for matches
+    # B. if matching, reset values
     last_daily = archivist.get_last_scores("day")
     last_weekly = archivist.get_last_scores("week")
 
-    hour_matches_last_moon_call = 0
-    if last_daily is not None:
-        for i in range(0, len(daily_top_scores)):
-            if i in operations_log["hourly_coins"] and hourly_top_scores[i]["symbol"] == operations_log["hourly_coins"][i]:
-                hour_matches_last_moon_call += 1
+    # A. check for matches
+    hourly_match = 0
+    if hourly_top_scores is not None:
+        hourly = operations_log["hourly_coins"]
+        for i in range(0, len(hourly_top_scores)):
+            if i not in hourly:
+                break
 
-    day_matches_last_moon_call = False
-    if last_daily is not None:
-        day_matches_last_moon_call = last_daily == operations_log["daily_coins"]
+            if hourly_top_scores[i]["symbol"] == hourly[i]:
+                hourly_match += 1
 
-    week_matches_last_moon_call = False
+    day_match = False
+    if last_daily != None:
+        day_match = last_daily == operations_log["daily_coins"]
+
+    week_match = False
     if last_weekly != None:
-        week_matches_last_moon_call = last_weekly == operations_log["weekly_coins"]
+        week_match = last_weekly == operations_log["weekly_coins"]
 
-    if hour_matches_last_moon_call > 0:
+    # B. if matching, reset values
+    if hourly_match > 0:
+        hourly_top_scores = []
+
+    if day_match:
         daily_top_scores = []
 
-    if day_matches_last_moon_call:
-        daily_top_scores = []
-
-    if week_matches_last_moon_call:
+    if week_match:
         weekly_top_scores = []
 
     # prepare message for telegram

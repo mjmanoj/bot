@@ -29,6 +29,8 @@ def generate_and_post_message(hourly, daily, weekly):
 
     if not hourly and not daily and not weekly:
         print("[INFO] all scores were same as last posting, skipping")
+        send_message("Scores remain same for twitter data in the last hour...")
+        return
 
     text = ""
 
