@@ -63,8 +63,12 @@ def moon_call():
     weekly_top_scores = archivist.get_score_history(tf="week")
 
     # track the daily and weekly coins for each call
+    operations_log["hourly_coins"] = []
     operations_log["daily_coins"] = []
     operations_log["weekly_coins"] = []
+
+    for coin in hourly_top_scores:
+        operations_log["hourly_coins"].append(coin["symbol"])
 
     for coin in daily_top_scores:
         operations_log["daily_coins"].append(coin["symbol"])
@@ -76,6 +80,12 @@ def moon_call():
     last_daily = archivist.get_last_scores("day")
     last_weekly = archivist.get_last_scores("week")
 
+    hour_matches_last_moon_call = 0
+    if last_daily is not None:
+        for i in range(0, len(daily_top_scores)):
+            if i in operations_log["hourly_coins"] and hourly_top_scores[i]["symbol"] == operations_log["hourly_coins"][i]:
+                hour_matches_last_moon_call += 1
+
     day_matches_last_moon_call = False
     if last_daily is not None:
         day_matches_last_moon_call = last_daily == operations_log["daily_coins"]
@@ -83,6 +93,9 @@ def moon_call():
     week_matches_last_moon_call = False
     if last_weekly != None:
         week_matches_last_moon_call = last_weekly == operations_log["weekly_coins"]
+
+    if hour_matches_last_moon_call > 0:
+        daily_top_scores = []
 
     if day_matches_last_moon_call:
         daily_top_scores = []

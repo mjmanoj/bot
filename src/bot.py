@@ -48,7 +48,14 @@ def generate_and_post_message(hourly, daily, weekly):
     -- medium being "twitter", "reddit", "google", etc.
     """
 
-    message_text = build_rating_template(hourly, "Hourly Twitter Hype") + "\n"
+    if not hourly and not daily and not weekly:
+        print("[INFO] all scores were same as last posting, skipping")
+
+    message_text = ""
+
+    if hourly:
+        message_text += build_rating_template(hourly,
+                                              "Hourly Twitter Hype") + "\n"
 
     if daily:
         daily_text = build_rating_template(daily, "Daily Twitter Hype")
@@ -58,7 +65,11 @@ def generate_and_post_message(hourly, daily, weekly):
         weekly_text = build_rating_template(weekly, "Weekly Twitter Hype")
         message_text += weekly_text + "\n"
 
-    send_message(text=message_text)
+    print "DEBUG"
+    print len(message_text)
+
+    if message_text:
+        send_message(text=message_text)
 
 
 def send_message(text):
