@@ -10,33 +10,12 @@ TEST_CHANNELS = [telegram_chat_dev]
 
 
 def build_info_template():
-    pray_symbol = emoji.emojize(":folded_hands:")
-    moon_symbol = emoji.emojize(":full_moon:")
-    crystal_ball_symbol = emoji.emojize(":crystal_ball:")
-
-    message_text = moon_symbol + " Moon Room Resources " + moon_symbol + "\n"
-    message_text += "- *Free Trading Guide* -> bit.ly/2vFCM5W \n"
-    message_text += "- Roadmap -> bit.ly/2wOPi7Z \n"
-    message_text += "- Website -> bit.ly/2wmfMLz\n"
-    message_text += "- Report bugs! -> goo.gl/forms/CPOCGE86TwDrf1sr1\n"
-    message_text += "- Request features! -> goo.gl/forms/bdHcPk5TsRH5roZL2\n\n"
-    message_text += crystal_ball_symbol + \
-        " Feedback, need a programmer or anything else? Write @azurikai at any time. " + \
-        crystal_ball_symbol + "\n"
-    return message_text
+    return open('./msg_temps/info.txt').read()
 
 
 def build_ad_template():
-    rocket_symbol = emoji.emojize(":rocket:")
-    crystal_ball_symbol = emoji.emojize(":crystal_ball:")
-
-    message_text = emoji.emojize(rocket_symbol + rocket_symbol + rocket_symbol +
-                                 " Accelerate Development With Donations " + rocket_symbol + rocket_symbol + rocket_symbol + " \n")
-    message_text += "BTC: `" + btc_tip_jar + "`\n"
-    message_text += "RAIN: `" + rain_tip_jar + "`\n"
-    message_text += "Bitconnect: bitconnect.co/?ref=5h3llgh05t\n"
-
-    return message_text
+    text = open('./msg_temps/ad.txt').read()
+    return text % (btc_tip_jar, rain_tip_jar)
 
 
 def generate_and_post_message(hourly, daily, weekly):
@@ -51,25 +30,25 @@ def generate_and_post_message(hourly, daily, weekly):
     if not hourly and not daily and not weekly:
         print("[INFO] all scores were same as last posting, skipping")
 
-    message_text = ""
+    text = ""
 
     if hourly:
-        message_text += build_rating_template(hourly,
-                                              "Hourly Twitter Hype") + "\n"
+        text += build_rating_template(hourly,
+                                      "Hourly Twitter Hype") + "\n"
 
     if daily:
         daily_text = build_rating_template(daily, "Daily Twitter Hype")
-        message_text += daily_text + "\n"
+        text += daily_text + "\n"
 
     if weekly:
         weekly_text = build_rating_template(weekly, "Weekly Twitter Hype")
-        message_text += weekly_text + "\n"
+        text += weekly_text + "\n"
 
     print "DEBUG"
-    print len(message_text)
+    print len(text)
 
-    if message_text:
-        send_message(text=message_text)
+    if text:
+        send_message(text=text)
 
 
 def send_message(text):
