@@ -44,6 +44,8 @@ def get_market_summaries():
         if coin_info:
             entry["name"] = coin_info["CurrencyLong"].lower()
 
+        # otherwise continue
+
         if market == "BTC":
             btc_summaries.append(entry)
 
