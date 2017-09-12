@@ -10,33 +10,34 @@ TEST_CHANNELS = [telegram_chat_dev]
 
 
 def build_info_template():
-    pray_symbol = emoji.emojize(":folded_hands:")
     moon_symbol = emoji.emojize(":full_moon:")
     crystal_ball_symbol = emoji.emojize(":crystal_ball:")
 
-    message_text = moon_symbol + " Moon Room Resources " + moon_symbol + "\n"
-    message_text += "- *Free Trading Guide* -> bit.ly/2vFCM5W \n"
-    message_text += "- Roadmap -> bit.ly/2wOPi7Z \n"
-    message_text += "- Website -> bit.ly/2wmfMLz\n"
-    message_text += "- Report bugs! -> goo.gl/forms/CPOCGE86TwDrf1sr1\n"
-    message_text += "- Request features! -> goo.gl/forms/bdHcPk5TsRH5roZL2\n\n"
-    message_text += crystal_ball_symbol + \
+    text = moon_symbol + " Moon Room Resources " + moon_symbol + "\n"
+    text += "- *Free Trading Guide* -> bit.ly/2vFCM5W \n"
+    text += "- Roadmap -> bit.ly/2wOPi7Z \n"
+    text += "- Website -> bit.ly/2wmfMLz\n"
+    text += "- Report bugs! -> goo.gl/forms/CPOCGE86TwDrf1sr1\n"
+    text += "- Request features! -> goo.gl/forms/bdHcPk5TsRH5roZL2\n\n"
+    text += crystal_ball_symbol + \
         " Feedback, need a programmer or anything else? Write @azurikai at any time. " + \
         crystal_ball_symbol + "\n"
-    return message_text
+    return text
 
 
 def build_ad_template():
     rocket_symbol = emoji.emojize(":rocket:")
-    crystal_ball_symbol = emoji.emojize(":crystal_ball:")
 
-    message_text = emoji.emojize(rocket_symbol + rocket_symbol + rocket_symbol +
-                                 " Accelerate Development With Donations " + rocket_symbol + rocket_symbol + rocket_symbol + " \n")
-    message_text += "BTC: `" + btc_tip_jar + "`\n"
-    message_text += "RAIN: `" + rain_tip_jar + "`\n"
-    message_text += "Bitconnect: bitconnect.co/?ref=5h3llgh05t\n"
+    text = emoji.emojize(rocket_symbol + rocket_symbol + rocket_symbol +
+                         " Accelerate Development With Donations " +
+                         rocket_symbol + rocket_symbol + rocket_symbol +
+                         " \n")
 
-    return message_text
+    text += "BTC: `" + btc_tip_jar + "`\n"
+    text += "RAIN: `" + rain_tip_jar + "`\n"
+    text += "Bitconnect: bitconnect.co/?ref=5h3llgh05t\n"
+
+    return text
 
 
 def generate_and_post_message(hourly, daily, weekly):
@@ -48,34 +49,44 @@ def generate_and_post_message(hourly, daily, weekly):
     -- medium being "twitter", "reddit", "google", etc.
     """
 
-    message_text = build_rating_template(hourly, "Hourly Twitter Hype") + "\n"
+    text = build_rating_template(hourly, "Hourly Twitter Hype") + "\n"
 
     if daily:
         daily_text = build_rating_template(daily, "Daily Twitter Hype")
-        message_text += daily_text + "\n"
+        text += daily_text + "\n"
 
     if weekly:
         weekly_text = build_rating_template(weekly, "Weekly Twitter Hype")
-        message_text += weekly_text + "\n"
+        text += weekly_text + "\n"
 
-    send_message(text=message_text)
+    send_message(text=text)
 
 
-def send_message(text):
-    """ send_message sends a text message to the environment variable chat id, in markdown """
+def send_message(text, user=None, disable_link_preview=True, typ="public"):
+    """ send_message sends a text message to the environment variable chat id,
+        in markdown
+    """
 
-    channels = PROD_CHANNELS
+    if typ is "public":
+        channels = PROD_CHANNELS
 
-    if env == "test":
-        channels = TEST_CHANNELS
+        if env == "test":
+            channels = TEST_CHANNELS
 
-    for channel in channels:
-        TELLIE.send_message(chat_id=channel, text=text,
-                            parse_mode="Markdown", disable_web_page_preview=True)
+        for channel in channels:
+            TELLIE.send_message(chat_id=channel, text=text,
+                                parse_mode="Markdown",
+                                disable_web_page_preview=disable_link_preview)
+
+    if typ is "private":
+        TELLIE.send_message(parse_mode="Markdown", text=text,
+                            disable_link_preview=False, chat_id="@" + user)
 
 
 def build_rating_template(scores, title):
-    """ build_rating_template builds and returns a text message for twitter based coin score ratings """
+    """ build_rating_template builds and returns a
+        text message for twitter based coin score ratings
+    """
 
     message = emoji.emojize("*:bird:" + title + ":bird: *\n")
     for market in scores:
