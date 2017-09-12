@@ -62,6 +62,7 @@ def get_moon_call_res_duration():
     moon_call_duration = 0
 
     if last_op is not None:
+        # TODO: Store duruation in database
         start = int(last_op["main_start"])
         end = int(last_op["main_end"])
         duration = abs(start - end)
@@ -70,6 +71,21 @@ def get_moon_call_res_duration():
               str(duration) + " seconds.")
 
     return moon_call_duration
+
+
+def get_last_twitter_scan_duration():
+    """ get_last_twitter_scan_duration returns the official twitter call
+        duration
+    """
+
+    last_op = postgres.get_last_twitter_scan_duration()
+
+    twitter_call_duration = 0
+
+    if last_op is not None:
+        return last_op["duration"]
+
+    return twitter_call_duration
 
 
 def get_last_scores(tf):

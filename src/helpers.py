@@ -6,11 +6,18 @@ import errno
 import pytz
 
 
+def find_date_in_string(str):
+    # https://stackoverflow.com/questions/3276180/extracting-date-from-a-string-in-python
+    return str
+
+
 def find(lst, key, value):
     """ finds a key by matching value in a list of dictionaries """
     for i, dic in enumerate(lst):
         if dic[key] == value:
             return dic
+
+    return False
 
 
 def get_time_now(stringify=False, naive=True):

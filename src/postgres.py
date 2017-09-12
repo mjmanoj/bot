@@ -58,6 +58,32 @@ def add_operations_log(log):
             pass
 
 
+def add_twitter_call_log(log):
+    """ adds a coin symbol to the symbols table according to environment, and the symbol it is."""
+    with Db() as db:
+        table = str(env + "_twitter_call")
+        try:
+            db.cur.execute("insert into " + table +
+                           "(start, end, duration) values (%s, %s, %s)",
+                           (log["start"], log["end"], log["duration"]))
+        except psycopg2.Error as e:
+            print e
+            pass
+
+
+def add_calendar_event(symbol, date, link):
+    """ adds a calendar event to the calendar table according to environment."""
+    with Db() as db:
+        table = str(env + "_calendar_events")
+        try:
+            db.cur.execute("insert into " + table +
+                           "(symbol, date, link) values (%s, %s, %s)",
+                           (symbol, date, link))
+        except psycopg2.Error as e:
+            print e
+            pass
+
+
 def get_historical_twitter_scores(cutoff):
     with Db() as db:
         table = str(env + "_twitter_scores")
@@ -71,12 +97,37 @@ def get_historical_twitter_scores(cutoff):
         return db.cur.fetchall()
 
 
+def get_coin_infos(cutoff):
+    with Db() as db:
+        table = str(env + "_coin_info")
+        try:
+            db.cur.execute("select * from " + table +
+                           " where created >= '" + str(cutoff))
+        except psycopg2.Error as e:
+            print e
+            return []
+
+        return db.cur.fetchall()
+
+
 def get_moon_call_operations():
     with Db() as db:
         table = str(env + "_moon_call")
         try:
             db.cur.execute("SELECT * from " + table +
                            " order by main_start desc limit 1")
+        except psycopg2.Error as e:
+            print e
+            pass
+        return db.cur.fetchone()
+
+
+def get_last_twitter_scan_duration():
+    with Db() as db:
+        table = str(env + "_twitter_call")
+        try:
+            db.cur.execute("SELECT * from " + table +
+                           " order by start desc limit 1")
         except psycopg2.Error as e:
             print e
             pass
