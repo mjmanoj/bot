@@ -9,6 +9,12 @@ PROD_CHANNELS = [telegram_chat_prod, kirby_bot_channel]
 TEST_CHANNELS = [telegram_chat_dev]
 
 
+def get_id_by_user(u):
+    return {
+        "azurikai": 247829509,
+    }[u]
+
+
 def build_info_template():
     moon_symbol = emoji.emojize(":full_moon:")
     crystal_ball_symbol = emoji.emojize(":crystal_ball:")
@@ -79,8 +85,9 @@ def send_message(text, user=None, disable_link_preview=True, typ="public"):
                                 disable_web_page_preview=disable_link_preview)
 
     if typ is "private":
+        chat_id = get_id_by_user(user)
         TELLIE.send_message(parse_mode="Markdown", text=text,
-                            disable_link_preview=False, chat_id="@" + user)
+                            disable_link_preview=False, chat_id=chat_id)
 
 
 def build_rating_template(scores, title):

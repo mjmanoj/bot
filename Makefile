@@ -17,7 +17,7 @@ call_twitter:
 	ENV=prod python2 ./src/scan_official_twitter.py
 
 test_call_twitter:
-	ENV=prod python2 ./src/scan_official_twitter.py
+	ENV=test python2 ./src/scan_official_twitter.py
 
 tail:
 	heroku logs --app crypto-moon-bot --tail

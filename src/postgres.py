@@ -89,7 +89,7 @@ def get_historical_twitter_scores(cutoff):
         table = str(env + "_twitter_scores")
         try:
             db.cur.execute("select * from " + table +
-                           " where created >= '" + str(cutoff) + "' order by score desc")
+                           " where created >= " + str(cutoff) + " order by score desc")
         except psycopg2.Error as e:
             print e
             return []
@@ -97,12 +97,11 @@ def get_historical_twitter_scores(cutoff):
         return db.cur.fetchall()
 
 
-def get_coin_infos(cutoff):
+def get_coin_infos():
     with Db() as db:
         table = str(env + "_coin_info")
         try:
-            db.cur.execute("select * from " + table +
-                           " where created >= '" + str(cutoff))
+            db.cur.execute("select * from " + table)
         except psycopg2.Error as e:
             print e
             return []

@@ -24,12 +24,12 @@ def scan():
     cutoff = 600 + last_duration
 
     summaries = rex.get_market_summaries()
-    database_entries = postgres.get_coin_infos(cutoff)
+    database_entries = postgres.get_coin_infos()
 
     for summary in summaries:
         coin_info = helpers.find(database_entries, "symbol", summary["symbol"])
 
-        if "twitter" in coin_info:
+        if coin_info and "twitter" in coin_info:
             posts = twit.check_account_for_new_posts(
                 coin_info["twitter"], cutoff)
 
@@ -49,12 +49,20 @@ def scan():
 
                     bot.send_message(text=text, disable_link_preview=False)
 
+            else:
+                bot.send_message(typ="private", user="azurikai",
+                                 text="No twitter account found for " + summary["symbol"] + ", please add it!")
+
         else:
+            # add basic coin entry to database.
             bot.send_message(typ="private", user="azurikai",
-                             text="No twitter account found for " + summary["symbol"] + ", please add it!")
+                                 text="New entry added for " + summary["symbol"] + ", please update!")
 
     scan_log["end"] = helpers.get_time_now(stringify=True)
     scan_log["duration"] = abs(scan_log["start"] - scan_log["end"])
     postgres.add_twitter_call_log(scan_log)
     print("[JOB] Official Twitter Accounts Scan finished in " +
           str(scan_log["duration"]) + " seconds.")
+
+
+scan()
