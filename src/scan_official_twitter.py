@@ -18,7 +18,7 @@ def scan():
     print("[JOB] Official Twitter Accounts Scan starting...")
 
     scan_log = {}
-    scan_log["start"] = helpers.get_time_now(stringify=True)
+    scan_log["start"] = helpers.get_time_now()
 
     last_duration = archivist.get_last_twitter_scan_duration()
     cutoff = 600 + last_duration
@@ -58,7 +58,7 @@ def scan():
             bot.send_message(typ="private", user="azurikai",
                                  text="New entry added for " + summary["symbol"] + ", please update!")
 
-    scan_log["end"] = helpers.get_time_now(stringify=True)
+    scan_log["end"] = helpers.get_time_now()
     scan_log["duration"] = abs(scan_log["start"] - scan_log["end"])
     postgres.add_twitter_call_log(scan_log)
     print("[JOB] Official Twitter Accounts Scan finished in " +
