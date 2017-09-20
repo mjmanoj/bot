@@ -28,32 +28,39 @@ def scan():
 
     # empty prefill for currencies info for inserting new coin_infos
     currencies = []
+    all_statuses = []
 
     for summary in summaries:
+
+        # TODO
+        # only take coins based on their market summaries
+        # - golden range of - 4% decrease and +4 % encrase
+
         coin_info = helpers.find(database_entries, "symbol", summary["symbol"])
+        all_statuses[summary["symbol"]] = []
 
         if coin_info and "twitter" in coin_info:
-            posts = twit.check_account_for_new_posts(
+            statuses = twit.check_account_for_new_posts(
                 coin_info["twitter"], cutoff)
 
-            if posts != None:
-                for post in posts:
+            if statuses != None:
+                for status in statuses:
                     # - check if tweet has specific criteria (how do we define?)
-                    date = helpers.find_date_in_string(post.text)
-                    text = "Official Twitter Announcement from " + \
-                        summary["symbol"] + "! Rating... HOT!\n"
+                    # date = helpers.find_date_in_string(status.text)
 
-                    url = "https://twitter.com/statuses/" + post.id_str
+                    # if date:
+                    #     url = "https://twitter.com/statuses/" + status.id_str
+                    #     postgres.add_calendar_event(
+                    #         summary["symbol"], date, url)
 
-                    if date:
-                        url = "https://twitter.com/statuses/" + post.id_str
-                        text += "Mark your calendars => " + date + ".\n"
-                        postgres.add_calendar_event(
-                            summary["symbol"], date, url)
-
-                    text += post.text + "\n" + url
-
-                    bot.send_message(text=text, disable_link_preview=False)
+                    # TODO
+                    # - status.created_at receives a expontential multiplier based on how close it is to present
+                    # - multiply against status.favorite_count,
+                    # - also again status.retweet_count,
+                    # - also if a date or time is referenced in the tweet
+                    # - also for each of the constants.HOT_TAGS that are in the hashtags.
+                    # - sentiment analysis
+                    # - push tweet id_str and score to all_statuses[summary["symbol"]]
 
             else:
                 bot.send_message(typ="private", user="azurikai",
@@ -68,6 +75,12 @@ def scan():
             postgres.add_coin_info(summary, currency)
             bot.send_message(typ="private", user="azurikai",
                                  text="New entry added for " + summary["symbol"] + ", please update!")
+
+        # TODO
+        # take all statuses for each object
+        # - store top scoring status for each coin into competition array
+        # sort competition array to top 3 based on score
+        # send message about the HOTTEST TWEETS OF TWITTER!
 
     scan_log["end"] = helpers.get_time_now()
     scan_log["duration"] = abs(scan_log["start"] - scan_log["end"])
