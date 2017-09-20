@@ -8,7 +8,7 @@ import pytz
 
 def find_date_in_string(str):
     # https://stackoverflow.com/questions/3276180/extracting-date-from-a-string-in-python
-    return str
+    return None
 
 
 def find(lst, key, value):

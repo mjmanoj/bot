@@ -5,7 +5,7 @@ from datetime import datetime, date
 from operator import itemgetter
 
 import postgres
-from rex import Rex
+from rex import Client
 from helpers import get_time_now, find
 from dateutil.parser import parse as parse_date
 from datetime import timedelta, datetime

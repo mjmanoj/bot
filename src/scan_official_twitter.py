@@ -26,6 +26,9 @@ def scan():
     summaries = rex.get_market_summaries()
     database_entries = postgres.get_coin_infos()
 
+    # empty prefill for currencies info for inserting new coin_infos
+    currencies = []
+
     for summary in summaries:
         coin_info = helpers.find(database_entries, "symbol", summary["symbol"])
 
@@ -40,12 +43,15 @@ def scan():
                     text = "Official Twitter Announcement from " + \
                         summary["symbol"] + "! Rating... HOT!\n"
 
+                    url = "https://twitter.com/statuses/" + post.id_str
+
                     if date:
+                        url = "https://twitter.com/statuses/" + post.id_str
                         text += "Mark your calendars => " + date + ".\n"
                         postgres.add_calendar_event(
-                            summary["symbol"], date, post.link)
+                            summary["symbol"], date, url)
 
-                    text += post.text + "\n" + post.link
+                    text += post.text + "\n" + url
 
                     bot.send_message(text=text, disable_link_preview=False)
 
@@ -54,7 +60,12 @@ def scan():
                                  text="No twitter account found for " + summary["symbol"] + ", please add it!")
 
         else:
-            # add basic coin entry to database.
+            if currencies != None:
+                currencies = rex.Client.get_currencies()["result"]
+
+            currency = helpers.find(currencies, "Currency", summary["symbol"])
+
+            postgres.add_coin_info(summary, currency)
             bot.send_message(typ="private", user="azurikai",
                                  text="New entry added for " + summary["symbol"] + ", please update!")
 

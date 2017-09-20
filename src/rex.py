@@ -6,7 +6,7 @@ import bittrex
 from operator import itemgetter
 from helpers import find
 from config import env
-Rex = bittrex.Bittrex(api_key="", api_secret="")
+Client = bittrex.Bittrex(api_key="", api_secret="")
 
 
 # blacklist is where coins who have too much non crypto currency meaning go. sorry :(
@@ -25,8 +25,8 @@ def get_market_summaries():
     btc, eth and usdt based markets
     TODO: how can we automate the btc/eth/usdt lists into automated list generation based on the split[0] for the MarketName?
     """
-    summaries = Rex.get_market_summaries()["result"]
-    currencies = Rex.get_currencies()["result"]
+    summaries = Client.get_market_summaries()["result"]
+    currencies = Client.get_currencies()["result"]
 
     btc_summaries = []
     eth_summaries = []

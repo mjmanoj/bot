@@ -5,6 +5,8 @@ the twit package is a bear python-twitter adapter
 import twitter
 import helpers
 import config
+import time
+from dateutil import parser
 
 
 class API():
@@ -47,7 +49,9 @@ def check_account_for_new_posts(account, cutoff):
             screen_name=account, count=10, include_rts=False, exclude_replies=True)
 
         for post in timeline:
-            if post["created_at"] >= helpers.get_time_now() - cutoff:
+            post_time = post.created_at
+            now_ts = int(helpers.get_time_now(stringify=True)) - cutoff
+            if post_time >= now_ts:
                 posts.append(post)
 
         return posts

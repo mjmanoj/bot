@@ -58,6 +58,19 @@ def add_operations_log(log):
             pass
 
 
+def add_coin_info(coin_info, currency):
+    """ adds coin info to the coin info database"""
+    with Db() as db:
+        table = str(env + "_coin_info")
+        try:
+            db.cur.execute("insert into " + table +
+                           "(symbol, name) values (%s, %s)",
+                           (coin_info["symbol"], currency["CurrencyLong"]))
+        except psycopg2.Error as e:
+            print e
+            pass
+
+
 def add_twitter_call_log(log):
     """ adds a coin symbol to the symbols table according to environment, and the symbol it is."""
     with Db() as db:
@@ -71,14 +84,14 @@ def add_twitter_call_log(log):
             pass
 
 
-def add_calendar_event(symbol, date, link):
+def add_calendar_event(symbol, date, url):
     """ adds a calendar event to the calendar table according to environment."""
     with Db() as db:
         table = str(env + "_calendar_events")
         try:
             db.cur.execute("insert into " + table +
-                           "(symbol, date, link) values (%s, %s, %s)",
-                           (symbol, date, link))
+                           "(symbol, date, url) values (%s, %s, %s)",
+                           (symbol, date, url))
         except psycopg2.Error as e:
             print e
             pass
