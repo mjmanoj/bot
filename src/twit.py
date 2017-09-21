@@ -6,7 +6,8 @@ import twitter
 import helpers
 import config
 import time
-from dateutil import parser
+from dateutil.parser import parse as parse_date
+from datetime import timedelta
 
 
 class API():
@@ -42,6 +43,7 @@ def get_tweep(tweep):
 
 
 def check_account_for_new_posts(account, cutoff):
+    print "[INFO] getting twitter posts no older than " + str(cutoff)
     """ gets a twitter user, aka account. """
     with API() as api:
         posts = []
@@ -50,8 +52,7 @@ def check_account_for_new_posts(account, cutoff):
 
         for post in timeline:
             post_time = post.created_at
-            now_ts = int(helpers.get_time_now(stringify=True)) - cutoff
-            if post_time >= now_ts:
+            if parse_date(post_time) > helpers.get_time_now() - timedelta(seconds=cutoff):
                 posts.append(post)
 
         return posts

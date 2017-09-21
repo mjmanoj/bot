@@ -4,6 +4,9 @@ this script gets the top 40 coins of bittrex and then calls twitter accounts eve
 to find if they have posted anything of relevance.
 """
 
+import time
+from datetime import datetime
+from dateutil import parser
 import rex
 import postgres
 import helpers
@@ -28,12 +31,13 @@ def scan():
 
     # empty prefill for currencies info for inserting new coin_infos
     currencies = []
-    all_statuses = []
+    all_statuses = {}
+
+    start_call = helpers.get_time_now()
 
     for summary in summaries:
-
         # TODO
-        # only take coins based on their market summaries
+        # only take coins based on their markpet summaries
         # - golden range of - 4% decrease and +4 % encrase
 
         coin_info = helpers.find(database_entries, "symbol", summary["symbol"])
@@ -54,6 +58,11 @@ def scan():
                     #         summary["symbol"], date, url)
 
                     # TODO
+                    created_ts = parser.parse(status.created_at)
+                    print("start", start_call)
+                    print("created", created_ts)
+                    age = ((start_call - created_ts).days) * 24 * 60
+                    print("age", age)
                     # - status.created_at receives a expontential multiplier based on how close it is to present
                     # - multiply against status.favorite_count,
                     # - also again status.retweet_count,
@@ -74,7 +83,7 @@ def scan():
 
             postgres.add_coin_info(summary, currency)
             bot.send_message(typ="private", user="azurikai",
-                                 text="New entry added for " + summary["symbol"] + ", please update!")
+                             text="New entry added for " + summary["symbol"] + ", please update!")
 
         # TODO
         # take all statuses for each object
