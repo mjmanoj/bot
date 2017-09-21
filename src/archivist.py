@@ -58,19 +58,16 @@ def get_moon_call_res_duration():
     """ get_moon_call_res_duration returns the moon call duration"""
 
     last_op = postgres.get_moon_call_operations()
-
-    moon_call_duration = 0
-
     if last_op is not None:
         # TODO: Store duruation in database
         start = int(last_op["main_start"])
         end = int(last_op["main_end"])
         duration = abs(start - end)
-        moon_call_duration += duration
         print("[INFO] last moon_call duration was " +
               str(duration) + " seconds.")
+        return duration
 
-    return moon_call_duration
+    return 0
 
 
 def get_last_twitter_scan_duration():
@@ -79,20 +76,16 @@ def get_last_twitter_scan_duration():
     """
 
     last_op = postgres.get_last_twitter_scan_duration()
-
-    twitter_call_duration = 0
-
     if last_op is not None:
         return last_op["duration"]
 
-    return twitter_call_duration
+    return 0
 
 
 def get_last_scores(tf):
     """ get_last_scores returns the last scores from the moon call based on the timeframe"""
 
     last_op = postgres.get_moon_call_operations()
-
     if last_op is not None:
         if tf == "day":
             return last_op["daily_coins"]
