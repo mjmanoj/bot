@@ -39,10 +39,10 @@ def build_ad_template():
     return message_text
 
 
-def generate_and_post_message(hourly, daily, weekly):
+def generate_and_post_message(hourly, daily):
     """
     generates and posts a message using the build template and send message functions
-    accepts hourly, daily, weekly scores
+    accepts hourly, daily scores
     - scores currently are expected to be of shape [{ symbol: string, score: int }]
     - scores will evolve to coins array => [{ symbol: string, scores: { medium: int }}]
     -- medium being "twitter", "reddit", "google", etc.
@@ -53,10 +53,6 @@ def generate_and_post_message(hourly, daily, weekly):
     if daily:
         daily_text = build_rating_template(daily, "Daily Twitter Hype")
         message_text += daily_text + "\n"
-
-    if weekly:
-        weekly_text = build_rating_template(weekly, "Weekly Twitter Hype")
-        message_text += weekly_text + "\n"
 
     send_message(text=message_text)
 
