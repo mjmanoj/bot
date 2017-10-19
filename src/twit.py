@@ -45,6 +45,9 @@ def get_tweep(tweep):
 def check_account_for_new_posts(account, cutoff):
     print "[INFO] getting twitter posts no older than " + str(cutoff)
     """ gets a twitter user, aka account. """
+
+    now_with_cutoff = helpers.get_time_now() - timedelta(seconds=cutoff)
+
     with API() as api:
         posts = []
         timeline = api.GetUserTimeline(
@@ -52,6 +55,8 @@ def check_account_for_new_posts(account, cutoff):
 
         for post in timeline:
             post_time = post.created_at
+            print post.created_at
+            print now_with_cutoff
             if parse_date(post_time) > helpers.get_time_now() - timedelta(seconds=cutoff):
                 posts.append(post)
 
